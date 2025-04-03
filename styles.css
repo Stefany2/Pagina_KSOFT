@@ -1,70 +1,99 @@
+/* RESET */
 body {
     margin: 0;
     padding: 0;
+    overflow: hidden;
     font-family: Arial, sans-serif;
-    background: #1a1a2e;
     color: white;
+    background: #080d1f; /* Color oscuro de fondo */
 }
 
+/* ENCABEZADO */
 header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
 .logo {
-    font-size: 2rem;
+    font-size: 28px;
     font-weight: bold;
+    margin-right: 50px;
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    gap: 15px;
+    gap: 30px;
+    padding: 0;
+    margin: 0;
 }
 
-nav a {
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
     text-decoration: none;
-    color: white;
-    font-size: 1.2rem;
+    font-size: 18px;
+    padding: 8px 15px;
+    transition: all 0.3s;
 }
 
-.hero {
-    position: relative;
-    height: 100vh;
-    background: url('image.png') no-repeat center center/cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+nav ul li a:hover {
+    background: cyan;
+    border-radius: 5px;
+    color: black;
 }
 
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-}
-
-.content {
-    position: relative;
-    text-align: center;
-    z-index: 1;
-}
-
-.button, #joinButton {
-    padding: 10px 20px;
-    border: none;
-    background: #ff4b5c;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
+.button {
+    background: cyan;
+    padding: 10px 15px;
     border-radius: 5px;
 }
 
-.button:hover, #joinButton:hover {
-    background: #ff6b7d;
+/* SECCIÓN PRINCIPAL */
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .hero h2 {
+        font-size: 24px;
+    }
 }

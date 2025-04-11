@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qué Hacemos - KSOFT</title>
+    <link rel="stylesheet" href="stylo1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1 class="logo">KSOFT</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Servicios</a></li>
+                    <li><a href="#about">Sobre nosotros</a></li>
+                    <li><a href="#blogs">Blogs</a></li>
+                    <li><a href="#contact">Contáctanos</a></li>
+                    <li><a href="#location">Ubicación</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+   <!-- Reemplaza tu sección hero con esto -->
+    <section class="hero">
+    <div id="threejs-container"></div>
+    <div class="content">
+        <h2 class="floating-text">En Ksoft, tu éxito es nuestra misión.</h2>
+        <h2 class="floating-text">Desarrollamos soluciones digitales</h2>
+        <h2 class="floating-text">a la medida de tus necesidades</h2>
+        <ul>
+            <li><a href="#join" class="button">Únete</a></li>
+        </ul>
+    </div>
+</section>
+
+    <main>
+      
+ 
+<!-- Sección "Qué Hacemos" -->
+<section class="qué-hacemos">
+    <div class="qué-hacemos-container">
+        <h2 class="titulo">Qué Hacemos?</h2>
+        <div class="contenido">
+            <!-- Servicios -->
+            <div class="servicios">
+                <div class="servicio-card" id="app-desarrollo" onclick="mostrarInfo('app-desarrollo')">
+                    <div class="icono-punto"></div>
+                    <h3>Desarrollo de aplicaciones</h3>
+                </div>
+                <div class="servicio-card" id="interfaz-usuario" onclick="mostrarInfo('interfaz-usuario')">
+                    <div class="icono-punto"></div>
+                    <h3>Interfaz de usuario / UX</h3>
+                </div>
+                <div class="servicio-card" id="ia" onclick="mostrarInfo('ia')">
+                    <div class="icono-punto"></div>
+                    <h3>Inteligencia Artificial (IA)</h3>
+                </div>
+                <div class="servicio-card" id="iot" onclick="mostrarInfo('iot')">
+                    <div class="icono-punto"></div>
+                    <h3>Internet de las cosas (IoT)</h3>
+                </div>
+                <div class="servicio-card" id="ciencia-datos" onclick="mostrarInfo('ciencia-datos')">
+                    <div class="icono-punto"></div>
+                    <h3>Ciencia de datos</h3>
+                </div>
+                <div class="servicio-card" id="big-data" onclick="mostrarInfo('big-data')">
+                    <div class="icono-punto"></div>
+                    <h3>Big Data y Análisis</h3>
+                </div>
+            </div>
+
+            <!-- Carrusel -->
+            <div class="carrusel">
+                <div id="carrusel-app-desarrollo" class="carrusel-item active">
+                    <img src="img/800x400_3_0.jpg" alt="Desarrollo de aplicaciones">
+                </div>
+                <div id="carrusel-interfaz-usuario" class="carrusel-item">
+                    <img src="img/images.jpeg" alt="Interfaz de usuario / UX">
+                </div>
+                <div id="carrusel-ia" class="carrusel-item">
+                    <img src="ia-image.jpg" alt="Inteligencia Artificial (IA)">
+                </div>
+                <div id="carrusel-iot" class="carrusel-item">
+                    <img src="iot-image.jpg" alt="Internet de las cosas (IoT)">
+                </div>
+                <div id="carrusel-ciencia-datos" class="carrusel-item">
+                    <img src="ciencia-datos-image.jpg" alt="Ciencia de datos">
+                </div>
+                <div id="carrusel-big-data" class="carrusel-item">
+                    <img src="big-data-image.jpg" alt="Big Data y Análisis">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+        <!-- Sección "Nuestros Clientes" -->
+       <section class="clientes-section">
+    <div class="clientes-container">
+        <h2>NUESTROS CLIENTES</h2>
+        <h3>"El éxito de nuestros clientes es nuestra mayor recompensa.</h3>
+        <h3>Seguimos innovando para que confíen</h3>
+        <h3>en nosotros cada vez más."</h3>
+        
+        <div class="clientes-grid">
+            <!-- Agrega aquí los logos de tus clientes -->
+            <div class="cliente-logo"><img src="cliente1.png" alt="Cliente 1"></div>
+            <div class="cliente-logo"><img src="cliente2.png" alt="Cliente 2"></div>
+            <div class="cliente-logo"><img src="cliente3.png" alt="Cliente 3"></div>
+            <div class="cliente-logo"><img src="cliente4.png" alt="Cliente 4"></div>
+            <div class="cliente-logo"><img src="cliente5.png" alt="Cliente 5"></div>
+        </div>
+        
+        <div class="testimonios">
+            <h3>Lo que dicen nuestros clientes</h3>
+            <div class="testimonio-card">
+                <p class="testimonio-text">KSOFT transformó completamente nuestra operación digital con soluciones personalizadas que superaron nuestras expectativas.</p>
+                <p class="testimonio-autor">Juan Pérez</p>
+                <p class="testimonio-cargo">CEO, Empresa XYZ</p>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <script src="script1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        function mostrarInfo(service) {
+            // Ocultar todos los párrafos de información
+            const allInfo = document.querySelectorAll('.info-text');
+            allInfo.forEach(info => info.style.display = 'none');
+
+            // Mostrar solo la información seleccionada
+            const selectedInfo = document.getElementById('info-' + service);
+            if (selectedInfo) {
+                selectedInfo.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

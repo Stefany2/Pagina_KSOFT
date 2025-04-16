@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qué hacemos</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-hover: #2980b9;
+            --text-color: #2c3e50;
+            --text-secondary: #555;
+            --bg-light: #f9f9f9;
+            --bg-hover: #f0f0f0;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+
+        .qué-hacemos {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .titulo {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 2.5rem;
+            text-align: left;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .titulo::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .contenedor {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .servicios {
+            display: flex;
+            flex-direction: column;
+            width: 35%;
+        }
+
+        .servicio {
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 1rem 1.5rem;
+            margin: 0.3rem 0;
+            font-size: 1rem;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            border-radius: 4px;
+        }
+
+        .servicio:hover {
+            background-color: var(--bg-hover);
+            transform: translateX(5px);
+        }
+
+        .servicio.active {
+            border-left: 3px solid var(--primary-color);
+            background-color: var(--bg-hover);
+            font-weight: 600;
+            transform: translateX(0);
+        }
+
+        .paneles-info {
+            width: 65%;
+        }
+
+        .panel-info {
+            width: 100%;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .panel-info.active {
+            display: block;
+        }
+
+        .panel-info h3 {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .panel-info p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .saber-mas {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 0.8rem 1.8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .saber-mas:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .contenedor {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .servicios, .paneles-info {
+                width: 100%;
+            }
+
+            .titulo {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .servicio {
+                padding: 0.8rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="qué-hacemos">
+        <div class="qué-hacemos-container">
+            <h2 class="titulo">¿Qué Hacemos?</h2>
+            <div class="contenido">
+                <div class="contenedor">
+                    <div class="servicios">
+                        <button class="servicio active" id="app-desarrollo" onclick="mostrarInfo('app-desarrollo')">Desarrollo de aplicaciones</button>
+                        <button class="servicio" id="interfaz-usuario" onclick="mostrarInfo('interfaz-usuario')">Interfaz de usuario/experiencia de usuario</button>
+                        <button class="servicio" id="ia" onclick="mostrarInfo('ia')">Inteligencia artificial (IA)</button>
+                        <button class="servicio" id="iot" onclick="mostrarInfo('iot')">Internet de las cosas (IoT)</button>
+                        <button class="servicio" id="ciencia-datos" onclick="mostrarInfo('ciencia-datos')">Ciencia de datos</button>
+                        <button class="servicio" id="big-data" onclick="mostrarInfo('big-data')">Big Data y análisis</button>
+                    </div>
+
+                    <div class="paneles-info">
+                        <div class="panel-info active" id="info-app-desarrollo">
+                            <h3>Desarrollo de aplicaciones</h3>
+                            <p>Creamos soluciones software a medida que se adaptan perfectamente a las necesidades de tu negocio. Nuestras aplicaciones son escalables, seguras y construidas con las últimas tecnologías para garantizar el máximo rendimiento.</p>
+                            <a href="#" class="saber-mas">Saber más</a>
+                        </div>
+
+                        <div class="panel-info" id="info-interfaz-usuario">
+                            <h3>Interfaz de usuario/experiencia de usuario</h3>
+                            <p>Diseñamos interfaces intuitivas y atractivas que mejoran la interacción con tus clientes. Nuestro enfoque en UX garantiza que cada elemento esté pensado para ofrecer la mejor experiencia posible.</p>
+                            <a href="#" class="saber-mas">Saber más</a>
+                        </div>
+
+                        <div class="panel-info" id="info-ia">
+                            <h3>Inteligencia artificial (IA)</h3>
+                            <p>Implementamos soluciones de inteligencia artificial que automatizan procesos, mejoran la toma de decisiones y generan insights valiosos para tu negocio mediante machine learning y algoritmos avanzados.</p>
+                            <a href="#" class="saber-mas">Saber más</a>
+                        </div>
+
+                        <div class="panel-info" id="info-iot">
+                            <h3>Internet de las cosas (IoT)</h3>
+                            <p>Conectamos dispositivos y sistemas para crear redes inteligentes que recopilan y analizan datos en tiempo real, permitiendo mayor eficiencia y nuevas capacidades para tu empresa.</p>
+                            <a href="#" class="saber-mas">Saber más</a>
+                        </div>
+
+                        <div class="panel-info" id="info-ciencia-datos">
+                            <h3>Ciencia de datos</h3>
+                            <p>Transformamos datos en conocimiento accionable. Nuestros expertos en data science ayudan a descubrir patrones, predecir tendencias y optimizar operaciones mediante análisis avanzado.</p>
+                            <a href="#" class="saber-mas">Saber más</a>
+                        </div>
+
+                        <div class="panel-info" id="info-big-data">
+                            <h3>Big Data y análisis</h3>
+                            <p>Gestionamos y analizamos grandes volúmenes de datos con herramientas especializadas que permiten extraer información valiosa para la estrategia de negocio y la toma de decisiones.</p>
+                            <a href="#" class="saber-mas">Saber más</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Activar el primer servicio por defecto
+            mostrarInfo('app-desarrollo');
+        });
+
+        function mostrarInfo(servicioId) {
+            // Ocultar todos los paneles de información
+            document.querySelectorAll('.panel-info').forEach(panel => {
+                panel.classList.remove('active');
+            });
+
+            // Desactivar todas las pestañas de servicio
+            document.querySelectorAll('.servicio').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Mostrar el panel de información correspondiente
+            const panel = document.getElementById(`info-${servicioId}`);
+            if (panel) {
+                panel.classList.add('active');
+            }
+            
+            // Activar el botón correspondiente
+            const btn = document.getElementById(servicioId);
+            if (btn) {
+                btn.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

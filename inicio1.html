@@ -38,95 +38,66 @@
 
     <main>
       
- 
-<!-- Sección "Qué Hacemos" -->
-<section class="qué-hacemos">
-    <div class="qué-hacemos-container">
-        <h2 class="titulo">Qué Hacemos?</h2>
-        <div class="contenido">
-            <!-- Servicios -->
-            <div class="servicios">
-                <div class="servicio-card" id="app-desarrollo" onclick="mostrarInfo('app-desarrollo')">
-                    <div class="icono-punto"></div>
-                    <h3>Desarrollo de aplicaciones</h3>
+              <!-- secciòn que hacemos? -->
+              <section class="qué-hacemos">
+                <div class="qué-hacemos-container">
+                    <h2 class="titulo">¿Qué Hacemos?</h2>
+                    <div class="contenido">
+                        <!-- Contenedor de servicios y panel de información -->
+                        <div class="contenedor">
+                            <!-- Servicios como lista simple -->
+                            <div class="servicios">
+                                <button class="servicio" id="app-desarrollo" onclick="mostrarInfo('app-desarrollo')">Desarrollo de aplicaciones</button>
+                                <button class="servicio" id="interfaz-usuario" onclick="mostrarInfo('interfaz-usuario')">Interfaz de usuario / UX</button>
+                                <button class="servicio" id="ia" onclick="mostrarInfo('ia')">Inteligencia Artificial (IA)</button>
+                                <button class="servicio" id="iot" onclick="mostrarInfo('iot')">Internet de las cosas (IoT)</button>
+                                <button class="servicio" id="ciencia-datos" onclick="mostrarInfo('ciencia-datos')">Ciencia de datos</button>
+                                <button class="servicio" id="big-data" onclick="mostrarInfo('big-data')">Big Data y Análisis</button>
+                            </div>
+            
+                            <!-- Carrusel de información -->
+                            <div class="info-carrusel">
+                                <div id="info-panel" class="info-panel">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="servicio-card" id="interfaz-usuario" onclick="mostrarInfo('interfaz-usuario')">
-                    <div class="icono-punto"></div>
-                    <h3>Interfaz de usuario / UX</h3>
-                </div>
-                <div class="servicio-card" id="ia" onclick="mostrarInfo('ia')">
-                    <div class="icono-punto"></div>
-                    <h3>Inteligencia Artificial (IA)</h3>
-                </div>
-                <div class="servicio-card" id="iot" onclick="mostrarInfo('iot')">
-                    <div class="icono-punto"></div>
-                    <h3>Internet de las cosas (IoT)</h3>
-                </div>
-                <div class="servicio-card" id="ciencia-datos" onclick="mostrarInfo('ciencia-datos')">
-                    <div class="icono-punto"></div>
-                    <h3>Ciencia de datos</h3>
-                </div>
-                <div class="servicio-card" id="big-data" onclick="mostrarInfo('big-data')">
-                    <div class="icono-punto"></div>
-                    <h3>Big Data y Análisis</h3>
-                </div>
-            </div>
-
-            <!-- Carrusel -->
-            <div class="carrusel">
-                <div id="carrusel-app-desarrollo" class="carrusel-item active">
-                    <img src="img/800x400_3_0.jpg" alt="Desarrollo de aplicaciones">
-                </div>
-                <div id="carrusel-interfaz-usuario" class="carrusel-item">
-                    <img src="img/images.jpeg" alt="Interfaz de usuario / UX">
-                </div>
-                <div id="carrusel-ia" class="carrusel-item">
-                    <img src="ia-image.jpg" alt="Inteligencia Artificial (IA)">
-                </div>
-                <div id="carrusel-iot" class="carrusel-item">
-                    <img src="iot-image.jpg" alt="Internet de las cosas (IoT)">
-                </div>
-                <div id="carrusel-ciencia-datos" class="carrusel-item">
-                    <img src="ciencia-datos-image.jpg" alt="Ciencia de datos">
-                </div>
-                <div id="carrusel-big-data" class="carrusel-item">
-                    <img src="big-data-image.jpg" alt="Big Data y Análisis">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
+            </section>
+            
+            
 
 
         <!-- Sección "Nuestros Clientes" -->
-       <section class="clientes-section">
-    <div class="clientes-container">
-        <h2>NUESTROS CLIENTES</h2>
-        <h3>"El éxito de nuestros clientes es nuestra mayor recompensa.</h3>
-        <h3>Seguimos innovando para que confíen</h3>
-        <h3>en nosotros cada vez más."</h3>
-        
-        <div class="clientes-grid">
-            <!-- Agrega aquí los logos de tus clientes -->
-            <div class="cliente-logo"><img src="cliente1.png" alt="Cliente 1"></div>
-            <div class="cliente-logo"><img src="cliente2.png" alt="Cliente 2"></div>
-            <div class="cliente-logo"><img src="cliente3.png" alt="Cliente 3"></div>
-            <div class="cliente-logo"><img src="cliente4.png" alt="Cliente 4"></div>
-            <div class="cliente-logo"><img src="cliente5.png" alt="Cliente 5"></div>
-        </div>
-        
-        <div class="testimonios">
-            <h3>Lo que dicen nuestros clientes</h3>
-            <div class="testimonio-card">
-                <p class="testimonio-text">KSOFT transformó completamente nuestra operación digital con soluciones personalizadas que superaron nuestras expectativas.</p>
-                <p class="testimonio-autor">Juan Pérez</p>
-                <p class="testimonio-cargo">CEO, Empresa XYZ</p>
+        <section class="clientes-section">
+            <div class="clientes-container">
+                <h2>NUESTROS CLIENTES</h2>
+                <h3>"El éxito de nuestros clientes es nuestra mayor recompensa.</h3>
+                <h3>Seguimos innovando para que confíen</h3>
+                <h3>en nosotros cada vez más."</h3>
+                
+                <div class="clientes-grid">
+                    <!-- Agrega aquí los logos de tus clientes -->
+                    <div class="cliente-logo"><img src="img/" alt="Cliente 1"></div>
+                    <div class="cliente-logo"><img src="img/" alt="Cliente 2"></div>
+                    <div class="cliente-logo"><img src="img/" alt="Cliente 3"></div>
+                    <div class="cliente-logo"><img src="img/" alt="Cliente 4"></div>
+                    <div class="cliente-logo"><img src="img/" alt="Cliente 5"></div>
+                </div>
+                
+                <div class="testimonios">
+                    <h3>Lo que dicen nuestros clientes</h3>
+                    <div class="testimonio-card">
+                        <p class="testimonio-text">KSOFT transformó completamente nuestra operación digital con soluciones personalizadas que superaron nuestras expectativas.</p>
+                        <p class="testimonio-autor">Juan Pérez</p>
+                        <p class="testimonio-cargo">CEO, Empresa XYZ</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
-    </main>
+        </section>
+            </main>
+
 
     <script src="script1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

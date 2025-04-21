@@ -18,55 +18,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+// Función para mostrar y ocultar los paneles de información
 
-    // Funcionalidad para mostrar la información de los servicios
-    function mostrarInfo(servicio) {
-        const infoPanel = document.getElementById('info-panel');
-        
-        let contenido = '';
+// Función para la sección Qué Hacemos
+function mostrarInfo(servicioId) {
+    document.querySelectorAll('.panel-info').forEach(panel => {
+        panel.classList.remove('active');
+    });
 
-        switch (servicio) {
-            case 'app-desarrollo':
-                contenido = '<h2>Desarrollo de Aplicaciones</h2><p>Desarrollamos aplicaciones a medida para empresas de todos los tamaños, optimizando su rendimiento y experiencia de usuario.</p>';
-                break;
-            case 'interfaz-usuario':
-                contenido = '<h2>Interfaz de Usuario / UX</h2><p>Nos especializamos en diseñar interfaces atractivas y funcionales que mejoran la experiencia de tus usuarios.</p>';
-                break;
-            case 'ia':
-                contenido = '<h2>Inteligencia Artificial (IA)</h2><p>Implementamos soluciones de IA para automatizar procesos y mejorar la toma de decisiones en tu organización.</p>';
-                break;
-            case 'iot':
-                contenido = '<h2>Internet de las Cosas (IoT)</h2><p>Conectamos tus dispositivos para crear un sistema más eficiente y automatizado que facilita tu gestión diaria.</p>';
-                break;
-            case 'ciencia-datos':
-                contenido = '<h2>Ciencia de Datos</h2><p>Usamos análisis avanzado de datos para descubrir patrones y mejorar la toma de decisiones estratégicas.</p>';
-                break;
-            case 'big-data':
-                contenido = '<h2>Big Data y Análisis</h2><p>Aprovechamos grandes volúmenes de datos para generar insights que optimicen las operaciones y la toma de decisiones.</p>';
-                break;
-            default:
-                contenido = '<p>Selecciona un servicio para ver más detalles.</p>';
-                break;
-        }
+    document.querySelectorAll('.servicio').forEach(btn => {
+        btn.classList.remove('active');
+    });
 
-        // Actualizar el contenido del carrusel
-        infoPanel.innerHTML = contenido;
-
-        // Desplazar el carrusel a la derecha
-        const currentTransform = infoPanel.style.transform;
-        infoPanel.style.transform = 'translateX(-100%)';
-        setTimeout(() => {
-            infoPanel.style.transition = 'transform 0.5s ease';
-            infoPanel.style.transform = 'translateX(0)';
-        }, 100);
-    }
-
-    // Llamada inicial para que la página esté lista
-    setTimeout(() => {
-        const infoPanel = document.getElementById('info-panel');
-        infoPanel.innerHTML = '<p>Selecciona un servicio para ver más detalles.</p>';
-    }, 100);
-
+    document.getElementById(`info-${servicioId}`).classList.add('active');
+    document.getElementById(servicioId).classList.add('active');
+}
     // Efecto Three.js mejorado con partículas rojas de fondo
     const initParticleEffect = () => {
         const container = document.getElementById('threejs-container');

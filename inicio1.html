@@ -27,6 +27,7 @@
     <section class="hero">
     <div id="threejs-container"></div>
     <div class="content">
+       
         <h2 class="floating-text">En Ksoft, tu éxito es nuestra misión.</h2>
         <h2 class="floating-text">Desarrollamos soluciones digitales</h2>
         <h2 class="floating-text">a la medida de tus necesidades</h2>
@@ -37,38 +38,57 @@
 </section>
 
     <main>
-      
               <!-- secciòn que hacemos? -->
               <section class="qué-hacemos">
-                <div class="qué-hacemos-container">
-                    <h2 class="titulo">¿Qué Hacemos?</h2>
-                    <div class="contenido">
-                        <!-- Contenedor de servicios y panel de información -->
-                        <div class="contenedor">
-                            <!-- Servicios como lista simple -->
-                            <div class="servicios">
-                                <button class="servicio" id="app-desarrollo" onclick="mostrarInfo('app-desarrollo')">Desarrollo de aplicaciones</button>
-                                <button class="servicio" id="interfaz-usuario" onclick="mostrarInfo('interfaz-usuario')">Interfaz de usuario / UX</button>
-                                <button class="servicio" id="ia" onclick="mostrarInfo('ia')">Inteligencia Artificial (IA)</button>
-                                <button class="servicio" id="iot" onclick="mostrarInfo('iot')">Internet de las cosas (IoT)</button>
-                                <button class="servicio" id="ciencia-datos" onclick="mostrarInfo('ciencia-datos')">Ciencia de datos</button>
-                                <button class="servicio" id="big-data" onclick="mostrarInfo('big-data')">Big Data y Análisis</button>
-                            </div>
+                <h2 class="titulo">¿Qué Hacemos?</h2>
+                <div class="contenedor">
+                  <div class="servicios">
+                    <button class="servicio active" id="app-desarrollo" onclick="mostrarInfo('app-desarrollo')">Desarrollo de aplicaciones</button>
+                    <button class="servicio" id="interfaz-usuario" onclick="mostrarInfo('interfaz-usuario')">Interfaz de usuario/experiencia de usuario</button>
+                    <button class="servicio" id="ia" onclick="mostrarInfo('ia')">Inteligencia artificial (IA)</button>
+                    <button class="servicio" id="iot" onclick="mostrarInfo('iot')">Internet de las cosas (IoT)</button>
+                    <button class="servicio" id="ciencia-datos" onclick="mostrarInfo('ciencia-datos')">Ciencia de datos</button>
+                    <button class="servicio" id="big-data" onclick="mostrarInfo('big-data')">Big Data y análisis</button>
+                  </div>
             
-                            <!-- Carrusel de información -->
-                            <div class="info-carrusel">
-                                <div id="info-panel" class="info-panel">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  <div class="panel-info active" id="info-app-desarrollo">
+                    <h3>Desarrollo de Aplicaciones</h3>
+                    <p>Desarrollamos aplicaciones a medida para empresas de todos los tamaños, optimizando su rendimiento y experiencia de usuario.</p>
+                    <a href="#" class="saber-mas">Saber más</a>
+                  </div>
+            
+                  <div class="panel-info" id="info-interfaz-usuario">
+                    <h3>Interfaz de Usuario / UX</h3>
+                    <p>Nos especializamos en diseñar interfaces atractivas y funcionales que mejoran la experiencia de tus usuarios.</p>
+                    <a href="#" class="saber-mas">Saber más</a>
+                  </div>
+            
+                  <div class="panel-info" id="info-ia">
+                    <h3>Inteligencia Artificial (IA)</h3>
+                    <p>Implementamos soluciones de IA para automatizar procesos y mejorar la toma de decisiones en tu organización.</p>
+                    <a href="#" class="saber-mas">Saber más</a>
+                  </div>
+            
+                  <div class="panel-info" id="info-iot">
+                    <h3>Internet de las Cosas (IoT)</h3>
+                    <p>Conectamos tus dispositivos para crear un sistema más eficiente y automatizado que facilita tu gestión diaria.</p>
+                    <a href="#" class="saber-mas">Saber más</a>
+                  </div>
+            
+                  <div class="panel-info" id="info-ciencia-datos">
+                    <h3>Ciencia de Datos</h3>
+                    <p>Usamos análisis avanzado de datos para descubrir patrones y mejorar la toma de decisiones estratégicas.</p>
+                    <a href="#" class="saber-mas">Saber más</a>
+                  </div>
+            
+                  <div class="panel-info" id="info-big-data">
+                    <h3>Big Data y Análisis</h3>
+                    <p>Aprovechamos grandes volúmenes de datos para generar insights que optimicen las operaciones y la toma de decisiones.</p>
+                    <a href="#" class="saber-mas">Saber más</a>
+                  </div>
                 </div>
-            </section>
+              </section>
             
-            
-
-
         <!-- Sección "Nuestros Clientes" -->
         <section class="clientes-section">
             <div class="clientes-container">

@@ -18,21 +18,29 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-// Función para mostrar y ocultar los paneles de información
+// funcionamiento que hacemos
+document.addEventListener('DOMContentLoaded', function () {
+    const botones = document.querySelectorAll('.servicio');
+    const paneles = document.querySelectorAll('.panel-info');
 
-// Función para la sección Qué Hacemos
-function mostrarInfo(servicioId) {
-    document.querySelectorAll('.panel-info').forEach(panel => {
-        panel.classList.remove('active');
+    botones.forEach(boton => {
+        boton.addEventListener('click', () => {
+            // Quitar clase 'active' a todos los botones y paneles
+            botones.forEach(b => b.classList.remove('active'));
+            paneles.forEach(p => p.classList.remove('active'));
+
+            // Agregar clase 'active' solo al botón clicado y al panel correspondiente
+            boton.classList.add('active');
+            const targetId = boton.getAttribute('data-target');
+            const panel = document.getElementById(targetId);
+            if (panel) {
+                panel.classList.add('active');
+            }
+        });
     });
+});
 
-    document.querySelectorAll('.servicio').forEach(btn => {
-        btn.classList.remove('active');
-    });
 
-    document.getElementById(`info-${servicioId}`).classList.add('active');
-    document.getElementById(servicioId).classList.add('active');
-}
     // Efecto Three.js mejorado con partículas rojas de fondo
     const initParticleEffect = () => {
         const container = document.getElementById('threejs-container');

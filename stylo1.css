@@ -301,107 +301,191 @@ nav ul li a:hover {
 
 
 /* Estilo que hacemos */
-
 /* Estilos para la sección Qué Hacemos */
-.qué-hacemos {
+.que-hacemos-section {
+    padding: 80px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.que-hacemos-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 80px 20px;
-    background-color: #fff;
 }
 
-.qué-hacemos .titulo {
-    font-size: 32px;
+.que-hacemos-section h2 {
+    font-size: 2.5rem;
     color: #2c3e50;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-bottom: 50px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.servicio-card {
+    background: white;
+    border-radius: 10px;
+    padding: 30px 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.servicio-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.servicio-icon {
+    font-size: 2.5rem;
+    color: #3498db;
+    margin-bottom: 20px;
+}
+
+.servicio-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
+}
+
+.servicio-resumen {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.ver-mas {
+    color: #3498db;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.detalle-servicio {
+    display: none;
+    background: white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    margin-top: 30px;
     text-align: left;
 }
 
-.qué-hacemos .contenedor {
-    display: flex;
-    gap: 30px;
+.detalle-contenido {
+    position: relative;
 }
 
-.qué-hacemos .servicios {
-    width: 40%;
+.detalle-header {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
 }
 
-.qué-hacemos .servicio {
+.detalle-icon {
+    font-size: 2rem;
+    color: #3498db;
+    margin-right: 20px;
+}
+
+.detalle-header h3 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.cerrar-detalle {
     background: none;
     border: none;
-    text-align: left;
-    padding: 15px 20px;
-    margin: 5px 0;
-    font-size: 16px;
-    color: #2c3e50;
+    font-size: 1.5rem;
+    color: #7f8c8d;
     cursor: pointer;
-    border-left: 3px solid transparent;
-    transition: all 0.3s ease;
+    transition: color 0.3s;
 }
 
-.qué-hacemos .servicio:hover {
-    background-color: #f0f0f0;
+.cerrar-detalle:hover {
+    color: #e74c3c;
 }
 
-.qué-hacemos .servicio.active {
-    border-left: 3px solid #3498db;
-    background-color: #f0f0f0;
-    font-weight: bold;
-}
-
-.qué-hacemos .panel-info {
-    width: 60%;
-    background: #fff;
-    border-radius: 8px;
-    padding: 30px;
-    display: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.qué-hacemos .panel-info.active {
-    display: block;
-}
-
-.qué-hacemos .panel-info h3 {
-    font-size: 24px;
-    color: #2c3e50;
-    margin-top: 0;
-}
-
-.qué-hacemos .panel-info p {
-    font-size: 16px;
-    color: #555;
+.detalle-body p {
+    color: #34495e;
     line-height: 1.6;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
 }
 
-.qué-hacemos .saber-mas {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
+.detalle-body h4 {
+    color: #2c3e50;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.beneficios-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.beneficios-list li {
+    margin-bottom: 10px;
+    color: #34495e;
+    display: flex;
+    align-items: flex-start;
+}
+
+.beneficios-list i {
+    color: #2ecc71;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.contactar-btn {
     background: #3498db;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background 0.3s ease;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
 }
 
-.qué-hacemos .saber-mas:hover {
+.contactar-btn:hover {
     background: #2980b9;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
-    .qué-hacemos .contenedor {
-        flex-direction: column;
-    }
-    .qué-hacemos .servicios, 
-    .qué-hacemos .panel-info {
-        width: 100%;
+    .servicios-grid {
+        grid-template-columns: 1fr;
     }
     
-    .qué-hacemos {
-        padding: 40px 20px;
+    .detalle-servicio {
+        padding: 25px;
+    }
+    
+    .detalle-header h3 {
+        font-size: 1.4rem;
     }
 }

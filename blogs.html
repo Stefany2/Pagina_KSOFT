@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSOFT - Competencias</title>
+    <link rel="stylesheet" href="stylo2.css">
+   
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <h1 class="logo">KSOFT</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Servicios</a></li>
+                    <li><a href="#about">Sobre nosotros</a></li>
+                    <li><a href="blogs.html">Blogs</a></li>
+                    <li><a href="#contact">Contáctanos</a></li>
+                    <li><a href="#location">Ubicación</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <h2>PARTICIPACIÓN EN COMPETENCIAS</h2>
+        
+        <div class="card-stack-container">
+            <div class="card-stack">
+                <div class="card active" data-index="0">
+                    <div class="card-image" style="background-image: url('img/Huawei.png');"></div>
+                    <div class="card-content">
+                        <p>Huawei Developer competition Latam 2023</p>
+                    </div>
+                </div>
+                <div class="card" data-index="1">
+                    <div class="card-image" style="background-image: url('img/unheval.png');"></div>
+                    <div class="card-content">
+                        <p>VI concurso de invenciones UNHEVAL 2023</p>
+                    </div>
+                </div>
+                <div class="card" data-index="2">
+                    <div class="card-image" style="background-image: url('img/costarica.png');"></div>
+                    <div class="card-content">
+                        <p>IEEE R9 IOT & IA 2023 en Costa Rica</p>
+                    </div>
+                </div>
+                <div class="card" data-index="3">
+                    <div class="card-image" style="background-image: url('img/nicaragua.png');"></div>
+                    <div class="card-content">
+                        <p>Hackathon ASRS Nicaragua 2022</p>
+                    </div>
+                </div>
+                <div class="card" data-index="4">
+                    <div class="card-image" style="background-image: url('img/cajamarca.png');"></div>
+                    <div class="card-content">
+                        <p>Hackathon acelera Cajamarca 2022</p>
+                    </div>
+                </div>
+                <div class="card" data-index="5">
+                    <div class="card-image" style="background-image: url('img/amazonia.png');"></div>
+                    <div class="card-content">
+                        <p>Hackathon Lupita en la Amazonía 2022</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-nav">
+                <div class="nav-dot active" data-index="0"></div>
+                <div class="nav-dot" data-index="1"></div>
+                <div class="nav-dot" data-index="2"></div>
+                <div class="nav-dot" data-index="3"></div>
+                <div class="nav-dot" data-index="4"></div>
+                <div class="nav-dot" data-index="5"></div>
+            </div>
+        </div>
+    </div>
+        <!-- Sección de logros añadida aquí -->
+        <div class="logros-container">
+          <div class="logro">
+            <div class="esfera">2022</div>
+            <p>1er lugar Hackathon Acelera Cajamarca</p>
+            <p>1er lugar Hackathon Lupita en la Amazonía</p>
+          </div>
+
+          <div class="logro">
+            <div class="esfera">2023</div>
+            <p>2nd Runner-Up en la Huawei Developers Competiton LATAM</p>
+            <p>Mención honrosa IEEE R9 IoT & IA en Costa Rica.</p>
+            <p>2 Menciones honrosas en categoría Proyectos Abiertos del Robotifest Costa Rica</p>
+            <p>1er Lugar Categoría Primaria Escuelas Innovadoras – Municipalidad de San Miguel</p>
+          </div>
+
+          <div class="logro">
+            <div class="esfera">2024</div>
+            <p>4to Lugar concurso SENATI INNOVA</p>
+          </div>
+
+          <div class="logro">
+            <div class="esfera">2025</div>
+            <p>(Espacio reservado para próximos logros)</p>
+          </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 KSOFT. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            const dots = document.querySelectorAll('.nav-dot');
+            let currentIndex = 0;
+            let isAnimating = false;
+            
+            // Función para mostrar una carta específica
+            function showCard(index) {
+                if (isAnimating || index === currentIndex) return;
+                isAnimating = true;
+                
+                // Ocultar la carta actual
+                const currentCard = cards[currentIndex];
+                currentCard.style.transform = 'translateX(-100%) rotateY(-30deg)';
+                currentCard.style.opacity = '0';
+                currentCard.classList.remove('active');
+                
+                // Mostrar la nueva carta
+                const newCard = cards[index];
+                newCard.style.transform = 'translateX(0) rotateY(0deg)';
+                newCard.style.opacity = '1';
+                newCard.classList.add('active');
+                
+                // Actualizar el índice actual
+                currentIndex = index;
+                
+                // Actualizar los puntos de navegación
+                updateNavDots();
+                
+                // Restablecer el flag de animación
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 600);
+            }
+            
+            // Función para mostrar la siguiente carta
+            function showNextCard() {
+                const nextIndex = (currentIndex + 1) % cards.length;
+                showCard(nextIndex);
+            }
+            
+            // Función para actualizar los puntos de navegación
+            function updateNavDots() {
+                dots.forEach((dot, index) => {
+                    if (index === currentIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Click en las cartas para avanzar
+            cards.forEach(card => {
+                card.addEventListener('click', showNextCard);
+            });
+            
+            // Click en los puntos de navegación
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const targetIndex = parseInt(this.getAttribute('data-index'));
+                    showCard(targetIndex);
+                });
+            });
+            
+            // Inicializar
+            showCard(0);
+        });
+    </script>
+
+</body>
+</html>

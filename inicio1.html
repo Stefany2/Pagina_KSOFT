@@ -6,6 +6,7 @@
     <title>Qué Hacemos - KSOFT</title>
     <link rel="stylesheet" href="stylo1.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -13,9 +14,9 @@
             <h1 class="logo">KSOFT</h1>
             <nav>
                 <ul>
-                    <li><a href="#home">Servicios</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
                     <li><a href="#about">Sobre nosotros</a></li>
-                    <li><a href="#blogs">Blogs</a></li>
+                    <li><a href="blogs.html">Blogs</a></li>
                     <li><a href="#contact">Contáctanos</a></li>
                     <li><a href="#location">Ubicación</a></li>
                 </ul>
@@ -23,71 +24,82 @@
         </div>
     </header>
 
-   <!-- Reemplaza tu sección hero con esto -->
     <section class="hero">
-    <div id="threejs-container"></div>
-    <div class="content">
-       
-        <h2 class="floating-text">En Ksoft, tu éxito es nuestra misión.</h2>
-        <h2 class="floating-text">Desarrollamos soluciones digitales</h2>
-        <h2 class="floating-text">a la medida de tus necesidades</h2>
-        <ul>
-            <li><a href="#join" class="button">Únete</a></li>
-        </ul>
-    </div>
-</section>
+        <div id="threejs-container"></div>
+        <div class="content">
+            <h2 class="floating-text">En Ksoft, tu éxito es nuestra misión.</h2>
+            <h2 class="floating-text">Desarrollamos soluciones digitales</h2>
+            <h2 class="floating-text">a la medida de tus necesidades</h2>
+            <ul>
+                <li><a href="#join" class="button">Únete</a></li>
+            </ul>
+        </div>
+    </section>
 
     <main>
-              <!-- secciòn que hacemos? -->
-              <section class="qué-hacemos">
-                <h2 class="titulo">¿Qué Hacemos?</h2>
-                <div class="contenedor">
-                  <div class="servicios">
-                    <button class="servicio active" id="app-desarrollo" onclick="mostrarInfo('app-desarrollo')">Desarrollo de aplicaciones</button>
-                    <button class="servicio" id="interfaz-usuario" onclick="mostrarInfo('interfaz-usuario')">Interfaz de usuario/experiencia de usuario</button>
-                    <button class="servicio" id="ia" onclick="mostrarInfo('ia')">Inteligencia artificial (IA)</button>
-                    <button class="servicio" id="iot" onclick="mostrarInfo('iot')">Internet de las cosas (IoT)</button>
-                    <button class="servicio" id="ciencia-datos" onclick="mostrarInfo('ciencia-datos')">Ciencia de datos</button>
-                    <button class="servicio" id="big-data" onclick="mostrarInfo('big-data')">Big Data y análisis</button>
-                  </div>
-            
-                  <div class="panel-info active" id="info-app-desarrollo">
-                    <h3>Desarrollo de Aplicaciones</h3>
-                    <p>Desarrollamos aplicaciones a medida para empresas de todos los tamaños, optimizando su rendimiento y experiencia de usuario.</p>
-                    <a href="#" class="saber-mas">Saber más</a>
-                  </div>
-            
-                  <div class="panel-info" id="info-interfaz-usuario">
-                    <h3>Interfaz de Usuario / UX</h3>
-                    <p>Nos especializamos en diseñar interfaces atractivas y funcionales que mejoran la experiencia de tus usuarios.</p>
-                    <a href="#" class="saber-mas">Saber más</a>
-                  </div>
-            
-                  <div class="panel-info" id="info-ia">
-                    <h3>Inteligencia Artificial (IA)</h3>
-                    <p>Implementamos soluciones de IA para automatizar procesos y mejorar la toma de decisiones en tu organización.</p>
-                    <a href="#" class="saber-mas">Saber más</a>
-                  </div>
-            
-                  <div class="panel-info" id="info-iot">
-                    <h3>Internet de las Cosas (IoT)</h3>
-                    <p>Conectamos tus dispositivos para crear un sistema más eficiente y automatizado que facilita tu gestión diaria.</p>
-                    <a href="#" class="saber-mas">Saber más</a>
-                  </div>
-            
-                  <div class="panel-info" id="info-ciencia-datos">
-                    <h3>Ciencia de Datos</h3>
-                    <p>Usamos análisis avanzado de datos para descubrir patrones y mejorar la toma de decisiones estratégicas.</p>
-                    <a href="#" class="saber-mas">Saber más</a>
-                  </div>
-            
-                  <div class="panel-info" id="info-big-data">
-                    <h3>Big Data y Análisis</h3>
-                    <p>Aprovechamos grandes volúmenes de datos para generar insights que optimicen las operaciones y la toma de decisiones.</p>
-                    <a href="#" class="saber-mas">Saber más</a>
-                  </div>
+        <!-- Sección Qué Hacemos -->
+        <section id="servicios" class="que-hacemos-section">
+
+            <div class="que-hacemos-container">
+                <h2>QUÉ HACEMOS</h2>
+                <p class="section-subtitle">Innovación tecnológica para transformar tu negocio</p>
+                
+                <div class="servicios-grid">
+                    <!-- Servicio 1 -->
+                    <div class="servicio-card" onclick="mostrarDetalle('desarrollo')">
+                        <i class="fas fa-code servicio-icon"></i>
+                        <h3>Desarrollo de aplicaciones</h3>
+                        <p class="servicio-resumen">Soluciones software a medida para tus necesidades</p>
+                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    
+                    <!-- Servicio 2 -->
+                    <div class="servicio-card" onclick="mostrarDetalle('uiux')">
+                        <i class="fas fa-paint-brush servicio-icon"></i>
+                        <h3>Interfaz de usuario/Experiencia de usuario</h3>
+                        <p class="servicio-resumen">Diseños intuitivos que enamoran a tus usuarios</p>
+                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    
+                    <!-- Servicio 3 -->
+                    <div class="servicio-card" onclick="mostrarDetalle('ia')">
+                        <i class="fas fa-brain servicio-icon"></i>
+                        <h3>Inteligencia Artificial (IA)</h3>
+                        <p class="servicio-resumen">Potencia tu negocio con algoritmos inteligentes</p>
+                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    
+                    <!-- Servicio 4 -->
+                    <div class="servicio-card" onclick="mostrarDetalle('iot')">
+                        <i class="fas fa-network-wired servicio-icon"></i>
+                        <h3>Internet de las cosas (IoT)</h3>
+                        <p class="servicio-resumen">Conecta tu mundo físico con el digital</p>
+                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    
+                    <!-- Servicio 5 -->
+                    <div class="servicio-card" onclick="mostrarDetalle('datascience')">
+                        <i class="fas fa-chart-line servicio-icon"></i>
+                        <h3>Ciencia de datos</h3>
+                        <p class="servicio-resumen">Extrae insights valiosos de tus datos</p>
+                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    
+                    <!-- Servicio 6 -->
+                    <div class="servicio-card" onclick="mostrarDetalle('bigdata')">
+                        <i class="fas fa-database servicio-icon"></i>
+                        <h3>Big Data y análisis</h3>
+                        <p class="servicio-resumen">Maneja y analiza grandes volúmenes de información</p>
+                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
+                    </div>
                 </div>
-              </section>
+                
+                <!-- Detalles de los servicios (se muestran al hacer clic) -->
+                <div id="detalle-servicio" class="detalle-servicio">
+                    <!-- Contenido dinámico se insertará aquí -->
+                </div>
+            </div>
+        </section>
             
         <!-- Sección "Nuestros Clientes" -->
         <section class="clientes-section">
@@ -116,22 +128,118 @@
                 </div>
             </div>
         </section>
-            </main>
-
+    </main>
 
     <script src="script1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
     <script>
-        function mostrarInfo(service) {
-            // Ocultar todos los párrafos de información
-            const allInfo = document.querySelectorAll('.info-text');
-            allInfo.forEach(info => info.style.display = 'none');
-
-            // Mostrar solo la información seleccionada
-            const selectedInfo = document.getElementById('info-' + service);
-            if (selectedInfo) {
-                selectedInfo.style.display = 'block';
+        // Detalles de cada servicio
+        const servicios = {
+            desarrollo: {
+                titulo: "Desarrollo de aplicaciones",
+                descripcion: "Creamos aplicaciones web, móviles y de escritorio personalizadas que se adaptan perfectamente a tus necesidades empresariales. Utilizamos tecnologías modernas y frameworks robustos para garantizar escalabilidad, seguridad y alto rendimiento.",
+                beneficios: [
+                    "Aplicaciones multiplataforma",
+                    "Desarrollo ágil y colaborativo",
+                    "Integración con sistemas existentes",
+                    "Soporte y mantenimiento continuo"
+                ],
+                icono: "fa-code"
+            },
+            uiux: {
+                titulo: "Diseño UI/UX",
+                descripcion: "Nuestro equipo de diseñadores crea interfaces intuitivas y experiencias de usuario memorables. Investigamos, prototipamos y testeamos para asegurar que cada interacción sea satisfactoria y cumpla con los objetivos de negocio.",
+                beneficios: [
+                    "Investigación de usuarios",
+                    "Prototipado interactivo",
+                    "Pruebas de usabilidad",
+                    "Diseño accesible e inclusivo"
+                ],
+                icono: "fa-paint-brush"
+            },
+            ia: {
+                titulo: "Inteligencia Artificial",
+                descripcion: "Implementamos soluciones de IA y machine learning para automatizar procesos, predecir tendencias y ofrecer experiencias personalizadas. Desde chatbots hasta sistemas de recomendación avanzados.",
+                beneficios: [
+                    "Procesamiento de lenguaje natural",
+                    "Visión por computadora",
+                    "Modelos predictivos",
+                    "Sistemas de recomendación"
+                ],
+                icono: "fa-brain"
+            },
+            iot: {
+                titulo: "Internet de las Cosas",
+                descripcion: "Conectamos dispositivos físicos con plataformas digitales para recopilar datos en tiempo real, optimizar operaciones y crear nuevos modelos de negocio. Soluciones desde wearables hasta ciudades inteligentes.",
+                beneficios: [
+                    "Sensores y dispositivos conectados",
+                    "Plataformas IoT escalables",
+                    "Análisis de datos en tiempo real",
+                    "Integración con sistemas empresariales"
+                ],
+                icono: "fa-network-wired"
+            },
+            datascience: {
+                titulo: "Ciencia de Datos",
+                descripcion: "Transformamos datos en conocimiento accionable. Nuestros expertos en data science aplican técnicas estadísticas avanzadas y algoritmos de machine learning para descubrir patrones y oportunidades ocultas.",
+                beneficios: [
+                    "Análisis exploratorio",
+                    "Modelado predictivo",
+                    "Visualización de datos",
+                    "Automatización de reportes"
+                ],
+                icono: "fa-chart-line"
+            },
+            bigdata: {
+                titulo: "Big Data y Análisis",
+                descripcion: "Manejamos y analizamos grandes volúmenes de datos estructurados y no estructurados. Implementamos arquitecturas de datos robustas que permiten procesamiento en tiempo real y batch para obtener insights valiosos.",
+                beneficios: [
+                    "Arquitecturas distribuidas",
+                    "Procesamiento en tiempo real",
+                    "Limpieza y preparación de datos",
+                    "Dashboards ejecutivos"
+                ],
+                icono: "fa-database"
             }
+        };
+
+        function mostrarDetalle(servicioKey) {
+            const servicio = servicios[servicioKey];
+            const detalleDiv = document.getElementById('detalle-servicio');
+            
+            let beneficiosHTML = '';
+            servicio.beneficios.forEach(beneficio => {
+                beneficiosHTML += `<li><i class="fas fa-check-circle"></i> ${beneficio}</li>`;
+            });
+            
+            detalleDiv.innerHTML = `
+                <div class="detalle-contenido">
+                    <div class="detalle-header">
+                        <i class="fas ${servicio.icono} detalle-icon"></i>
+                        <h3>${servicio.titulo}</h3>
+                        <button onclick="cerrarDetalle()" class="cerrar-detalle"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="detalle-body">
+                        <p>${servicio.descripcion}</p>
+                        <h4>Beneficios clave:</h4>
+                        <ul class="beneficios-list">
+                            ${beneficiosHTML}
+                        </ul>
+                        <button class="contactar-btn">Contáctanos para más información</button>
+                    </div>
+                </div>
+            `;
+            
+            detalleDiv.style.display = 'block';
+            window.scrollTo({
+                top: detalleDiv.offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+
+        function cerrarDetalle() {
+            document.getElementById('detalle-servicio').style.display = 'none';
         }
     </script>
 </body>

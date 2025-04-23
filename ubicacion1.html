@@ -1,120 +1,209 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    
-        <script>
-            L_NO_TOUCH = false;
-            L_DISABLE_3D = false;
-        </script>
-    
-    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
-    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-    
-            <meta name="viewport" content="width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <style>
-                #map_75f1e7ced019c3af8f79390ad334cddd {
-                    position: relative;
-                    width: 100.0%;
-                    height: 100.0%;
-                    left: 0.0%;
-                    top: 0.0%;
-                }
-                .leaflet-container { font-size: 1rem; }
-            </style>
-        
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KSOFT - Ubicación</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+  <style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .space-background {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, #111 20%, #000 100%);
+        overflow: hidden;
+        z-index: 0;
+    }
+
+    .content-wrapper {
+        display: flex;
+        height: 92vh;
+        position: relative;
+    }
+
+    .results {
+        width: 30%;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        overflow-y: auto;
+        z-index: 1;
+    }
+
+    .result-item {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+
+    .result-item:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        transform: scale(1.02);
+        cursor: pointer;
+    }
+
+    #map {
+        width: 70%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    nav.navbar {
+        z-index: 2;
+        position: relative;
+    }
+
+    .meteor {
+        position: absolute;
+        width: 3px;
+        height: 100px;
+        background: linear-gradient(to top, #fff, transparent);
+        animation: meteor-fall linear infinite;
+        opacity: 0.7;
+        z-index: 0;
+    }
+
+    @keyframes meteor-fall {
+        from {
+            transform: translateY(-100px) translateX(0px) rotate(45deg);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(100vh) translateX(-200px) rotate(45deg);
+            opacity: 0;
+        }
+    }
+
+    /* Estilo del desplegable para el menú hamburguesa */
+    .navbar-nav {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .navbar-nav .nav-item {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .navbar-collapse {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    /* Estilo para mostrar la información al hacer clic */
+    .info-toggle {
+        display: none;
+        margin-top: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 15px;
+        color: white;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .info-toggle.active {
+        display: block;
+    }
+
+  </style>
 </head>
 <body>
-    
-    
-            <div class="folium-map" id="map_75f1e7ced019c3af8f79390ad334cddd" ></div>
-        
+
+  <!-- Fondo animado espacial -->
+  <div class="space-background" id="space"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">KSOFT</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Sobre nosotros</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Blogs</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#">Ubicación</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contáctanos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="container-fluid content-wrapper">
+    <div class="results">
+      <h4>Resultados</h4>
+      <div class="result-item" onclick="moveToLocation([-9.98131858444757, -76.24075873422063])">
+        <p><b>COLPA ALTA B-13</b></p>
+        <p>EMPRESA KINSOFT, INGENIERÍA E INFORMÁTICA KINGSOFTWARE</p>
+      </div>
+      <div class="result-item" onclick="moveToLocation([-9.98181858444757, -76.24125873422063])">
+        <p><b>OFICINA PRINCIPAL</b></p>
+        <p>Otro lugar de interés</p>
+      </div>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <!-- Información extra debajo del botón hamburguesa -->
+  <div id="infoToggle" class="info-toggle">
+    <p><b>Información adicional</b></p>
+    <p>Ubicaciones interesantes y más detalles sobre nuestra empresa.</p>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap JS -->
+  <script>
+    var map = L.map('map').setView([-9.98131858444757, -76.24075873422063], 15);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker = L.marker([-9.98131858444757, -76.24075873422063]).addTo(map);
+    marker.bindPopup("<b>COLPA ALTA B-13</b><br>EMPRESA KINSOFT").openPopup();
+
+    function moveToLocation(coords) {
+      map.setView(coords, 15);
+      L.marker(coords).addTo(map).bindPopup("<b>Ubicación seleccionada</b>").openPopup();
+    }
+
+    // Generar meteoritos
+    const space = document.getElementById("space");
+    for (let i = 0; i < 25; i++) {
+      const meteor = document.createElement("div");
+      meteor.classList.add("meteor");
+      meteor.style.left = Math.random() * 100 + "vw";
+      meteor.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      meteor.style.animationDelay = Math.random() * 10 + "s";
+      space.appendChild(meteor);
+    }
+
+    // Mostrar/ocultar información al hacer clic en el botón hamburguesa
+    const navToggler = document.querySelector(".navbar-toggler");
+    const infoToggle = document.getElementById("infoToggle");
+
+    navToggler.addEventListener("click", () => {
+      infoToggle.classList.toggle("active");
+    });
+  </script>
 </body>
-<script>
-    
-    
-            var map_75f1e7ced019c3af8f79390ad334cddd = L.map(
-                "map_75f1e7ced019c3af8f79390ad334cddd",
-                {
-                    center: [-9.98131858444757, -76.24075873422063],
-                    crs: L.CRS.EPSG3857,
-                    ...{
-  "zoom": 15,
-  "zoomControl": true,
-  "preferCanvas": false,
-}
-
-                }
-            );
-
-            
-
-        
-    
-            var tile_layer_5e44183c2e7fded3bdec97bc42004c19 = L.tileLayer(
-                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                {
-  "minZoom": 0,
-  "maxZoom": 19,
-  "maxNativeZoom": 19,
-  "noWrap": false,
-  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
-  "subdomains": "abc",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
-}
-
-            );
-        
-    
-            tile_layer_5e44183c2e7fded3bdec97bc42004c19.addTo(map_75f1e7ced019c3af8f79390ad334cddd);
-        
-    
-            var marker_57a38343154fe90bfabc8db14b4889d7 = L.marker(
-                [-9.98131858444757, -76.24075873422063],
-                {
-}
-            ).addTo(map_75f1e7ced019c3af8f79390ad334cddd);
-        
-    
-        var popup_5c987c470b788a00346b1bb4c5496231 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_a2ad8ef43d1439856b1b40217acb084e = $(`<div id="html_a2ad8ef43d1439856b1b40217acb084e" style="width: 100.0%; height: 100.0%;"> <b>COLPA ALTA B-13</b><br> EMPRESA KINSOFT,<br> INGENERIA E INFORMATICA KINGSOFTWARE. </div>`)[0];
-                popup_5c987c470b788a00346b1bb4c5496231.setContent(html_a2ad8ef43d1439856b1b40217acb084e);
-            
-        
-
-        marker_57a38343154fe90bfabc8db14b4889d7.bindPopup(popup_5c987c470b788a00346b1bb4c5496231)
-        ;
-
-        
-    
-    
-            marker_57a38343154fe90bfabc8db14b4889d7.bindTooltip(
-                `<div>
-                     Haz clic para más info
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-</script>
 </html>

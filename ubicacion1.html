@@ -576,12 +576,13 @@
       <div class="results">
         <h4 style="color: var(--neon-red); text-shadow: 0 0 10px rgba(255, 36, 0, 0.5);">Resultados</h4>
         <div class="result-item" onclick="moveToLocation([-9.98131858444757, -76.24075873422063])">
-          <p><b>COLPA ALTA B-13</b></p>
+          <p><b>COLPA ALTA 124 B-1</b></p>
           <p>EMPRESA KINSOFT, INGENIERÍA E INFORMÁTICA KINGSOFTWARE</p>
         </div>
         <div class="result-item" onclick="moveToLocation([-9.98181858444757, -76.24125873422063])">
           <p><b>OFICINA PRINCIPAL</b></p>
-          <p>Otro lugar de interés</p>
+          <p>BELLA DURMIENTE MZA.B LOTE.19 A.H.</p>
+          <p>BELLA DURMIENTE(ESQ.JR. LLOQUE YUPANQUI CON CARRET.CENTR) HUANUCO- HUANUCO-AMARLIS</p>
         </div>
       </div>
       <div id="map"></div>
@@ -589,110 +590,117 @@
 
     <!-- Sección de Contacto Galáctica Roja -->
     <section class="contact-section" id="contacto">
-      <div class="contact-container">
-        <h2 class="section-title">Contáctanos</h2>
-        
-        <div class="contact-content">
-          <form class="contact-form">
-            <div class="form-group">
-              <label for="name">Nombres</label>
-              <input type="text" id="name" placeholder="Ingresa tu nombre" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="lastname">Apellidos</label>
-              <input type="text" id="lastname" placeholder="Ingresa tus apellidos" required>
-            </div>
-
-            <div class="form-group">
-              <label for="email">Correo Electrónico</label>
-              <input type="email" id="email" placeholder="Ingresa tu correo electrónico" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="phone">Número de contacto</label>
-              <input type="tel" id="phone" placeholder="Ingresa tu número de teléfono" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="service">Selecciona un servicio</label>
-              <select id="service" class="form-control">
-                <option value="selecciona">Selecciona un servicio</option>
+        <div class="contact-container">
+          <h2 class="section-title">Contáctanos</h2>
+          
+          <div class="contact-content">
+            <!-- Formulario -->
+            <form class="contact-form" method="POST" action="contact.php">
+              <div class="form-group">
+                <label for="name">Nombres</label>
+                <input type="text" id="name" name="name" placeholder="Ingresa tu nombre" required>
+              </div>
+      
+              <div class="form-group">
+                <label for="lastname">Apellidos</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Ingresa tus apellidos" required>
+              </div>
+      
+              <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+              </div>
+      
+              <div class="form-group">
+                <label for="phone">Número de contacto</label>
+                <input type="tel" id="phone" name="phone" placeholder="Ingresa tu número de teléfono" required>
+              </div>
+      
+              <div class="form-group">
+                <label for="service">Selecciona un servicio</label>
+                <select id="service" name="service" required>
+                  <option value="selecciona">Selecciona un servicio</option>
                   <option value="desarrollo-aplicaciones">Desarrollo de aplicaciones</option>
                   <option value="interfaz-usuario">Interfaz de usuario/Experiencia de usuario</option>
                   <option value="ia">Inteligencia Artificial (IA)</option>
                   <option value="iot">Internet de las Cosas</option>
                   <option value="ciencia-datos">Ciencia de datos</option>
                   <option value="big-data">Big Data y Análisis</option>
-              </select>
-            </div>
-            
-            <div class="form-group">
-              <label for="message">¿Cómo podemos ayudarle?</label>
-              <textarea id="message" rows="5" placeholder="Describe cómo podemos ayudarte..." required></textarea>
-            </div>
-            
-            <button type="submit" class="submit-btn">
-              Enviar Mensaje
-              <i class="fas fa-paper-plane"></i>
-          </button>
-          </form>
-          
-          <div class="contact-info">
-            <div class="info-card">
-              <div class="info-icon">
-                <i class="fas fa-map-marker-alt"></i>
+                </select>
               </div>
-              <div class="info-content">
-                <h3>Dirección</h3>
-                <p>Colpa Alta 124 B – 1, Huánuco, Perú</p>
+      
+              <div class="form-group">
+                <label for="message">¿Cómo podemos ayudarle?</label>
+                <textarea id="message" name="message" rows="5" placeholder="Describe cómo podemos ayudarte..." required></textarea>
               </div>
-            </div>
-            
-            <div class="info-card">
-              <div class="info-icon">
-                <i class="fas fa-phone"></i>
+      
+              <button type="submit" class="submit-btn">
+                Enviar Mensaje
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+      
+            <!-- Información de contacto -->
+            <div class="contact-info">
+              <div class="info-card">
+                <div class="info-icon">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="info-content">
+                  <h3>Dirección</h3>
+                  <p>Colpa Alta 124 B – 1, Huánuco, Perú</p>
+                </div>
               </div>
-              <div class="info-content">
-                <h3>Teléfono</h3>
-                <p>+51 123 456 789</p>
-                <p>+51 987 654 321</p>
+      
+              <div class="info-card">
+                <div class="info-icon">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <div class="info-content">
+                  <h3>Teléfono</h3>
+                  <p>+51  998 887 099</p>
+                  <p>+51  956 000 668</p>
+                </div>
               </div>
-            </div>
-            
-            <div class="info-card">
-              <div class="info-icon">
-                <i class="fas fa-envelope"></i>
+      
+              <div class="info-card">
+                <div class="info-icon">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div class="info-content">
+                  <h3>Email</h3>
+                  <p>ksoftventas@gmail.com</p>
+                  <p>charlen.calero@gmail.com</p>
+                  
+                </div>
               </div>
-              <div class="info-content">
-                <h3>Email</h3>
-                <p>info@ksoft.com</p>
-                <p>soporte@ksoft.com</p>
-              </div>
-            </div>
-            
-            <div class="info-card">
-              <div class="info-icon">
-                <i class="fas fa-clock"></i>
-              </div>
-              <div class="info-content">
-                <h3>Horario</h3>
-                <p>Lunes a Viernes: 9:00 - 18:00</p>
-                <p>Sábados: 9:00 - 13:00</p>
+      
+              <div class="info-card">
+                <div class="info-icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="info-content">
+                  <h3>Horario</h3>
+                  <p>Lunes a Viernes: 9:00 - 18:00</p>
+                  <p>Sábados: 9:00 - 13:00</p>
+                </div>
               </div>
             </div>
           </div>
+      
+          <!-- Redes sociales -->
+          <div class="social-links">
+            <a href="https://www.facebook.com/share/19UPuwgEhW/" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com" class="social-link" target="_blank">
+                <i class="fab fa-youtube"></i>
+              </a>              
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="931576209" class="social-link"><i class="fab fa-whatsapp"></i></a>
+          </div>
         </div>
-        
-        <div class="social-links">
-          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
-        </div>
-      </div>
-    </section>
+      </section>
+      
   </div>
 
   <!-- Scripts -->
@@ -725,7 +733,7 @@
         }).addTo(map);
 
         var marker = L.marker([-9.98131858444757, -76.24075873422063]).addTo(map);
-        marker.bindPopup("<b>COLPA ALTA B-13</b><br>EMPRESA KINSOFT").openPopup();
+        marker.bindPopup("<b>COLPA ALTA 124 B-1</b><br>EMPRESA KINSOFT").openPopup();
 
         // Forzar redimensionamiento
         setTimeout(function() {

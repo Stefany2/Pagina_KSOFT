@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qué Hacemos - KSOFT</title>
+    <title>KSOFT - Soluciones Digitales</title>
     <link rel="stylesheet" href="stylo1.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -14,120 +14,202 @@
             <h1 class="logo">KSOFT</h1>
             <nav>
                 <ul>
-                    <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="#about">Sobre nosotros</a></li>
-                    <li><a href="blogs.html">Blogs</a></li>
-                    <li><a href="contactanos.html">Contáctanos</a></li>
-                    <li><a href="ubicacion1.html">Ubicación</a></li>
+                    <li><a href="#servicios">SERVICIOS</a></li>
+                    <li><a href="#about">SOBRE NOSOTROS</a></li>
+                    <li><a href="blogs.html">BLOGS</a></li>
+                    <li><a href="ubicacion1.html#contacto">CONTACTANOS</a></li>
+                    <li><a href="ubicacion1.html">UBICACIÒN</a></li>
                 </ul>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
             </nav>
         </div>
     </header>
 
     <section class="hero">
-        <div id="threejs-container"></div>
+        <div class="video-background">
+            <video class="active" autoplay muted loop>
+                <source src="video/inicio1.mp4" type="video/mp4">
+            </video>
+            <video autoplay muted loop>
+                <source src="video/video2.mp4" type="video/mp4">
+            </video>
+            <video autoplay muted loop>
+                <source src="video/video3.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
         <div class="content">
-            <h2 class="floating-text">En Ksoft, tu éxito es nuestra misión.</h2>
-            <h2 class="floating-text">Desarrollamos soluciones digitales</h2>
-            <h2 class="floating-text">a la medida de tus necesidades</h2>
-            <ul>
-                <li><a href="#join" class="button">Únete</a></li>
-            </ul>
+            <div class="tagline-container">
+                <h2 class="floating-text">En Ksoft, tu éxito es nuestra misión.</h2>
+                <h2 class="floating-text">Desarrollamos soluciones digitales</h2>
+                <h2 class="floating-text">a la medida de tus necesidades</h2>
+            </div>
+            <div class="cta-buttons">
+                <a href="#join" class="button primary-btn">Únete</a>
+                <a href="#explore" class="button secondary-btn">Explora</a>
+            </div>
         </div>
     </section>
+    
+</body>
+</html>
 
     <main>
         <!-- Sección Qué Hacemos -->
-        <section id="servicios" class="que-hacemos-section">
-
-            <div class="que-hacemos-container">
-                <h2>QUÉ HACEMOS</h2>
-                <p class="section-subtitle">Innovación tecnológica para transformar tu negocio</p>
-                
-                <div class="servicios-grid">
-                    <!-- Servicio 1 -->
-                    <div class="servicio-card" onclick="mostrarDetalle('desarrollo')">
-                        <i class="fas fa-code servicio-icon"></i>
-                        <h3>Desarrollo de aplicaciones</h3>
-                        <p class="servicio-resumen">Soluciones software a medida para tus necesidades</p>
-                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    
-                    <!-- Servicio 2 -->
-                    <div class="servicio-card" onclick="mostrarDetalle('uiux')">
-                        <i class="fas fa-paint-brush servicio-icon"></i>
-                        <h3>Interfaz de usuario/Experiencia de usuario</h3>
-                        <p class="servicio-resumen">Diseños intuitivos que enamoran a tus usuarios</p>
-                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    
-                    <!-- Servicio 3 -->
-                    <div class="servicio-card" onclick="mostrarDetalle('ia')">
-                        <i class="fas fa-brain servicio-icon"></i>
-                        <h3>Inteligencia Artificial (IA)</h3>
-                        <p class="servicio-resumen">Potencia tu negocio con algoritmos inteligentes</p>
-                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    
-                    <!-- Servicio 4 -->
-                    <div class="servicio-card" onclick="mostrarDetalle('iot')">
-                        <i class="fas fa-network-wired servicio-icon"></i>
-                        <h3>Internet de las cosas (IoT)</h3>
-                        <p class="servicio-resumen">Conecta tu mundo físico con el digital</p>
-                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    
-                    <!-- Servicio 5 -->
-                    <div class="servicio-card" onclick="mostrarDetalle('datascience')">
-                        <i class="fas fa-chart-line servicio-icon"></i>
-                        <h3>Ciencia de datos</h3>
-                        <p class="servicio-resumen">Extrae insights valiosos de tus datos</p>
-                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    
-                    <!-- Servicio 6 -->
-                    <div class="servicio-card" onclick="mostrarDetalle('bigdata')">
-                        <i class="fas fa-database servicio-icon"></i>
-                        <h3>Big Data y análisis</h3>
-                        <p class="servicio-resumen">Maneja y analiza grandes volúmenes de información</p>
-                        <span class="ver-mas">Ver más <i class="fas fa-chevron-down"></i></span>
-                    </div>
+          <!-- Sección "Qué Hacemos" con tema Galaxia Digital -->
+    <section id="servicios" class="galaxia-digital-section">
+        <!-- Efectos de fondo espacial -->
+        <div class="universo-digital">
+            <div class="estrellas-digital"></div>
+            <div class="nebulosa-azul"></div>
+            <div class="nebulosa-purpura"></div>
+            <div class="polvo-estelar"></div>
+        </div>
+        
+        <div class="constelacion-container">
+            <h2 class="titulo-constelacion">QUÉ HACEMOS</h2>
+            <p class="subtitulo-neon">Innovación tecnológica para transformar tu negocio</p>
+            
+            <!-- Constelación de servicios -->
+            <div class="constelacion-servicios">
+                <!-- Cada servicio es una estrella en la constelación -->
+                <div class="estrella-servicio" data-servicio="desarrollo" onclick="mostrarDetalle('desarrollo')">
+                    <div class="nucleo-estrella"></div>
+                    <div class="rayos-estrella"></div>
+                    <i class="fas fa-code icono-estrella"></i>
+                    <h3>Desarrollo<br>de aplicaciones</h3>
+                    <div class="conector"></div>
                 </div>
                 
-                <!-- Detalles de los servicios (se muestran al hacer clic) -->
-                <div id="detalle-servicio" class="detalle-servicio">
-                    <!-- Contenido dinámico se insertará aquí -->
+                <div class="estrella-servicio" data-servicio="uiux" onclick="mostrarDetalle('uiux')">
+                    <div class="nucleo-estrella"></div>
+                    <div class="rayos-estrella"></div>
+                    <i class="fas fa-paint-brush icono-estrella"></i>
+                    <h3>Diseño<br>UI/UX</h3>
+                    <div class="conector"></div>
                 </div>
+                
+                <div class="estrella-servicio" data-servicio="ia" onclick="mostrarDetalle('ia')">
+                    <div class="nucleo-estrella"></div>
+                    <div class="rayos-estrella"></div>
+                    <i class="fas fa-brain icono-estrella"></i>
+                    <h3>Inteligencia<br>Artificial</h3>
+                    <div class="conector"></div>
+                </div>
+                
+                <div class="estrella-servicio" data-servicio="iot" onclick="mostrarDetalle('iot')">
+                    <div class="nucleo-estrella"></div>
+                    <div class="rayos-estrella"></div>
+                    <i class="fas fa-network-wired icono-estrella"></i>
+                    <h3>Internet<br>de las cosas</h3>
+                    <div class="conector"></div>
+                </div>
+                
+                <div class="estrella-servicio" data-servicio="datascience" onclick="mostrarDetalle('datascience')">
+                    <div class="nucleo-estrella"></div>
+                    <div class="rayos-estrella"></div>
+                    <i class="fas fa-chart-line icono-estrella"></i>
+                    <h3>Ciencia<br>de datos</h3>
+                    <div class="conector"></div>
+                </div>
+                
+                <div class="estrella-servicio" data-servicio="bigdata" onclick="mostrarDetalle('bigdata')">
+                    <div class="nucleo-estrella"></div>
+                    <div class="rayos-estrella"></div>
+                    <i class="fas fa-database icono-estrella"></i>
+                    <h3>Big Data<br>y análisis</h3>
+                    <div class="conector"></div>
+                </div>
+                
+                <!-- Líneas de conexión -->
+                <svg class="lineas-constelacion" viewBox="0 0 1000 600" preserveAspectRatio="none">
+                    <path class="linea" d="M200,150 L400,100 L600,150 L800,200 L700,350 L500,400 L300,350"/>
+                    <path class="linea" d="M300,350 L500,400 L700,350 L600,500 L400,450 L200,500"/>
+                </svg>
             </div>
+            
+            <!-- Detalle del servicio -->
+            <div id="detalle-servicio" class="nebulosa-detalle">
+                <div class="particulas-nebulosa"></div>
+                <!-- Contenido dinámico se insertará aquí -->
+            </div>
+        </div>
+  
         </section>
             
-        <!-- Sección "Nuestros Clientes" -->
-        <section class="clientes-section">
-            <div class="clientes-container">
-                <h2>NUESTROS CLIENTES</h2>
-                <h3>"El éxito de nuestros clientes es nuestra mayor recompensa.</h3>
-                <h3>Seguimos innovando para que confíen</h3>
-                <h3>en nosotros cada vez más."</h3>
-                
-                <div class="clientes-grid">
-                    <!-- Agrega aquí los logos de tus clientes -->
-                    <div class="cliente-logo"><img src="img/" alt="Cliente 1"></div>
-                    <div class="cliente-logo"><img src="img/" alt="Cliente 2"></div>
-                    <div class="cliente-logo"><img src="img/" alt="Cliente 3"></div>
-                    <div class="cliente-logo"><img src="img/" alt="Cliente 4"></div>
-                    <div class="cliente-logo"><img src="img/" alt="Cliente 5"></div>
+       <!-- Sección "Nuestros Clientes" con tema Galaxia -->
+<section class="clientes-galaxia">
+    <div class="universo-container">
+        <!-- Fondo de estrellas -->
+        <div class="estrellas"></div>
+        <div class="estrellas pequeñas"></div>
+        <div class="estrellas medianas"></div>
+        
+        <!-- Nebulosa decorativa -->
+        <div class="nebulosa-purpura"></div>
+        <div class="nebulosa-azul"></div>
+        
+        <div class="galaxia-content">
+            <h2 class="titulo-galaxia">NUESTROS CLIENTES</h2>
+            <div class="constelacion-texto">
+                <h3 class="frase-constelacion">"El éxito de nuestros clientes es nuestra mayor recompensa.</h3>
+                <h3 class="frase-constelacion">Seguimos innovando para que confíen</h3>
+                <h3 class="frase-constelacion">en nosotros cada vez más."</h3>
+            </div>
+            
+            <!-- Galería de clientes como planetas -->
+            <div class="sistema-planetario">
+                <div class="orbita">
+                    <div class="planeta cliente-logo" data-planeta="tierra">
+                        <img src="img/cliente1.png" alt="Cliente 1" class="superficie-planeta">
+                        <div class="anillos"></div>
+                    </div>
                 </div>
-                
-                <div class="testimonios">
-                    <h3>Lo que dicen nuestros clientes</h3>
-                    <div class="testimonio-card">
-                        <p class="testimonio-text">KSOFT transformó completamente nuestra operación digital con soluciones personalizadas que superaron nuestras expectativas.</p>
+                <div class="orbita">
+                    <div class="planeta cliente-logo" data-planeta="marte">
+                        <img src="img/cliente2.png" alt="Cliente 2" class="superficie-planeta">
+                        <div class="anillos"></div>
+                    </div>
+                </div>
+                <div class="orbita">
+                    <div class="planeta cliente-logo" data-planeta="jupiter">
+                        <img src="img/cliente3.png" alt="Cliente 3" class="superficie-planeta">
+                        <div class="anillos-anchos"></div>
+                    </div>
+                </div>
+                <div class="orbita">
+                    <div class="planeta cliente-logo" data-planeta="saturno">
+                        <img src="img/cliente4.png" alt="Cliente 4" class="superficie-planeta">
+                        <div class="anillos-grandes"></div>
+                    </div>
+                </div>
+                <div class="orbita">
+                    <div class="planeta cliente-logo" data-planeta="neptuno">
+                        <img src="img/cliente5.png" alt="Cliente 5" class="superficie-planeta">
+                        <div class="anillos-delgados"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonios como cometas -->
+            <div class="cinturon-testimonios">
+                <h3 class="titulo-testimonios">Lo que dicen en el universo</h3>
+                <div class="cometa testimonio-card">
+                    <div class="nucleo-cometa"></div>
+                    <div class="cola-cometa">
+                        <p class="testimonio-texto">"KSOFT transformó completamente nuestra operación digital con soluciones personalizadas que superaron nuestras expectativas."</p>
                         <p class="testimonio-autor">Juan Pérez</p>
                         <p class="testimonio-cargo">CEO, Empresa XYZ</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+       
+    </div>
+</section>
+
     </main>
 
     <script src="script1.js"></script>
@@ -205,42 +287,62 @@
         };
 
         function mostrarDetalle(servicioKey) {
-            const servicio = servicios[servicioKey];
-            const detalleDiv = document.getElementById('detalle-servicio');
-            
-            let beneficiosHTML = '';
-            servicio.beneficios.forEach(beneficio => {
-                beneficiosHTML += `<li><i class="fas fa-check-circle"></i> ${beneficio}</li>`;
-            });
-            
-            detalleDiv.innerHTML = `
-                <div class="detalle-contenido">
-                    <div class="detalle-header">
-                        <i class="fas ${servicio.icono} detalle-icon"></i>
-                        <h3>${servicio.titulo}</h3>
-                        <button onclick="cerrarDetalle()" class="cerrar-detalle"><i class="fas fa-times"></i></button>
-                    </div>
-                    <div class="detalle-body">
-                        <p>${servicio.descripcion}</p>
-                        <h4>Beneficios clave:</h4>
-                        <ul class="beneficios-list">
-                            ${beneficiosHTML}
-                        </ul>
-                        <button class="contactar-btn">Contáctanos para más información</button>
-                    </div>
-                </div>
-            `;
-            
-            detalleDiv.style.display = 'block';
-            window.scrollTo({
-                top: detalleDiv.offsetTop - 100,
-                behavior: 'smooth'
-            });
-        }
+    const servicio = servicios[servicioKey];
+    const detalleDiv = document.getElementById('detalle-servicio');
+    
+    let beneficiosHTML = '';
+    servicio.beneficios.forEach(beneficio => {
+        beneficiosHTML += `<li><i class="fas fa-check-circle"></i> ${beneficio}</li>`;
+    });
+    
+    detalleDiv.innerHTML = `
+        <div class="detalle-contenido">
+            <div class="detalle-header">
+                <i class="fas ${servicio.icono} detalle-icon"></i>
+                <h3>${servicio.titulo}</h3>
+                <button onclick="cerrarDetalle()" class="cerrar-detalle"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="detalle-body">
+                <p>${servicio.descripcion}</p>
+                <h4>Beneficios clave:</h4>
+                <ul class="beneficios-list">
+                    ${beneficiosHTML}
+                </ul>
+                <button class="contactar-btn">Contáctanos</button>
+            </div>
+        </div>
+    `;
+    
+    detalleDiv.style.display = 'block';
+    setTimeout(() => {
+        detalleDiv.classList.add('mostrar');
+    }, 10);
+    
+    window.scrollTo({
+        top: detalleDiv.offsetTop - 100,
+        behavior: 'smooth'
+    });
+}
 
-        function cerrarDetalle() {
-            document.getElementById('detalle-servicio').style.display = 'none';
-        }
+
+// Función para cerrar el detalle
+function cerrarDetalle() {
+    const detalleDiv = document.getElementById('detalle-servicio');
+    detalleDiv.classList.remove('mostrar');
+    setTimeout(() => {
+        detalleDiv.style.display = 'none';
+    }, 500); // Asegura que el detalle se oculte después de la animación
+}
+
+// Evitar que se cierre el detalle al hacer clic fuera del mismo
+document.addEventListener('click', function(e) {
+    const detalleDiv = document.getElementById('detalle-servicio');
+    // Verifica si el clic fue fuera del área del detalle y el detalle está visible
+    if (detalleDiv.style.display === 'block' && !detalleDiv.contains(e.target)) {
+        // No hacer nada, solo evitar el cierre cuando clickea fuera
+    }
+});
+
     </script>
 </body>
 </html>

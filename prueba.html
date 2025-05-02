@@ -75,6 +75,7 @@
 
         nav li {
             margin-left: 2rem;
+            position: relative;
         }
 
         nav a {
@@ -85,6 +86,8 @@
             transition: all 0.3s ease;
             position: relative;
             padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
         }
 
         nav a:hover {
@@ -104,6 +107,40 @@
 
         nav a:hover::after {
             width: 100%;
+        }
+
+        /* Submenú de servicios */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            min-width: 250px;
+            border: 1px solid rgba(224, 0, 0, 0.3);
+            border-top: 3px solid var(--secondary-color);
+            display: none;
+            flex-direction: column;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .has-submenu:hover .submenu {
+            display: flex;
+        }
+
+        .submenu li {
+            margin: 0;
+            width: 100%;
+        }
+
+        .submenu a {
+            padding: 1rem;
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .submenu a:hover {
+            background: rgba(224, 0, 0, 0.1);
         }
 
         .mobile-menu-btn {
@@ -221,7 +258,7 @@
             color: var(--text-color);
         }
 
-        /* Sección Qué Hacemos */
+        /* Sección Servicios */
         .servicios-section {
             padding: 6rem 2rem;
             position: relative;
@@ -683,11 +720,29 @@
             nav li {
                 margin: 0;
                 text-align: center;
+                width: 100%;
             }
 
             nav a {
                 padding: 1rem;
                 display: block;
+                justify-content: center;
+            }
+
+            .submenu {
+                position: static;
+                display: none;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+            }
+
+            .has-submenu:hover .submenu {
+                display: none;
+            }
+
+            .has-submenu.active .submenu {
+                display: flex;
             }
 
             .mobile-menu-btn {
@@ -789,7 +844,16 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#servicios">SERVICIOS</a></li>
+                    <li class="has-submenu">
+                        <a href="#servicios">SERVICIOS <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="#desarrollo-software">Desarrollo de software</a></li>
+                            <li><a href="#erp">Implementación de sistemas ERP</a></li>
+                            <li><a href="#automatizacion">Automatización de procesos</a></li>
+                            <li><a href="#consultoria">Consultoría en transformación digital</a></li>
+                            <li><a href="#seguridad">Seguridad informática y soporte técnico</a></li>
+                        </ul>
+                    </li>
                     <li><a href="sobrenosotros.html">SOBRE NOSOTROS</a></li>
                     <li><a href="blogs.html">BLOGS</a></li>
                     <li><a href="ubicacion1.html#contacto">CONTACTANOS</a></li>
@@ -837,152 +901,132 @@
                 
                 <!-- Sistema de esferas -->
                 <div class="esferas-container">
-                    <!-- Desarrollo de aplicaciones -->
-                    <div class="esfera" onclick="mostrarDetalle('desarrollo')">
-                        <i class="fas fa-code esfera-icon"></i>
-                        <span class="esfera-name">Desarrollo de aplicaciones</span>
+                    <!-- Desarrollo de software -->
+                    <div class="esfera" onclick="mostrarDetalle('desarrollo-software')">
+                        <i class="fas fa-laptop-code esfera-icon"></i>
+                        <span class="esfera-name">Desarrollo de software</span>
                     </div>
                     
-                    <!-- Diseño UI/UX -->
-                    <div class="esfera" onclick="mostrarDetalle('uiux')">
-                        <i class="fas fa-paint-brush esfera-icon"></i>
-                        <span class="esfera-name">Diseño UI/UX</span>
+                    <!-- Sistemas ERP -->
+                    <div class="esfera" onclick="mostrarDetalle('erp')">
+                        <i class="fas fa-project-diagram esfera-icon"></i>
+                        <span class="esfera-name">Sistemas ERP</span>
                     </div>
                     
-                    <!-- Inteligencia Artificial -->
-                    <div class="esfera" onclick="mostrarDetalle('ia')">
-                        <i class="fas fa-brain esfera-icon"></i>
-                        <span class="esfera-name">Inteligencia Artificial</span>
+                    <!-- Automatización -->
+                    <div class="esfera" onclick="mostrarDetalle('automatizacion')">
+                        <i class="fas fa-robot esfera-icon"></i>
+                        <span class="esfera-name">Automatización</span>
                     </div>
                     
-                    <!-- Internet de las cosas -->
-                    <div class="esfera" onclick="mostrarDetalle('iot')">
-                        <i class="fas fa-network-wired esfera-icon"></i>
-                        <span class="esfera-name">Internet de las cosas</span>
-                    </div>
-                    
-                    <!-- Ciencia de datos -->
-                    <div class="esfera" onclick="mostrarDetalle('datascience')">
+                    <!-- Consultoría -->
+                    <div class="esfera" onclick="mostrarDetalle('consultoria')">
                         <i class="fas fa-chart-line esfera-icon"></i>
-                        <span class="esfera-name">Ciencia de datos</span>
+                        <span class="esfera-name">Consultoría</span>
                     </div>
                     
-                    <!-- Big Data -->
-                    <div class="esfera" onclick="mostrarDetalle('bigdata')">
-                        <i class="fas fa-database esfera-icon"></i>
-                        <span class="esfera-name">Big Data y análisis</span>
+                    <!-- Seguridad -->
+                    <div class="esfera" onclick="mostrarDetalle('seguridad')">
+                        <i class="fas fa-shield-alt esfera-icon"></i>
+                        <span class="esfera-name">Seguridad</span>
                     </div>
                 </div>
                 
                 <!-- Detalles de servicios -->
-                <div id="detalle-desarrollo" class="servicio-detalle">
+                <!-- Desarrollo de software -->
+                <div id="detalle-desarrollo-software" class="servicio-detalle">
                     <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
                     <div class="detalle-container">
-                        <img src="img/desarrollo-apps-large.jpg" alt="Desarrollo de aplicaciones" class="detalle-imagen">
+                        <img src="img/desarrollo-software.jpg" alt="Desarrollo de software" class="detalle-imagen">
                         <div class="detalle-content">
-                            <h3 class="detalle-title">Desarrollo de aplicaciones</h3>
-                            <p class="detalle-text">Creamos aplicaciones web, móviles y de escritorio personalizadas que se adaptan perfectamente a tus necesidades empresariales. Utilizamos tecnologías modernas y frameworks robustos para garantizar escalabilidad, seguridad y alto rendimiento.</p>
+                            <h3 class="detalle-title">Desarrollo de Software</h3>
+                            <p class="detalle-text">Creamos soluciones de software personalizadas que se adaptan perfectamente a tus necesidades empresariales. Desde aplicaciones web hasta sistemas empresariales complejos.</p>
                             <ul class="beneficios-list">
-                                <li><i class="fas fa-check"></i> Aplicaciones multiplataforma</li>
-                                <li><i class="fas fa-check"></i> Desarrollo ágil y colaborativo</li>
+                                <li><i class="fas fa-check"></i> Aplicaciones web y móviles</li>
+                                <li><i class="fas fa-check"></i> Sistemas a medida</li>
+                                <li><i class="fas fa-check"></i> Desarrollo ágil</li>
                                 <li><i class="fas fa-check"></i> Integración con sistemas existentes</li>
-                                <li><i class="fas fa-check"></i> Soporte y mantenimiento continuo</li>
-                                <li><i class="fas fa-check"></i> Tecnologías: React, Angular, Flutter, Node.js</li>
+                                <li><i class="fas fa-check"></i> Soporte y mantenimiento</li>
                             </ul>
                             <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
                         </div>
                     </div>
                 </div>
                 
-                <div id="detalle-uiux" class="servicio-detalle">
+                <!-- Implementación ERP -->
+                <div id="detalle-erp" class="servicio-detalle">
                     <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
                     <div class="detalle-container">
-                        <img src="img/diseno-uiux-large.jpg" alt="Diseño UI/UX" class="detalle-imagen">
+                        <img src="img/erp.jpg" alt="Implementación de sistemas ERP" class="detalle-imagen">
                         <div class="detalle-content">
-                            <h3 class="detalle-title">Diseño UI/UX</h3>
-                            <p class="detalle-text">Nuestro equipo de diseñadores crea interfaces intuitivas y experiencias de usuario memorables. Investigamos, prototipamos y testeamos para asegurar que cada interacción sea satisfactoria y cumpla con los objetivos de negocio.</p>
+                            <h3 class="detalle-title">Implementación de sistemas ERP</h3>
+                            <p class="detalle-text">Optimizamos tus procesos empresariales con soluciones ERP líderes en el mercado, adaptadas a tus necesidades específicas.</p>
                             <ul class="beneficios-list">
-                                <li><i class="fas fa-check"></i> Investigación de usuarios</li>
-                                <li><i class="fas fa-check"></i> Prototipado interactivo</li>
-                                <li><i class="fas fa-check"></i> Pruebas de usabilidad</li>
-                                <li><i class="fas fa-check"></i> Diseño accesible e inclusivo</li>
-                                <li><i class="fas fa-check"></i> Herramientas: Figma, Adobe XD, Sketch</li>
+                                <li><i class="fas fa-check"></i> SAP, Oracle, Microsoft Dynamics</li>
+                                <li><i class="fas fa-check"></i> Migración de datos</li>
+                                <li><i class="fas fa-check"></i> Capacitación de usuarios</li>
+                                <li><i class="fas fa-check"></i> Soporte post-implementación</li>
+                                <li><i class="fas fa-check"></i> Integración con otros sistemas</li>
                             </ul>
                             <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
                         </div>
                     </div>
                 </div>
                 
-                <div id="detalle-ia" class="servicio-detalle">
+                <!-- Automatización -->
+                <div id="detalle-automatizacion" class="servicio-detalle">
                     <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
                     <div class="detalle-container">
-                        <img src="img/inteligencia-artificial-large.jpg" alt="Inteligencia Artificial" class="detalle-imagen">
+                        <img src="img/automatizacion.jpg" alt="Automatización de procesos" class="detalle-imagen">
                         <div class="detalle-content">
-                            <h3 class="detalle-title">Inteligencia Artificial</h3>
-                            <p class="detalle-text">Implementamos soluciones de IA y machine learning para automatizar procesos, predecir tendencias y ofrecer experiencias personalizadas. Desde chatbots hasta sistemas de recomendación avanzados.</p>
+                            <h3 class="detalle-title">Automatización de procesos</h3>
+                            <p class="detalle-text">Automatizamos tus procesos empresariales para mejorar la eficiencia, reducir errores y aumentar la productividad.</p>
                             <ul class="beneficios-list">
-                                <li><i class="fas fa-check"></i> Procesamiento de lenguaje natural</li>
-                                <li><i class="fas fa-check"></i> Visión por computadora</li>
-                                <li><i class="fas fa-check"></i> Modelos predictivos</li>
-                                <li><i class="fas fa-check"></i> Sistemas de recomendación</li>
-                                <li><i class="fas fa-check"></i> Frameworks: TensorFlow, PyTorch, Scikit-learn</li>
+                                <li><i class="fas fa-check"></i> RPA (Automatización Robótica de Procesos)</li>
+                                <li><i class="fas fa-check"></i> Workflows automatizados</li>
+                                <li><i class="fas fa-check"></i> Integración entre sistemas</li>
+                                <li><i class="fas fa-check"></i> Reducción de errores humanos</li>
+                                <li><i class="fas fa-check"></i> Aumento de productividad</li>
                             </ul>
                             <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
                         </div>
                     </div>
                 </div>
                 
-                <div id="detalle-iot" class="servicio-detalle">
+                <!-- Consultoría -->
+                <div id="detalle-consultoria" class="servicio-detalle">
                     <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
                     <div class="detalle-container">
-                        <img src="img/iot-large.jpg" alt="Internet de las Cosas" class="detalle-imagen">
+                        <img src="img/consultoria.jpg" alt="Consultoría en transformación digital" class="detalle-imagen">
                         <div class="detalle-content">
-                            <h3 class="detalle-title">Internet de las Cosas</h3>
-                            <p class="detalle-text">Conectamos dispositivos físicos con plataformas digitales para recopilar datos en tiempo real, optimizar operaciones y crear nuevos modelos de negocio. Soluciones desde wearables hasta ciudades inteligentes.</p>
+                            <h3 class="detalle-title">Consultoría en transformación digital</h3>
+                            <p class="detalle-text">Te acompañamos en tu proceso de transformación digital con estrategias personalizadas y soluciones tecnológicas innovadoras.</p>
                             <ul class="beneficios-list">
-                                <li><i class="fas fa-check"></i> Sensores y dispositivos conectados</li>
-                                <li><i class="fas fa-check"></i> Plataformas IoT escalables</li>
-                                <li><i class="fas fa-check"></i> Análisis de datos en tiempo real</li>
-                                <li><i class="fas fa-check"></i> Integración con sistemas empresariales</li>
-                                <li><i class="fas fa-check"></i> Tecnologías: MQTT, LoRaWAN, AWS IoT</li>
+                                <li><i class="fas fa-check"></i> Diagnóstico tecnológico</li>
+                                <li><i class="fas fa-check"></i> Roadmap de transformación</li>
+                                <li><i class="fas fa-check"></i> Implementación de soluciones</li>
+                                <li><i class="fas fa-check"></i> Capacitación y acompañamiento</li>
+                                <li><i class="fas fa-check"></i> Medición de resultados</li>
                             </ul>
                             <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
                         </div>
                     </div>
                 </div>
                 
-                <div id="detalle-datascience" class="servicio-detalle">
+                <!-- Seguridad -->
+                <div id="detalle-seguridad" class="servicio-detalle">
                     <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
                     <div class="detalle-container">
-                        <img src="img/ciencia-datos-large.jpg" alt="Ciencia de Datos" class="detalle-imagen">
+                        <img src="img/seguridad.jpg" alt="Seguridad informática y soporte técnico" class="detalle-imagen">
                         <div class="detalle-content">
-                            <h3 class="detalle-title">Ciencia de Datos</h3>
-                            <p class="detalle-text">Transformamos datos en conocimiento accionable. Nuestros expertos en data science aplican técnicas estadísticas avanzadas y algoritmos de machine learning para descubrir patrones y oportunidades ocultas.</p>
+                            <h3 class="detalle-title">Seguridad informática y soporte técnico</h3>
+                            <p class="detalle-text">Protegemos tus sistemas y datos con soluciones de seguridad robustas y ofrecemos soporte técnico especializado.</p>
                             <ul class="beneficios-list">
-                                <li><i class="fas fa-check"></i> Análisis exploratorio</li>
-                                <li><i class="fas fa-check"></i> Modelado predictivo</li>
-                                <li><i class="fas fa-check"></i> Visualización de datos</li>
-                                <li><i class="fas fa-check"></i> Automatización de reportes</li>
-                                <li><i class="fas fa-check"></i> Herramientas: Python, R, Tableau, Power BI</li>
-                            </ul>
-                            <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="detalle-bigdata" class="servicio-detalle">
-                    <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                    <div class="detalle-container">
-                        <img src="img/big-data-large.jpg" alt="Big Data y Análisis" class="detalle-imagen">
-                        <div class="detalle-content">
-                            <h3 class="detalle-title">Big Data y Análisis</h3>
-                            <p class="detalle-text">Manejamos y analizamos grandes volúmenes de datos estructurados y no estructurados. Implementamos arquitecturas de datos robustas que permiten procesamiento en tiempo real y batch para obtener insights valiosos.</p>
-                            <ul class="beneficios-list">
-                                <li><i class="fas fa-check"></i> Arquitecturas distribuidas</li>
-                                <li><i class="fas fa-check"></i> Procesamiento en tiempo real</li>
-                                <li><i class="fas fa-check"></i> Limpieza y preparación de datos</li>
-                                <li><i class="fas fa-check"></i> Dashboards ejecutivos</li>
-                                <li><i class="fas fa-check"></i> Tecnologías: Hadoop, Spark, Kafka, Snowflake</li>
+                                <li><i class="fas fa-check"></i> Auditorías de seguridad</li>
+                                <li><i class="fas fa-check"></i> Protección contra amenazas</li>
+                                <li><i class="fas fa-check"></i> Backup y recuperación</li>
+                                <li><i class="fas fa-check"></i> Soporte 24/7</li>
+                                <li><i class="fas fa-check"></i> Monitoreo continuo</li>
                             </ul>
                             <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
                         </div>
@@ -1021,17 +1065,17 @@
 
     <footer>
         <div class="footer-container">
-            <a href="#" class="footer-logo">KSOFT</a>
-            
+            <div class="footer-logo-container">
+                <img src="img/logo.png" alt="KSOFT Logo" class="footer-logo-img">
+                <a href="#" class="footer-logo">KSOFT</a>
+            </div>
             
             <div class="social-links">
                 <p class="detalle-text">Potenciamos tu negocio con tecnología de precisión</p>
-                
             </div>
             
             <p class="copyright">© 2025 KSOFT - Todos los derechos reservados</p>
         </div>
-    </footer>
     </footer>
 
     <script>
@@ -1089,18 +1133,37 @@
         setInterval(rotateVideos, 8000);
 
         // Menú móvil
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('show');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('nav ul');
+        const hasSubmenuItems = document.querySelectorAll('.has-submenu');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            navMenu.classList.toggle('show');
         });
 
-        // Cerrar menú al hacer clic en un enlace (solo en móviles)
+        // Manejar submenú en móviles
         if (window.innerWidth <= 768) {
-            document.querySelectorAll('nav a').forEach(link => {
-                link.addEventListener('click', () => {
-                    document.querySelector('nav ul').classList.remove('show');
+            hasSubmenuItems.forEach(item => {
+                const link = item.querySelector('a');
+                link.addEventListener('click', (e) => {
+                    if (navMenu.classList.contains('show')) {
+                        e.preventDefault();
+                        item.classList.toggle('active');
+                    }
                 });
             });
         }
+
+        // Cerrar menú al hacer clic en un enlace (solo en móviles)
+        document.querySelectorAll('nav a').forEach(link => {
+            if (!link.parentElement.classList.contains('has-submenu')) {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        navMenu.classList.remove('show');
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>

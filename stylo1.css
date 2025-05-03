@@ -1,5 +1,5 @@
-   /* Estilos inicio */
-   * {
+/* Estilos generales */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -79,7 +79,7 @@ a {
     z-index: 2;
 }
 
-/* diseño encabezado*/
+/* Header */
 header {
     position: fixed;
     top: 0;
@@ -736,6 +736,8 @@ footer {
         font-size: 0.9rem;
     }
 }
+
+
   /* Estilos desarrollo software*/
   :root {
     --primary-color: #ff0000;

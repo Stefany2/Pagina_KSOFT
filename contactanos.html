@@ -410,18 +410,30 @@
     
     <header>
         <div class="header-container">
-            <h1 class="logo">KSOFT</h1>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
+            <div class="logo-container">
+                <img src="img/logo.png" alt="KSOFT Logo" class="logo-img">
+                <h1 class="logo">KSOFT</h1>
             </div>
             <nav>
                 <ul>
-                    <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
-                    <li><a href="blogs.html">Blogs</a></li>
-                    <li><a href="contactanos.html">Contáctanos</a></li>
-                    <li><a href="ubicacion1.html">Ubicación</a></li>
+                    <li class="has-submenu">
+                        <a href="#servicios">SERVICIOS <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="desarrollo-software.html">Desarrollo de software</a></li>
+                            <li><a href="desarrollo-software.html#erp">Implementación de sistemas ERP</a></li>
+                            <li><a href="desarrollo-software.html#automatizacion">Automatización de procesos</a></li>
+                            <li><a href="desarrollo-software.html#consultoria">Consultoría en transformación digital</a></li>
+                            <li><a href="desarrollo-software.html#seguridad">Seguridad informática y soporte técnico</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="sobrenosotros.html">SOBRE NOSOTROS</a></li>
+                    <li><a href="blogs.html">BLOGS</a></li>
+                    <li><a href="ubicacion1.html#contacto">CONTACTANOS</a></li>
+                    <li><a href="ubicacion1.html">UBICACIÒN</a></li>
                 </ul>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
             </nav>
         </div>
     </header>

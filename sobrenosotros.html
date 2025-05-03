@@ -33,42 +33,124 @@
             flex-direction: column;
         }
 
-        /* Encabezado */
+        /* Header */
         header {
-            background: var(--primary-color);
+            background: rgba(0, 0, 0, 0.9);
             position: fixed;
             width: 100%;
             z-index: 1000;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid var(--secondary-color);
+            border-bottom: 1px solid rgba(224, 0, 0, 0.3);
+            padding: 1rem 2rem;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
         }
 
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 15px;
         }
 
-        .logo-container img {
-            height: 50px;
+        .logo-img {
+            height: 40px;
             width: auto;
-            transition: transform 0.3s ease;
         }
 
-        .logo-container img:hover {
-            transform: rotate(15deg);
-        }
-
-        .logo-text {
-            font-size: 1.8rem;
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--secondary-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 2rem;
+            position: relative;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Submenú de servicios */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            min-width: 250px;
+            border: 1px solid rgba(224, 0, 0, 0.3);
+            border-top: 3px solid var(--secondary-color);
+            display: none;
+            flex-direction: column;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .has-submenu:hover .submenu {
+            display: flex;
+        }
+
+        .submenu li {
+            margin: 0;
+            width: 100%;
+        }
+
+        .submenu a {
+            padding: 1rem;
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .submenu a:hover {
+            background: rgba(224, 0, 0, 0.1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
         }
 
         /* Navegación */
@@ -208,112 +290,114 @@
             background: transparent;
             color: var(--secondary-color);
         }
+ /* Contenido CARRUSEL */
+ .image-carousel {
+        padding: 5rem 2rem;
+        background-color: #000; /* Fondo negro */
+        text-align: center;
+    }
 
-        /* Carrusel de videos */
-        .video-carousel {
-            padding: 4rem 0;
-            background: rgba(0, 0, 0, 0.7);
-        }
+    .carousel-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-        .carousel-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+    .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: #fff; /* Título en blanco */
+    }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-        }
+    .carousel {
+        position: relative;
+        overflow: hidden;
+    }
 
-        .carousel {
-            position: relative;
-            overflow: hidden;
-        }
+    .carousel-inner {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
 
-        .carousel-inner {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
+    .carousel-item {
+        flex: 1 0 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .carousel-item {
-            min-width: 100%;
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
+    .image-wrapper {
+        width: 100%;
+        max-width: 400px; /* Tamaño máximo de las imágenes */
+        height: 400px; /* Altura fija para hacerlo cuadrado */
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 10px; /* Bordes redondeados */
+        background-color: #000; /* Fondo negro */
+    }
 
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-        }
+    .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Para que la imagen se ajuste de forma cuadrada */
+        border-radius: 10px; /* Bordes redondeados */
+    }
 
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+    /* Estilo para los botones de control */
+.carousel-control {
+    background-color: black; /* Fondo negro */
+    color: white; /* Texto blanco */
+    border: 3px solid red; /* Borde rojo */
+    border-radius: 50%; /* Hace los botones circulares */
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background-color 0.3s ease;
+}
 
-        .carousel-control {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(218, 9, 9, 0.7);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
+.carousel-control:hover {
+    background-color: red; /* Cambia el fondo a rojo cuando se pasa el cursor */
+    color: white; /* Mantiene el texto en blanco */
+}
 
-        .carousel-control:hover {
-            background: var(--secondary-color);
-        }
+.carousel-control.prev {
+    left: 10px; /* Botón de izquierda */
+}
 
-        .carousel-control.prev {
-            left: 10px;
-        }
+.carousel-control.next {
+    right: 10px; /* Botón de derecha */
+}
 
-        .carousel-control.next {
-            right: 10px;
-        }
 
-        .carousel-indicators {
-            display: flex;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
+    /* Indicadores */
+    .carousel-indicators {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 1rem;
+    }
 
-        .indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--dark-text);
-            margin: 0 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    .indicator {
+        width: 12px;
+        height: 12px;
+        background-color: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-        .indicator.active {
-            background: var(--secondary-color);
-            transform: scale(1.2);
-        }
+    .indicator.active {
+        background-color: var(--primary-color);
+    }
 
+    .indicator:hover {
+        background-color: var(--highlight-color);
+    }
         /* Sección de información */
         .about-us {
             padding: 4rem 2rem;
@@ -544,25 +628,33 @@
 </head>
 <body>
     <header>
-        <div class="logo-container">
-            <img src="logo.png" alt="KSOFT Logo">
-            <div class="logo-text">KSOFT</div>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="img/logo.png" alt="KSOFT Logo" class="logo-img">
+                <h1 class="logo">KSOFT</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="has-submenu">
+                        <a href="#servicios">SERVICIOS <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="desarrollo-software.html">Desarrollo de software</a></li>
+                            <li><a href="erp.html">Implementación de sistemas ERP</a></li>
+                            <li><a href="automatizacion.html">Automatización de procesos</a></li>
+                            <li><a href="consultoria.html">Consultoría en transformación digital</a></li>
+                            <li><a href="seguridad.html">Seguridad informática y soporte técnico</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="sobrenosotros.html">SOBRE NOSOTROS</a></li>
+                    <li><a href="blogs.html">BLOGS</a></li>
+                    <li><a href="ubicacion1.html#contacto">CONTACTANOS</a></li>
+                    <li><a href="ubicacion1.html">UBICACIÒN</a></li>
+                </ul>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
         </div>
-        
-        <div class="menu-toggle">
-            <div class="hamburger"></div>
-        </div>
-        
-        <nav>
-            <ul>
-                <li><a href="index.html">INICIO</a></li>
-                <li><a href="servicios.html">SERVICIOS</a></li>
-                <li><a href="sobrenosotros.html">SOBRE NOSOTROS</a></li>
-                <li><a href="blog.html">BLOG</a></li>
-                <li><a href="ubicacion1.html#contacto">CONTACTANOS</a></li>
-                <li><a href="ubicacion1.html">UBICACIÒN</a></li>
-            </ul>
-        </nav>
     </header>
 
     <main>
@@ -580,44 +672,49 @@
         </div>
     </section>
 
-        <!-- Carrusel de Videos -->
-        <section class="video-carousel">
-            <div class="carousel-container">
-                <h2 class="section-title">NUESTROS PROYECTOS</h2>
-                <div class="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item">
-                            <div class="video-wrapper">
-                                <iframe src="img/registros.jpg" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="video-wrapper">
-                                <iframe src="img/steve.jpeg" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="video-wrapper">
-                                <iframe src="img/Steve1.jpeg" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="video-wrapper">
-                                <iframe src="img/proyecto.jpeg" allowfullscreen></iframe>
-                            </div>
-                        </div>
+       <!-- Carrusel de Imágenes -->
+<section class="image-carousel">
+    <div class="carousel-container">
+        <h2 class="section-title">NUESTROS PROYECTOS</h2>
+        <div class="carousel">
+            <div class="carousel-inner">
+                <!-- Item 1 -->
+                <div class="carousel-item">
+                    <div class="image-wrapper">
+                        <img src="img/registros.jpg" alt="Proyecto 1">
                     </div>
-                    <button class="carousel-control prev" aria-label="Anterior">&lt;</button>
-                    <button class="carousel-control next" aria-label="Siguiente">&gt;</button>
-                    <div class="carousel-indicators">
-                        <div class="indicator active" data-index="0"></div>
-                        <div class="indicator" data-index="1"></div>
-                        <div class="indicator" data-index="2"></div>
-                        <div class="indicator" data-index="3"></div>
+                </div>
+                <!-- Item 2 -->
+                <div class="carousel-item">
+                    <div class="image-wrapper">
+                        <img src="img/steve.jpeg" alt="Proyecto 2">
+                    </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="carousel-item">
+                    <div class="image-wrapper">
+                        <img src="img/Steve1.jpeg" alt="Proyecto 3">
+                    </div>
+                </div>
+                <!-- Item 4 -->
+                <div class="carousel-item">
+                    <div class="image-wrapper">
+                        <img src="img/proyecto.jpeg" alt="Proyecto 4">
                     </div>
                 </div>
             </div>
-        </section>
+            <button class="carousel-control prev" aria-label="Anterior">&lt;</button>
+            <button class="carousel-control next" aria-label="Siguiente">&gt;</button>
+            <div class="carousel-indicators">
+                <div class="indicator active" data-index="0"></div>
+                <div class="indicator" data-index="1"></div>
+                <div class="indicator" data-index="2"></div>
+                <div class="indicator" data-index="3"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
     </main>
 
     <footer>
@@ -637,11 +734,12 @@
             <div class="footer-column">
                 <h3>Enlaces Rápidos</h3>
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="inicio1.html">Inicio</a></li>
                     <li><a href="servicios.html">Servicios</a></li>
                     <li><a href="sobrenosotros.html">Sobre Nosotros</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="blogs.html">Blog</a></li>
+                    <li><a href="ubicacion1.html#contacto">Contacto</a></li>
+                    <li><a href="ubicacion1.html">UBICACIÓN</a></li>
                 </ul>
             </div>
             
@@ -673,85 +771,90 @@
 
     <script>
         // Menú hamburguesa
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const nav = document.querySelector('nav');
-            
-            menuToggle.addEventListener('click', function() {
-                this.classList.toggle('active');
-                nav.classList.toggle('active');
-            });
-            
-            // Cerrar menú al hacer clic en un enlace (solo en móviles)
-            if (window.innerWidth <= 768) {
-                const navLinks = document.querySelectorAll('nav a');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        menuToggle.classList.remove('active');
-                        nav.classList.remove('active');
-                    });
-                });
-            }
-            
-            // Carrusel de videos
-            const carouselInner = document.querySelector('.carousel-inner');
-            const carouselItems = document.querySelectorAll('.carousel-item');
-            const indicators = document.querySelectorAll('.indicator');
-            const prevBtn = document.querySelector('.prev');
-            const nextBtn = document.querySelector('.next');
-            let currentIndex = 0;
-            const itemWidth = 100; // Porcentaje
-            
-            function updateCarousel() {
-                carouselInner.style.transform = `translateX(-${currentIndex * itemWidth}%)`;
-                
-                // Actualizar indicadores
-                indicators.forEach((indicator, index) => {
-                    if (index === currentIndex) {
-                        indicator.classList.add('active');
-                    } else {
-                        indicator.classList.remove('active');
-                    }
-                });
-            }
-            
-            // Eventos para botones
-            nextBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % carouselItems.length;
-                updateCarousel();
-            });
-            
-            prevBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
-                updateCarousel();
-            });
-            
-            // Eventos para indicadores
-            indicators.forEach(indicator => {
-                indicator.addEventListener('click', () => {
-                    currentIndex = parseInt(indicator.getAttribute('data-index'));
-                    updateCarousel();
-                });
-            });
-            
-            // Auto-play (opcional)
-            let autoPlay = setInterval(() => {
-                currentIndex = (currentIndex + 1) % carouselItems.length;
-                updateCarousel();
-            }, 5000);
-            
-            // Pausar auto-play al interactuar
-            carouselInner.addEventListener('mouseenter', () => {
-                clearInterval(autoPlay);
-            });
-            
-            carouselInner.addEventListener('mouseleave', () => {
-                autoPlay = setInterval(() => {
-                    currentIndex = (currentIndex + 1) % carouselItems.length;
-                    updateCarousel();
-                }, 5000);
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    
+    menuToggle.addEventListener('click', function() {
+        this.classList.toggle('active');
+        nav.classList.toggle('active');
+    });
+    
+    // Cerrar menú al hacer clic en un enlace (solo en móviles)
+    if (window.innerWidth <= 768) {
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                menuToggle.classList.remove('active');
+                nav.classList.remove('active');
             });
         });
+    }
+    
+    // Carrusel de imágenes
+    const carouselInner = document.querySelector('.carousel-inner');
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    const indicators = document.querySelectorAll('.indicator');
+    const prevBtn = document.querySelector('.carousel-control.prev');
+    const nextBtn = document.querySelector('.carousel-control.next');
+    let currentIndex = 0;
+    const totalItems = carouselItems.length;
+    
+    function updateCarousel() {
+        carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+        // Actualizar indicadores
+        indicators.forEach((indicator, index) => {
+            if (index === currentIndex) {
+                indicator.classList.add('active');
+            } else {
+                indicator.classList.remove('active');
+            }
+        });
+    }
+
+    // Eventos para botones de control (prev y next)
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % totalItems; // Cambio al siguiente item
+        updateCarousel();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + totalItems) % totalItems; // Cambio al anterior item
+        updateCarousel();
+    });
+
+    // Eventos para indicadores
+    indicators.forEach((indicator, i) => {
+        indicator.addEventListener('click', () => {
+            currentIndex = i; // Cambia el índice a ese indicador
+            updateCarousel();
+        });
+    });
+
+    // Auto-play (opcional) - Cambiado a 2 segundos
+    let autoPlay = setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalItems; // Cambio automático al siguiente item
+        updateCarousel();
+    }, 2000); // Cambiado a 2000 milisegundos (2 segundos)
+
+    // Pausar auto-play al interactuar con el carrusel
+    carouselInner.addEventListener('mouseenter', () => {
+        clearInterval(autoPlay);
+    });
+
+    // Reanudar auto-play al salir del carrusel
+    carouselInner.addEventListener('mouseleave', () => {
+        autoPlay = setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalItems;
+            updateCarousel();
+        }, 2000); // Cambiado a 2000 milisegundos (2 segundos)
+    });
+
+    // Inicializar el carrusel en el primer ítem
+    updateCarousel();
+});
+
     </script>
 </body>
 </html>

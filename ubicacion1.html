@@ -95,13 +95,214 @@
         box-shadow: 0 2px 20px rgba(139, 0, 0, 0.3);
     }
 
-    .navbar-brand, .nav-link {
-        color: #fff !important;
-        text-shadow: 0 0 8px var(--neon-red);
+/* Navbar */
+nav.navbar {
+    z-index: 100;
+    position: relative;
+    background: rgba(10, 0, 0, 0.95) !important;
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--primary-red);
+    box-shadow: 0 2px 20px rgba(139, 0, 0, 0.3);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between; /* Mantener el logo y el menú separados */
+    align-items: center;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ff0000;
+}
+
+/* Menú de navegación */
+nav ul {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin-left: 30px;
+    position: relative;
+}
+
+nav ul li a {
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+nav ul li a:hover {
+    color: #ff0000;
+}
+
+nav ul li a i {
+    margin-left: 5px;
+    font-size: 0.7rem;
+}
+
+/* Submenú */
+.submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 250px;
+    background-color: #222222;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+    padding: 10px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    transform: translateY(10px);
+    z-index: 1;
+}
+
+.has-submenu:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.submenu li {
+    padding: 8px 20px;
+    list-style: none;
+}
+
+.submenu li a {
+    font-size: 0.9rem;
+    text-transform: none;
+    letter-spacing: normal;
+    display: block;
+    padding: 5px 0;
+    color: white;
+    text-decoration: none;
+}
+
+.submenu li:hover {
+    background-color: #333333;
+}
+
+/* Menú móvil (Hamburguesa) */
+/* Estilos para el botón de hamburguesa */
+.mobile-menu-btn {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+}
+
+/* Estilos para el menú en dispositivos móviles */
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    flex-direction: row;
+}
+
+nav ul li {
+    margin-left: 30px;
+    position: relative;
+}
+
+nav ul li a {
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ff0000;
+}
+
+/* Menú móvil oculto por defecto */
+nav ul.mobile-menu-active {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    background-color: rgba(10, 0, 0, 0.95);
+    flex-direction: column;
+    padding-top: 50px;
+    box-shadow: -2px 0 10px rgba(139, 0, 0, 0.3);
+}
+
+/* Mostrar el botón de hamburguesa en pantallas pequeñas */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        z-index: 100;
     }
 
+    nav ul {
+        display: none;  /* Ocultar menú en pantallas pequeñas */
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-end;
+    }
+
+    /* Menú visible al hacer clic */
+    nav ul.mobile-menu-active {
+        display: flex;
+    }
+
+
+    .submenu {
+        width: 100%;
+        box-shadow: none;
+    }
+
+    .has-submenu:hover .submenu {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+
+/* Mostrar el menú cuando se activa el botón de hamburguesa */
+.mobile-menu-btn.active + nav ul {
+    display: flex;
+}
+
+
     .nav-link.active {
-      color: #fff !important;  /* Asegura que el enlace activo también sea blanco */
+      color: #fff !important;  
         font-weight: bold;
     }
 
@@ -114,7 +315,7 @@
         flex: 1;
         position: relative;
         background: transparent;
-        padding-top: 80px; /* Ajuste para que el contenido no se superponga al navbar fijo */
+        padding-top: 80px; 
         
     }
 
@@ -543,6 +744,9 @@
         }
        
     }
+    
+
+
   </style>
 </head>
 <body>
@@ -554,20 +758,33 @@
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">KSOFT</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#servicios">SERVICIOS</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">SOBRE NOSOTROS</a></li>
-          <li class="nav-item"><a class="nav-link" href="blogs.html">BLOGS</a></li>
-          <li class="nav-item"><a class="nav-link active" href="ubicacion1.html">UBICACIÒN</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contacto">CONTACTÀNOS</a></li>
-        </ul>
+    <div class="header-container">
+      <div class="logo-container">
+          <img src="img/logo.png" alt="KSOFT Logo" class="logo-img">
+          <h1 class="logo">KSOFT</h1>
       </div>
+      <nav>
+          <ul>
+              <li class="has-submenu">
+                  <a href="#servicios">SERVICIOS <i class="fas fa-chevron-down"></i></a>
+                  <ul class="submenu">
+                      <li><a href="desarrollo-software.html">Desarrollo de software</a></li>
+                      <li><a href="desarrollo-software.html#erp">Implementación de sistemas ERP</a></li>
+                      <li><a href="desarrollo-software.html#automatizacion">Automatización de procesos</a></li>
+                      <li><a href="desarrollo-software.html#consultoria">Consultoría en transformación digital</a></li>
+                      <li><a href="desarrollo-software.html#seguridad">Seguridad informática y soporte técnico</a></li>
+                  </ul>
+              </li>
+              <li><a href="sobrenosotros.html">SOBRE NOSOTROS</a></li>
+              <li><a href="blogs.html">BLOGS</a></li>
+              <li><a href="ubicacion1.html#contacto">CONTÁCTANOS</a></li>
+              <li><a href="ubicacion1.html">UBICACIÓN</a></li>
+          </ul>
+          <div class="mobile-menu-btn">
+              <i class="fas fa-bars"></i>
+          </div>
+      </nav>
+  </div>
     </div>
   </nav>
 

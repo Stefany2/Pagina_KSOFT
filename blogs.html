@@ -4,21 +4,589 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KSOFT - Competencias</title>
-    <link rel="stylesheet" href="stylo2.css">
-   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff0000;
+            --primary-dark: #cc0000;
+            --secondary-color: #333333;
+            --accent-color: #666666;
+            --dark-color: #000000;
+            --light-color: #ffffff;
+            --gray-light: #f1f1f1;
+            --text-color: #ffffff;
+            --text-light: #cccccc;
+            --gradient: linear-gradient(135deg, #ff0000 0%, #990000 100%);
+            --snitch-gradient: linear-gradient(135deg, #cc0000 0%, #990000 100%);
+            --wing-color: rgba(255, 255, 255, 0.9);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+            --radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--dark-color);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Estrellas de fondo */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90px 40px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 160px 120px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 200px 50px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 240px 90px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 280px 140px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 320px 60px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 360px 100px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 400px 150px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 440px 70px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 480px 110px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 520px 160px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 560px 80px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 600px 120px, white, rgba(0,0,0,0));
+            background-size: 650px 650px;
+            z-index: -1;
+            animation: stars 60s linear infinite;
+        }
+
+        @keyframes stars {
+            from { transform: translateY(0); }
+            to { transform: translateY(-650px); }
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(0, 0, 0, 0.9);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Menú principal */
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        nav ul li {
+            position: relative;
+            list-style: none;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--text-color);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            text-decoration: none;
+            padding: 0.5rem 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
+        }
+
+        /* Submenú vertical */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--radius);
+            padding: 0.5rem 0;
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .has-submenu:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .submenu li {
+            padding: 0.5rem 1.5rem;
+            width: 100%;
+        }
+
+        .submenu li a {
+            display: block;
+            white-space: nowrap;
+            padding: 0.5rem 1rem;
+        }
+
+        .submenu li:hover {
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+
+        /* Botón de menú móvil */
+        .mobile-menu-btn {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light-color);
+            margin-left: auto;
+            padding: 0.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(51, 0, 0, 0.5) 100%);
+            z-index: -1;
+            border-radius: var(--radius);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--light-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 3px;
+        }
+
+        /* Card Stack - Cuadrados */
+        .card-stack-container {
+            margin: 3rem auto;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .card-stack {
+            position: relative;
+            height: 400px;
+            perspective: 1000px;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 400px;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease, opacity 0.6s ease;
+            opacity: 0;
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card.active {
+            opacity: 1;
+            transform: translateX(0) rotateY(0deg);
+            z-index: 10;
+        }
+
+        .card:not(.active) {
+            transform: translateX(-100%) rotateY(-30deg);
+        }
+
+        .card-image {
+            height: 70%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            text-align: center;
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-content p {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--light-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content .logros-title {
+            font-size: 1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        /* Navegación con puntos flotantes */
+        .card-nav {
+            display: flex;
+            justify-content: center;
+            margin: 2rem auto;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .nav-dot {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 0, 0, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            font-weight: bold;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .nav-dot:nth-child(1) { animation-delay: 0s; }
+        .nav-dot:nth-child(2) { animation-delay: 0.2s; }
+        .nav-dot:nth-child(3) { animation-delay: 0.4s; }
+        .nav-dot:nth-child(4) { animation-delay: 0.6s; }
+        .nav-dot:nth-child(5) { animation-delay: 0.8s; }
+        .nav-dot:nth-child(6) { animation-delay: 1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .nav-dot.active {
+            background: var(--gradient);
+            transform: translateY(-15px) scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Sección de logros mejorada */
+        .logros-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 4rem auto;
+            max-width: 1200px;
+        }
+
+        .logro {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logro:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3);
+            border-color: rgba(255, 0, 0, 0.5);
+        }
+
+        .esfera {
+            width: 80px;
+            height: 80px;
+            background: var(--snitch-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 0 20px rgba(204, 0, 0, 0.7);
+            position: relative;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .logro:hover .esfera {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(204, 0, 0, 0.9);
+        }
+
+        .logro-content {
+            width: 100%;
+        }
+
+        .logro p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            position: relative;
+            padding: 0.8rem;
+            background: rgba(40, 40, 40, 0.7);
+            border-radius: var(--radius);
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .logro p:hover {
+            background: rgba(50, 50, 50, 0.9);
+            border-left: 3px solid var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .logro p::before {
+            content: '★';
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        /* Alas del snitch */
+        .snitch-wing {
+            position: absolute;
+            width: 40px;
+            height: 15px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.7), var(--wing-color));
+            border-radius: 50%;
+            opacity: 0.9;
+            z-index: 0;
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
+        }
+
+        .wing-left {
+            top: 30px;
+            left: -20px;
+            transform: rotate(-30deg);
+        }
+
+        .wing-right {
+            top: 30px;
+            right: -20px;
+            transform: rotate(30deg);
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 3rem;
+        }
+
+        footer p {
+            color: var(--text-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                padding: 1rem;
+                flex-direction: column;
+                transform: translateY(-150%);
+                opacity: 0;
+                transition: var(--transition);
+                z-index: 999;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                order: 1;
+            }
+
+            .has-submenu .submenu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                padding: 0.5rem 0 0 1rem;
+                display: none;
+                background: transparent;
+                border: none;
+            }
+
+            .has-submenu:hover .submenu,
+            .submenu.active {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .card-stack {
+                height: 350px;
+            }
+
+            .card {
+                height: 350px;
+            }
+
+            .logros-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-dot {
+                width: 40px;
+                height: 40px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 3rem 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .card-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <header>
         <div class="header-container">
-            <h1 class="logo">KSOFT</h1>
+            <div class="logo-container">
+                <img src="img/logo.png" alt="KSOFT Logo" class="logo-img">
+                <h1 class="logo">KSOFT</h1>
+            </div>
+            
             <nav>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
                 <ul>
-                    <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
-                    <li><a href="blogs.html">Blogs</a></li>
-                    <li><a href="ubicacion1.html#contacto">Contáctanos</a></li>
-                    <li><a href="ubicacion1.html">Ubicación</a></li>
+                    <li class="has-submenu">
+                        <a href="#servicios">SERVICIOS <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="desarrollo-software.html">Desarrollo de software</a></li>
+                            <li><a href="desarrollo-software.html#erp">Implementación de sistemas ERP</a></li>
+                            <li><a href="desarrollo-software.html#automatizacion">Automatización de procesos</a></li>
+                            <li><a href="desarrollo-software.html#consultoria">Consultoría en transformación digital</a></li>
+                            <li><a href="desarrollo-software.html#seguridad">Seguridad informática y soporte técnico</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="inicio1.html">INICIO</a></li>
+                    <li><a href="sobrenosotros.html">SOBRE NOSOTROS</a></li>
+                    <li><a href="blogs.html">BLOGS</a></li>
+                    <li><a href="ubicacion1.html#contacto">CONTÁCTANOS</a></li>
+                    <li><a href="ubicacion1.html">UBICACIÓN</a></li>
                 </ul>
             </nav>
         </div>
@@ -33,75 +601,105 @@
                     <div class="card-image" style="background-image: url('img/Huawei.png');"></div>
                     <div class="card-content">
                         <p>Huawei Developer competition Latam 2023</p>
+                        <div class="logros-title">LOGROS OBTENIDOS</div>
                     </div>
                 </div>
                 <div class="card" data-index="1">
                     <div class="card-image" style="background-image: url('img/unheval.png');"></div>
                     <div class="card-content">
                         <p>VI concurso de invenciones UNHEVAL 2023</p>
+                        <div class="logros-title">LOGROS OBTENIDOS</div>
                     </div>
                 </div>
                 <div class="card" data-index="2">
                     <div class="card-image" style="background-image: url('img/costarica.png');"></div>
                     <div class="card-content">
                         <p>IEEE R9 IOT & IA 2023 en Costa Rica</p>
+                        <div class="logros-title">LOGROS OBTENIDOS</div>
                     </div>
                 </div>
                 <div class="card" data-index="3">
                     <div class="card-image" style="background-image: url('img/nicaragua.png');"></div>
                     <div class="card-content">
                         <p>Hackathon ASRS Nicaragua 2022</p>
+                        <div class="logros-title">LOGROS OBTENIDOS</div>
                     </div>
                 </div>
                 <div class="card" data-index="4">
                     <div class="card-image" style="background-image: url('img/cajamarca.png');"></div>
                     <div class="card-content">
                         <p>Hackathon acelera Cajamarca 2022</p>
+                        <div class="logros-title">LOGROS OBTENIDOS</div>
                     </div>
                 </div>
                 <div class="card" data-index="5">
                     <div class="card-image" style="background-image: url('img/amazonia.png');"></div>
                     <div class="card-content">
                         <p>Hackathon Lupita en la Amazonía 2022</p>
+                        <div class="logros-title">LOGROS OBTENIDOS</div>
                     </div>
                 </div>
             </div>
             
             <div class="card-nav">
-                <div class="nav-dot active" data-index="0"></div>
-                <div class="nav-dot" data-index="1"></div>
-                <div class="nav-dot" data-index="2"></div>
-                <div class="nav-dot" data-index="3"></div>
-                <div class="nav-dot" data-index="4"></div>
-                <div class="nav-dot" data-index="5"></div>
+                <div class="nav-dot active" data-index="0">2023</div>
+                <div class="nav-dot" data-index="1">2023</div>
+                <div class="nav-dot" data-index="2">2023</div>
+                <div class="nav-dot" data-index="3">2022</div>
+                <div class="nav-dot" data-index="4">2022</div>
+                <div class="nav-dot" data-index="5">2022</div>
             </div>
         </div>
-    </div>
-        <!-- Sección de logros añadida aquí -->
+        
+        <!-- Sección de logros mejorada -->
         <div class="logros-container">
-          <div class="logro">
-            <div class="esfera">2022</div>
-            <p>1er lugar Hackathon Acelera Cajamarca</p>
-            <p>1er lugar Hackathon Lupita en la Amazonía</p>
-          </div>
+            <div class="logro">
+                <div class="esfera snitch" data-year="2022">
+                    <div class="snitch-wing wing-left"></div>
+                    2022
+                    <div class="snitch-wing wing-right"></div>
+                </div>
+                <div class="logro-content">
+                    <p>1er lugar Hackathon Acelera Cajamarca</p>
+                    <p>1er lugar Hackathon Lupita en la Amazonía</p>
+                </div>
+            </div>
 
-          <div class="logro">
-            <div class="esfera">2023</div>
-            <p>2nd Runner-Up en la Huawei Developers Competiton LATAM</p>
-            <p>Mención honrosa IEEE R9 IoT & IA en Costa Rica.</p>
-            <p>2 Menciones honrosas en categoría Proyectos Abiertos del Robotifest Costa Rica</p>
-            <p>1er Lugar Categoría Primaria Escuelas Innovadoras – Municipalidad de San Miguel</p>
-          </div>
+            <div class="logro">
+                <div class="esfera snitch" data-year="2023">
+                    <div class="snitch-wing wing-left"></div>
+                    2023
+                    <div class="snitch-wing wing-right"></div>
+                </div>
+                <div class="logro-content">
+                    <p>2nd Runner-Up en la Huawei Developers Competiton LATAM</p>
+                    <p>Mención honrosa IEEE R9 IoT & IA en Costa Rica.</p>
+                    <p>2 Menciones honrosas en categoría Proyectos Abiertos del Robotifest Costa Rica</p>
+                    <p>1er Lugar Categoría Primaria Escuelas Innovadoras - Municipalidad de San Miguel</p>
+                </div>
+            </div>
 
-          <div class="logro">
-            <div class="esfera">2024</div>
-            <p>4to Lugar concurso SENATI INNOVA</p>
-          </div>
+            <div class="logro">
+                <div class="esfera snitch" data-year="2024">
+                    <div class="snitch-wing wing-left"></div>
+                    2024
+                    <div class="snitch-wing wing-right"></div>
+                </div>
+                <div class="logro-content">
+                    <p>4to Lugar concurso SENATI INNOVA</p>
+                </div>
+            </div>
 
-          <div class="logro">
-            <div class="esfera">2025</div>
-            <p>(Espacio reservado para próximos logros)</p>
-          </div>
+            <div class="logro">
+                <div class="esfera snitch" data-year="2025">
+                    <div class="snitch-wing wing-left"></div>
+                    2025
+                    <div class="snitch-wing wing-right"></div>
+                </div>
+                <div class="logro-content">
+                    <p>(Espacio reservado para próximos logros)</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -113,8 +711,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.card');
             const dots = document.querySelectorAll('.nav-dot');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('nav ul');
             let currentIndex = 0;
             let isAnimating = false;
+            let autoSlideInterval;
             
             // Función para mostrar una carta específica
             function showCard(index) {
@@ -143,6 +744,9 @@
                 setTimeout(() => {
                     isAnimating = false;
                 }, 600);
+                
+                // Reiniciar el auto slide
+                resetAutoSlide();
             }
             
             // Función para mostrar la siguiente carta
@@ -162,6 +766,17 @@
                 });
             }
             
+            // Función para iniciar el auto slide
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(showNextCard, 5000);
+            }
+            
+            // Función para reiniciar el auto slide
+            function resetAutoSlide() {
+                clearInterval(autoSlideInterval);
+                startAutoSlide();
+            }
+            
             // Click en las cartas para avanzar
             cards.forEach(card => {
                 card.addEventListener('click', showNextCard);
@@ -175,8 +790,87 @@
                 });
             });
             
+            // Toggle del menú móvil
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+            
+            // Cerrar menú al hacer clic en un enlace
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Animación para los snitch rojos
+            const snitches = document.querySelectorAll('.snitch');
+            
+            snitches.forEach(snitch => {
+                // Animación de flotación
+                snitch.style.animation = `floatSnitch 3s ease-in-out infinite`;
+                
+                // Efecto de brillo intermitente
+                setInterval(() => {
+                    snitch.style.boxShadow = `0 0 ${15 + Math.random() * 15}px rgba(204, 0, 0, ${0.5 + Math.random() * 0.5})`;
+                }, 1000);
+                
+                // Efecto de movimiento aleatorio
+                setInterval(() => {
+                    const x = (Math.random() * 10) - 5;
+                    const y = (Math.random() * 10) - 5;
+                    snitch.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+                }, 3000);
+            });
+
+            // Añadir keyframes dinámicamente
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes floatSnitch {
+                    0%, 100% { transform: translateY(0) rotate(0deg); }
+                    25% { transform: translateY(-5px) rotate(5deg); }
+                    50% { transform: translateY(5px) rotate(-5deg); }
+                    75% { transform: translateY(-5px) rotate(5deg); }
+                }
+                
+                @keyframes wingFlapLeft {
+                    0%, 100% { transform: rotate(-30deg) translateX(0); }
+                    50% { transform: rotate(-45deg) translateX(-5px); }
+                }
+                
+                @keyframes wingFlapRight {
+                    0%, 100% { transform: rotate(30deg) translateX(0); }
+                    50% { transform: rotate(45deg) translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Animación de alas blancas
+            const wingsLeft = document.querySelectorAll('.wing-left');
+            const wingsRight = document.querySelectorAll('.wing-right');
+            
+            wingsLeft.forEach(wing => {
+                wing.style.animation = 'wingFlapLeft 1.5s ease-in-out infinite';
+            });
+            
+            wingsRight.forEach(wing => {
+                wing.style.animation = 'wingFlapRight 1.5s ease-in-out infinite';
+            });
+
             // Inicializar
             showCard(0);
+            startAutoSlide();
+            
+            // Pausar auto slide cuando el mouse está sobre el carrusel
+            document.querySelector('.card-stack-container').addEventListener('mouseenter', function() {
+                clearInterval(autoSlideInterval);
+            });
+            
+            // Reanudar auto slide cuando el mouse sale del carrusel
+            document.querySelector('.card-stack-container').addEventListener('mouseleave', function() {
+                resetAutoSlide();
+            });
         });
     </script>
 

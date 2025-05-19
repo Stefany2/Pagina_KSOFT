@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="stylo1.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Fuente Helvetica similar al ejemplo -->
     <style>
-        
+        @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700&display=swap');
     </style>
 </head>
 <body>
@@ -35,10 +36,10 @@
                         <a href="#servicios">SERVICIOS <i class="fas fa-chevron-down"></i></a>
                         <ul class="submenu">
                             <li><a href="desarrollo-software.html">Desarrollo de software</a></li>
-                            <li><a href="erp.html">Implementación de sistemas ERP</a></li>
-                            <li><a href="automatizacion.html">Automatización de procesos</a></li>
-                            <li><a href="consultoria.html">Consultoría en transformación digital</a></li>
-                            <li><a href="seguridad.html">Seguridad informática y soporte técnico</a></li>
+                            <li><a href="desarrollo-software.html#erp">Implementación de sistemas ERP</a></li>
+                            <li><a href="desarrollo-software.html#automatizacion">Automatización de procesos</a></li>
+                            <li><a href="desarrollo-software.html#consultoria">Consultoría en transformación digital</a></li>
+                            <li><a href="desarrollo-software.html#seguridad.html">Seguridad informática y soporte técnico</a></li>
                         </ul>
                     </li>
                     <li><a href="sobrenosotros.html">SOBRE NOSOTROS</a></li>
@@ -52,6 +53,40 @@
             </nav>
         </div>
     </header>
+
+
+
+
+
+
+    <!-- Widget Configuration -->
+    <script>
+        window.ChatWidgetConfig = {
+            webhook: {
+                url: 'https://www.kingsoft.pe:5678/webhook/b8e62e7e-39cd-42c0-8ec1-1ca0fd45d3a7/chat',
+                route: 'general'
+            },
+            branding: {
+                logo: 'img/eva.png',
+                name: 'EVA',
+                welcomeText: 'Hola 👋, ¿cómo puedo ayudarte?',
+                responseTimeText: 'respondemos rápidamente'
+            },
+        style: {
+            primaryColor: '#ff0000',       // Rojo
+            secondaryColor: '#000000',     // Negro
+            backgroundColor: '#000000',    // Fondo negro
+            fontColor: '#ffffff',          // Letras blancas
+            position: 'right'
+        }           
+        };
+    </script>
+    <script src="https://nocodeveloper.com/chat.js"></script>
+
+
+
+
+
 
     <section class="hero">
         <div class="video-background">
@@ -211,22 +246,22 @@
                 <h2 class="clientes-title">NUESTROS CLIENTES</h2>
                 <div class="clientes-grid">
                     <div class="cliente-item">
-                        <img src="img/cliente1.png" alt="Cliente 1" class="cliente-logo">
+                        <img src="img/Market.jpg" alt="Cliente 1" class="cliente-logo">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/cliente2.png" alt="Cliente 2" class="cliente-logo">
+                        <img src="img/market1.png" alt="Cliente 2" class="cliente-logo">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/cliente3.png" alt="Cliente 3" class="cliente-logo">
+                        <img src="img/market2.png" alt="Cliente 3" class="cliente-logo">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/cliente4.png" alt="Cliente 4" class="cliente-logo">
+                        <img src="img/market3.png" alt="Cliente 4" class="cliente-logo">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/cliente5.png" alt="Cliente 5" class="cliente-logo">
+                        <img src="img/market2.png" alt="Cliente 5" class="cliente-logo">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/cliente6.png" alt="Cliente 6" class="cliente-logo">
+                        <img src="img/market3.png" alt="Cliente 6" class="cliente-logo">
                     </div>
                 </div>
             </div>

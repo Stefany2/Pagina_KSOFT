@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KSOFT </title>
-    <link rel="stylesheet" href="stylo1.css">
+    <title>KINGSOFT</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Fuente Helvetica similar al ejemplo -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700&display=swap');
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Preloader de imágenes (carga las imágenes en caché) -->
+
+     <!-- Preloader de imágenes (carga las imágenes en caché) -->
     <div class="image-preloader">
         <img src="img/appsmoviles.jpg" alt="">
         <img src="img/UI-UX.jpg" alt="">
@@ -23,15 +19,20 @@
         <img src="img/bigdata.jpg" alt="">
     </div>
 
-    <header>
+
+    <header class="main-header">
         <div class="header-container">
             <div class="logo-container">
-                <img src="img/logo.png" alt="KSOFT Logo" class="logo-img">
-                <h1 class="logo">KSOFT</h1>
+                <img src="img/KINGSOFT1.png" alt="KINGSOFT Logo" class="logo-img">
+                <h1 class="logo">KINGSOFT</h1>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="inicio1.html">INICIO</a></li>
+            
+            <nav class="main-nav">
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-list">
+                    <li><a href="inicio.html">INICIO</a></li>
                     <li class="has-submenu">
                         <a href="#servicios">SERVICIOS <i class="fas fa-chevron-down"></i></a>
                         <ul class="submenu">
@@ -45,77 +46,70 @@
                     <li><a href="sobrenosotros.html">SOBRE NOSOTROS</a></li>
                     <li><a href="blogs.html">BLOGS</a></li>
                     <li><a href="ubicacion1.html#contacto">CONTACTANOS</a></li>
-                    <li><a href="ubicacion1.html">UBICACIÒN</a></li>
+                    <li><a href="ubicacion1.html">UBICACIÓN</a></li>
                 </ul>
-                <div class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </div>
             </nav>
         </div>
     </header>
 
 
-
-
-
-
-    <!-- Widget Configuration -->
-    <script>
-        window.ChatWidgetConfig = {
-            webhook: {
-                url: 'https://www.kingsoft.pe:5678/webhook/b8e62e7e-39cd-42c0-8ec1-1ca0fd45d3a7/chat',
-                route: 'general'
-            },
-            branding: {
-                logo: 'img/eva.png',
-                name: 'EVA',
-                welcomeText: 'Hola 👋, ¿cómo puedo ayudarte?',
-                responseTimeText: 'respondemos rápidamente'
-            },
+ <!-- Widget Configuration -->
+  <script>
+    window.ChatWidgetConfig = {
+        webhook: {
+            url: 'https://www.kingsoft.pe:5678/webhook/b8e62e7e-39cd-42c0-8ec1-1ca0fd45d3a7/chat',
+            route: 'general'
+        },
+        branding: {
+            logo: 'img/eva.png',
+            name: 'EVA',
+            welcomeText: 'Hola 👋, ¿cómo puedo ayudarte?',
+            responseTimeText: 'respondemos rápidamente'
+        },
         style: {
-            primaryColor: '#ff0000',       // Rojo
-            secondaryColor: '#000000',     // Negro
-            backgroundColor: '#000000',    // Fondo negro
-            fontColor: '#ffffff',          // Letras blancas
+            primaryColor: '#4366E6',      // Azul CMYK convertido a RGB y Hex
+            secondaryColor: '#000000',    // Negro
+            backgroundColor: '#000000',   // Fondo negro
+            fontColor: '#ffffff',         // Letras blancas
             position: 'right'
-        }           
-        };
-    </script>
+        }
+    };
+</script>
+
     <script src="https://nocodeveloper.com/chat.js"></script>
 
 
-
-
-
-
-    <section class="hero">
+    <section class="hero-section">
         <div class="video-background">
             <video class="active" autoplay muted loop>
                 <source src="video/inicio1.mp4" type="video/mp4">
+                
             </video>
             <video autoplay muted loop>
                 <source src="video/video2.mp4" type="video/mp4">
+              
             </video>
             <video autoplay muted loop>
                 <source src="video/video3.mp4" type="video/mp4">
+               
             </video>
-            <div class="video-overlay"></div>
+            <video autoplay muted loop>
+                <source src="video/inicio1.mp4" type="video/mp4">
+            
+            </video>
         </div>
-        <div class="content">
-            <div class="tagline-container">
-                <h2 class="floating-text">En Ksoft, tu éxito es nuestra misión.</h2>
-                <h2 class="floating-text">Desarrollamos soluciones digitales</h2>
-                <h2 class="floating-text">a la medida de tus necesidades</h2>
-            </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">En KINGSOFT, tu éxito es nuestra misión.</h1>
+            <p class="hero-subtitle">Desarrollamos soluciones digitales a la medida de tus necesidades</p>
             <div class="cta-buttons">
                 <a href="#servicios" class="button primary-btn">Nuestros Servicios</a>
                 <a href="ubicacion1.html#contacto" class="button secondary-btn">Contacto</a>
             </div>
         </div>
     </section>
-
-    <main>
-        <!-- Sección Servicios con Estrellas -->
+  <main>
+<!-- Sección Servicios con Estrellas -->
         <section id="servicios" class="servicios-section">
             <div class="galaxy-bg" id="servicios-galaxy"></div>
             <div class="section-container">
@@ -160,130 +154,143 @@
                         <span class="esfera-name">Big Data y análisis</span>
                     </div>
                 </div>
-                
-                <!-- Detalles de servicios -->
-                <div id="detalle-desarrollo" class="servicio-detalle">
-                    <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                    <div class="detalle-container">
-                        <img src="img/appsmoviles.jpg" alt="Desarrollo de aplicaciones" class="detalle-imagen">
-                        <div class="detalle-content">
-                            <h3 class="detalle-title">Desarrollo de aplicaciones</h3>
-                            <p class="detalle-text">Creamos aplicaciones web, móviles y de escritorio personalizadas que se adaptan perfectamente a tus necesidades empresariales. Utilizamos tecnologías modernas y frameworks robustos para garantizar escalabilidad, seguridad y alto rendimiento.</p>
-                            <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="detalle-uiux" class="servicio-detalle">
-                    <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                    <div class="detalle-container">
-                        <img src="img/UI-UX.jpg" alt="Diseño UI/UX" class="detalle-imagen">
-                        <div class="detalle-content">
-                            <h3 class="detalle-title">Diseño UI/UX</h3>
-                            <p class="detalle-text">Nuestro equipo de diseñadores crea interfaces intuitivas y experiencias de usuario memorables. Investigamos, prototipamos y testeamos para asegurar que cada interacción sea satisfactoria y cumpla con los objetivos de negocio.</p>
-                            <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="detalle-ia" class="servicio-detalle">
-                    <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                    <div class="detalle-container">
-                        <img src="img/artificial.png" alt="Inteligencia Artificial" class="detalle-imagen">
-                        <div class="detalle-content">
-                            <h3 class="detalle-title">Inteligencia Artificial(IA)</h3>
-                            <p class="detalle-text">Implementamos soluciones de IA y machine learning para automatizar procesos, predecir tendencias y ofrecer experiencias personalizadas. Desde chatbots hasta sistemas de recomendación avanzados.</p>
-                            <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="detalle-iot" class="servicio-detalle">
-                    <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                    <div class="detalle-container">
-                        <img src="img/IOT.jpg" alt="Internet de las Cosas" class="detalle-imagen">
-                        <div class="detalle-content">
-                            <h3 class="detalle-title">Internet de las Cosas(IOT)</h3>
-                            <p class="detalle-text">Conectamos dispositivos físicos con plataformas digitales para recopilar datos en tiempo real, optimizar operaciones y crear nuevos modelos de negocio. Soluciones desde wearables hasta ciudades inteligentes.</p>
-                            <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="detalle-datascience" class="servicio-detalle">
-                    <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                    <div class="detalle-container">
-                        <img src="img/datos.jpg" alt="Ciencia de Datos" class="detalle-imagen">
-                        <div class="detalle-content">
-                            <h3 class="detalle-title">Ciencia de Datos</h3>
-                            <p class="detalle-text">Transformamos datos en conocimiento accionable. Nuestros expertos en data science aplican técnicas estadísticas avanzadas y algoritmos de machine learning para descubrir patrones y oportunidades ocultas.</p>
-                            <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="detalle-bigdata" class="servicio-detalle">
-                    <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                    <div class="detalle-container">
-                        <img src="img/bigdata.jpg" alt="Big Data y Análisis" class="detalle-imagen">
-                        <div class="detalle-content">
-                            <h3 class="detalle-title">Big Data y Análisis</h3>
-                            <p class="detalle-text">Manejamos y analizamos grandes volúmenes de datos estructurados y no estructurados. Implementamos arquitecturas de datos robustas que permiten procesamiento en tiempo real y batch para obtener insights valiosos.</p>
-                            <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                        </div>
+            
+            <!-- Modales de servicios -->
+            <div id="detalle-desarrollo" class="servicio-detalle">
+                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
+                <div class="detalle-container">
+                    <img src="img/appsmoviles.jpg" alt="Desarrollo de aplicaciones" class="detalle-imagen">
+                    <div class="detalle-content">
+                        <h3 class="detalle-title">Desarrollo de aplicaciones</h3>
+                        <p class="detalle-text">Creamos aplicaciones web, móviles y de escritorio personalizadas que se adaptan perfectamente a tus necesidades empresariales. Utilizamos tecnologías modernas y frameworks robustos para garantizar escalabilidad, seguridad y alto rendimiento.</p>
+                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Línea divisoria roja -->
-        <div class="divider-line"></div>
-
-        <!-- Sección de Clientes con Estrellas -->
-        <section class="clientes-section">
-            <div class="galaxy-bg" id="clientes-galaxy"></div>
-            <div class="clientes-container">
-                <h2 class="clientes-title">NUESTROS CLIENTES</h2>
-                <div class="clientes-grid">
-                    <div class="cliente-item">
-                        <img src="img/Market.jpg" alt="Cliente 1" class="cliente-logo">
-                    </div>
-                    <div class="cliente-item">
-                        <img src="img/market1.png" alt="Cliente 2" class="cliente-logo">
-                    </div>
-                    <div class="cliente-item">
-                        <img src="img/market2.png" alt="Cliente 3" class="cliente-logo">
-                    </div>
-                    <div class="cliente-item">
-                        <img src="img/market3.png" alt="Cliente 4" class="cliente-logo">
-                    </div>
-                    <div class="cliente-item">
-                        <img src="img/market2.png" alt="Cliente 5" class="cliente-logo">
-                    </div>
-                    <div class="cliente-item">
-                        <img src="img/market3.png" alt="Cliente 6" class="cliente-logo">
+            
+            <div id="detalle-uiux" class="servicio-detalle">
+                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
+                <div class="detalle-container">
+                    <img src="img/UI-UX.jpg" alt="Diseño UI/UX" class="detalle-imagen">
+                    <div class="detalle-content">
+                        <h3 class="detalle-title">Diseño UI/UX</h3>
+                        <p class="detalle-text">Nuestro equipo de diseñadores crea interfaces intuitivas y experiencias de usuario memorables. Investigamos, prototipamos y testeamos para asegurar que cada interacción sea satisfactoria y cumpla con los objetivos de negocio.</p>
+                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+            
+            <div id="detalle-ia" class="servicio-detalle">
+                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
+                <div class="detalle-container">
+                    <img src="img/artificial.png" alt="Inteligencia Artificial" class="detalle-imagen">
+                    <div class="detalle-content">
+                        <h3 class="detalle-title">Inteligencia Artificial(IA)</h3>
+                        <p class="detalle-text">Implementamos soluciones de IA y machine learning para automatizar procesos, predecir tendencias y ofrecer experiencias personalizadas. Desde chatbots hasta sistemas de recomendación avanzados.</p>
+                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="detalle-iot" class="servicio-detalle">
+                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
+                <div class="detalle-container">
+                    <img src="img/IOT.jpg" alt="Internet de las Cosas" class="detalle-imagen">
+                    <div class="detalle-content">
+                        <h3 class="detalle-title">Internet de las Cosas(IOT)</h3>
+                        <p class="detalle-text">Conectamos dispositivos físicos con plataformas digitales para recopilar datos en tiempo real, optimizar operaciones y crear nuevos modelos de negocio. Soluciones desde wearables hasta ciudades inteligentes.</p>
+                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="detalle-datascience" class="servicio-detalle">
+                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
+                <div class="detalle-container">
+                    <img src="img/datos.jpg" alt="Ciencia de Datos" class="detalle-imagen">
+                    <div class="detalle-content">
+                        <h3 class="detalle-title">Ciencia de Datos</h3>
+                        <p class="detalle-text">Transformamos datos en conocimiento accionable. Nuestros expertos en data science aplican técnicas estadísticas avanzadas y algoritmos de machine learning para descubrir patrones y oportunidades ocultas.</p>
+                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="detalle-bigdata" class="servicio-detalle">
+                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
+                <div class="detalle-container">
+                    <img src="img/bigdata.jpg" alt="Big Data y Análisis" class="detalle-imagen">
+                    <div class="detalle-content">
+                        <h3 class="detalle-title">Big Data y Análisis</h3>
+                        <p class="detalle-text">Manejamos y analizamos grandes volúmenes de datos estructurados y no estructurados. Implementamos arquitecturas de datos robustas que permiten procesamiento en tiempo real y batch para obtener insights valiosos.</p>
+                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Línea divisoria -->
+    <div class="divider-line"></div>
+
+    <!-- Sección de Clientes -->
+    <section class="clientes-section">
+        <div class="galaxy-bg" id="clientes-galaxy"></div>
+        <div class="clientes-container">
+            <h2 class="clientes-title">PARTNERSHIP</h2>
+            <div class="clientes-grid">
+                <div class="cliente-item">
+                    <img src="img/ECOFAUCET.png" alt="Cliente 1" class="cliente-logo">
+                </div>
+                <div class="cliente-item">
+                    <img src="img/IRON.png" alt="Cliente 2" class="cliente-logo">
+                </div>
+                <div class="cliente-item">
+                    <img src="img/JEREM-IA.png" alt="Cliente 3" class="cliente-logo">
+                </div>
+                <div class="cliente-item">
+                    <img src="img/CUY.png" alt="Cliente 4" class="cliente-logo">
+                </div>
+                <div class="cliente-item">
+                    <img src="img/LLAM-AI-.png" alt="Cliente 5" class="cliente-logo">
+                </div>
+                <div class="cliente-item">
+                    <img src="img/MAT-IA-.png" alt="Cliente 6" class="cliente-logo">
+                </div>
+                  <div class="cliente-item">
+                    <img src="img/SOF-IA-.png" alt="Cliente 6" class="cliente-logo">
+                </div>
+                <div class="cliente-item">
+                    <img src="img/SMARTKEY.png" alt="Cliente 6" class="cliente-logo">
+                </div>
+                <div class="cliente-item">
+                    <img src="img/VIGIA.png" alt="Cliente 6" class="cliente-logo">
+                </div>
+                 <div class="cliente-item">
+                    <img src="img/VALER-IA.png" alt="Cliente 6" class="cliente-logo">
+                </div>
+                 <div class="cliente-item">
+                    <img src="img/JOS-IA-.png" alt="Cliente 6" class="cliente-logo">
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <div class="footer-container">
             <div class="footer-logo-container">
-                <img src="img/logo.png" alt="KSOFT Logo" class="footer-logo-img">
-                <a href="#" class="footer-logo">KSOFT</a>
+                <img src="img/KINGSOFT1.png" alt="KSOFT Logo" class="footer-logo-img">
+                <a href="#" class="footer-logo">KINGSOFT</a>
             </div>
             
             <div class="social-links">
                 <p class="detalle-text">Potenciamos tu negocio con tecnología de precisión</p>
             </div>
             
-            <p class="copyright">© 2025 KSOFT - Todos los derechos reservados</p>
+            <p class="copyright">© 2025 KINGSOFT - Todos los derechos reservados</p>
         </div>
     </footer>
-
-    <script>
+ <script>
         // Preload images al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
             // Preload de imágenes para los detalles de servicios
@@ -459,5 +466,6 @@
             });
         });
     </script>
+    <script src="script.js"></script>
 </body>
 </html>

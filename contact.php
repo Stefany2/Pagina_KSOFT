@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         // Redirigir a WhatsApp con los datos del formulario
         $whatsappMessage = "Nombre: $nombres $apellidos\nEmail: $correo_electronico\nTeléfono: $numero_contacto\nServicio: $servicio\nMensaje: $mensaje";
-        $phoneNumber = '51998887099';  // Número de WhatsApp de tu empresa
+        $phoneNumber = '51931576209';  // Número de WhatsApp de tu empresa
         $whatsappUrl = "https://wa.me/$phoneNumber?text=" . urlencode($whatsappMessage);
 
         // Redirigir al usuario a WhatsApp

@@ -16,6 +16,6 @@ KINGSOFTWARE SAC.
 folium.Marker([lat, lon], popup=popup_texto, tooltip="Haz clic para más info").add_to(mapa)
 
 # Guardar el mapa como un archivo HTML
-mapa.save("ubicacion.html")
+mapa.save("ubi.html")
 
 print("Mapa generado exitosamente: abre 'ubicacion.html' en tu navegador.")

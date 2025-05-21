@@ -4,22 +4,1369 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KINGSOFT</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 1.875rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin: 0.625rem 0.3125rem;
+            min-height: 2.75rem;
+        }
+
+        .primary-btn {
+            background-color: #4366E6;
+            color: white;
+            border: 2px solid #4366E6;
+        }
+
+        .primary-btn:hover {
+            background-color: transparent;
+            color: #4366E6;
+        }
+
+        .secondary-btn {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .secondary-btn:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-0.625rem); }
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 7.5rem;
+            height: 0.25rem;
+            background: #4366E6;
+            margin: 0.625rem auto;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: #aaa;
+        }
+
+        /* Header */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(67, 102, 230, 0.9);
+            backdrop-filter: blur(0.625rem);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 87.5rem;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 3.125rem;
+            margin-right: 0.75rem;
+        }
+
+        .logo {
+            color: white;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .main-nav li {
+            margin-left: 1.5625rem;
+            position: relative;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+        }
+
+        .main-nav a:hover {
+            color: #000;
+        }
+
+        .main-nav i {
+            margin-left: 0.3125rem;
+            font-size: 0.9rem;
+        }
+
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(67, 102, 230, 0.95);
+            width: 15.625rem;
+            padding: 0.9375rem 0;
+            border-radius: 0.3125rem;
+            box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .has-submenu:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .submenu li {
+            margin: 0;
+            padding: 0.5rem 1.25rem;
+        }
+
+        .submenu a {
+            color: #ddd;
+            font-size: 0.9rem;
+        }
+
+        .submenu a:hover {
+            color: #fff;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .video-background video.active {
+            opacity: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1.25rem;
+            max-width: 87.5rem;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 4rem);
+            margin-bottom: 1.5625rem;
+            text-shadow: 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 4vw, 1.8rem);
+            margin-bottom: 2.5rem;
+            max-width: 56.25rem;
+            text-shadow: 0.0625rem 0.0625rem 0.1875rem rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(1.25rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Us Section */
+        .about-us {
+            background-color: #4366E6;
+            padding: clamp(3rem, 10vw, 6.25rem) 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-container {
+            max-width: 87.5rem;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            gap: 2.5rem;
+        }
+
+        .left-section {
+            flex: 1;
+            padding-right: 2.5rem;
+        }
+
+        .left-section h2 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin-bottom: 1.25rem;
+            color: white;
+        }
+
+        .left-section p {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .separator {
+            width: 0.125rem;
+            height: 9.375rem;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .right-section {
+            flex: 1;
+            padding-left: 2.5rem;
+        }
+
+        .right-section h3 {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            line-height: 1.4;
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Servicios Section */
+        .servicios-section {
+            background-color: #000;
+            padding: clamp(3rem, 10vw, 7.5rem) 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .galaxy-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 6.25rem;
+            height: 0.125rem;
+            background: linear-gradient(90deg, rgba(255,255,255,0), white);
+            transform: rotate(45deg);
+            animation: shooting var(--shooting-duration) linear infinite;
+        }
+
+        @keyframes shooting {
+            0% {
+                transform: translate(var(--shooting-x), var(--shooting-y)) rotate(45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(var(--shooting-x) + 31.25rem), calc(var(--shooting-y) + 31.25rem)) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        .section-container {
+            max-width: 87.5rem;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .esferas-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: clamp(1rem, 3vw, 1.875rem);
+            margin-top: 3.125rem;
+        }
+
+        .esfera {
+            width: clamp(8rem, 20vw, 10rem);
+            height: clamp(8rem, 20vw, 10rem);
+            border-radius: 50%;
+            background: rgb(67, 102, 230);
+            box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.5),
+                        inset 0 0 0.9375rem rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .esfera:hover {
+            transform: translateY(-0.625rem) scale(1.05);
+            box-shadow: 0 0.9375rem 2.1875rem rgba(0, 0, 0, 0.6),
+                        inset 0 0 1.25rem rgba(255, 255, 255, 0.2);
+        }
+
+        .esfera::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .esfera:hover::before {
+            transform: rotate(45deg) translate(1.25rem, 1.25rem);
+        }
+
+        .esfera-icon {
+            font-size: clamp(1.5rem, 5vw, 2.8rem);
+            margin-bottom: 0.625rem;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .esfera:hover .esfera-icon {
+            transform: scale(1.2);
+        }
+
+        .esfera-name {
+            font-size: clamp(0.8rem, 2vw, 1.1rem);
+            font-weight: 500;
+            text-align: center;
+            color: #fff;
+        }
+
+        .servicio-detalle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(0.3125rem);
+            overflow-y: auto;
+            padding: 1.25rem;
+        }
+
+        .servicio-detalle.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .detalle-container {
+            background-color: #111;
+            border-radius: 0.625rem;
+            width: 100%;
+            max-width: 56.25rem;
+            padding: clamp(1rem, 3vw, 1.875rem);
+            position: relative;
+            box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 1.25rem 0;
+        }
+
+        .close-detalle {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-detalle:hover {
+            color: #4366E6;
+        }
+
+        .detalle-content-wrapper {
+            display: flex;
+            gap: clamp(1rem, 3vw, 1.875rem);
+        }
+
+        .detalle-imagen {
+            width: 100%;
+            height: auto;
+            max-height: 18.75rem;
+            object-fit: cover;
+            border-radius: 0.3125rem;
+        }
+
+        .detalle-content {
+            flex: 1;
+        }
+
+        .detalle-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 1.25rem;
+            color: #4366E6;
+        }
+
+        .detalle-text {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            line-height: 1.6;
+            color: #ddd;
+            margin-bottom: 1.875rem;
+        }
+
+        .contact-btn {
+            background-color: #4366E6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5625rem;
+            border-radius: 1.875rem;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 2.75rem;
+        }
+
+        .contact-btn:hover {
+            background-color: #5a7eff;
+            transform: translateY(-0.1875rem);
+            box-shadow: 0 0.3125rem 0.9375rem rgba(67, 102, 230, 0.4);
+        }
+
+        /* Clientes Section */
+        .clientes-section {
+            background-color: #000;
+            padding: clamp(3rem, 10vw, 7.5rem) 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clientes-container {
+            max-width: 87.5rem;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .clientes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(clamp(8rem, 20vw, 10rem), 1fr));
+            gap: clamp(1rem, 3vw, 1.875rem);
+            margin-top: 3.125rem;
+        }
+
+        .cliente-item {
+            background-color: #fff;
+            border-radius: 0.625rem;
+            padding: 1.25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: clamp(7rem, 20vw, 8.75rem);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cliente-item:hover {
+            transform: translateY(-0.3125rem);
+            box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.3);
+        }
+
+        .cliente-logo {
+            max-width: clamp(5rem, 15vw, 7.5rem);
+            max-height: clamp(3.5rem, 10vw, 5rem);
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .cliente-item:hover .cliente-logo {
+            transform: scale(1.05);
+        }
+
+        /* Contacto Section */
+        .contact-section {
+            background-color: #000;
+            padding: clamp(3rem, 10vw, 7.5rem) 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-container {
+            max-width: 87.5rem;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-content {
+            display: flex;
+            gap: clamp(1.5rem, 5vw, 3.125rem);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .astronaut {
+            width: clamp(10rem, 30vw, 18.75rem);
+            z-index: 0;
+            opacity: 0.8;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .contact-form {
+            flex: 0 0 clamp(25rem, 50vw, 31.25rem);
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: clamp(1rem, 3vw, 1.875rem);
+            border-radius: 0.625rem;
+            box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(0.3125rem);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #ddd;
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 0.9375rem;
+            border-radius: 0.3125rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: clamp(0.8rem, 2vw, 1.1rem);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4366E6;
+            box-shadow: 0 0 0 0.125rem rgba(67, 102, 230, 0.3);
+        }
+
+        .submit-btn {
+            background-color: #4366E6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5625rem;
+            border-radius: 1.875rem;
+            font-size: clamp(0.8rem, 2vw, 1.1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 2.75rem;
+        }
+
+        .submit-btn i {
+            margin-left: 0.625rem;
+        }
+
+        .submit-btn:hover {
+            background-color: #5a7eff;
+            transform: translateY(-0.1875rem);
+            box-shadow: 0 0.3125rem 0.9375rem rgba(67, 102, 230, 0.4);
+        }
+
+        /* Ubicacion Section */
+        .ubicacion-section {
+            background-color: #000;
+            padding: clamp(3rem, 10vw, 7.5rem) 1.25rem;
+            position: relative;
+            overflow: visible;
+            min-height: clamp(25rem, 80vh, 31.25rem);
+        }
+
+        .ubicacion-container {
+            max-width: 87.5rem;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: clamp(1.5rem, 5vw, 3.125rem);
+            align-items: center;
+        }
+
+        .ubicacion-text {
+            flex: 1;
+            text-align: center;
+        }
+
+        .ubicacion-text h2 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin-bottom: 1.25rem;
+            color: white;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .ubicacion-text h2::after {
+            content: '';
+            display: block;
+            width: 7.5rem;
+            height: 0.25rem;
+            background: #4366E6;
+            margin: 0.625rem auto;
+        }
+
+        .ubicacion-map {
+            flex: 1;
+            height: clamp(15rem, 50vw, 25rem);
+            border-radius: 0.625rem;
+            overflow: hidden;
+            box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            min-height: clamp(15rem, 50vw, 25rem);
+        }
+
+        .leaflet-container {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            background: #000;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .cloud {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3.125rem;
+            animation: moveCloud linear infinite;
+        }
+
+        .cloud-1 {
+            height: 5rem;
+            animation-duration: 30s;
+            top: 20%;
+            left: 5%;
+        }
+
+        .cloud-2 {
+            height: 7.5rem;
+            animation-duration: 40s;
+            top: 60%;
+            left: -10%;
+            opacity: 0.7;
+        }
+
+        .cloud-3 {
+            height: 6.25rem;
+            animation-duration: 35s;
+            top: 30%;
+            right: -5%;
+            opacity: 0.6;
+        }
+
+        @keyframes moveCloud {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
+        }
+
+        /* Divider */
+        .divider-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(67, 102, 230, 0.5), transparent);
+            margin: 0 auto;
+            max-width: 87.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4366E6;
+            padding: clamp(2rem, 8vw, 3.125rem) 1.25rem;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 87.5rem;
+            margin: 0 auto;
+        }
+
+        .footer-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-logo-img {
+            height: clamp(2rem, 8vw, 3.125rem);
+            margin-right: 0.75rem;
+        }
+
+        .footer-logo {
+            color: white;
+            font-size: clamp(1rem, 3vw, 1.8rem);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .social-links {
+            margin-bottom: 1.25rem;
+        }
+
+        .social-links p {
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            color: #ddd;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: clamp(1.8rem, 7vw, 3.5rem);
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(0.9rem, 3.5vw, 1.6rem);
+            }
+            
+            .content-container {
+                gap: 1.875rem;
+            }
+            
+            .contact-form {
+                flex: 0 0 clamp(22rem, 45vw, 28rem);
+            }
+            
+            .esfera {
+                width: clamp(7.5rem, 18vw, 9rem);
+                height: clamp(7.5rem, 18vw, 9rem);
+            }
+            
+            .clientes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(clamp(7.5rem, 18vw, 9rem), 1fr));
+            }
+            
+            .cliente-item {
+                height: clamp(6.5rem, 18vw, 8rem);
+            }
+            
+            .cliente-logo {
+                max-width: clamp(4.5rem, 13vw, 6.5rem);
+                max-height: clamp(3rem, 9vw, 4.5rem);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: clamp(1.5rem, 6vw, 3rem);
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(0.8rem, 3vw, 1.4rem);
+            }
+            
+            .content-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .left-section, .right-section {
+                padding: 0;
+                text-align: center;
+            }
+            
+            .left-section h2, .right-section h3 {
+                font-size: clamp(1.5rem, 5vw, 2.5rem);
+            }
+            
+            .separator {
+                width: 80%;
+                height: 0.125rem;
+                margin: 1.875rem auto;
+            }
+            
+            .contact-content {
+                flex-direction: column;
+            }
+            
+            .contact-form {
+                flex: 0 0 100%;
+                max-width: clamp(20rem, 90vw, 31.25rem);
+            }
+
+            .ubicacion-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .ubicacion-text {
+                text-align: center;
+            }
+
+            .ubicacion-map {
+                width: 100%;
+                height: clamp(14rem, 45vw, 21.875rem);
+                min-height: clamp(14rem, 45vw, 21.875rem);
+            }
+
+            #map {
+                min-height: clamp(14rem, 45vw, 21.875rem);
+            }
+
+            .detalle-content-wrapper {
+                flex-direction: column;
+            }
+
+            .detalle-imagen {
+                max-height: clamp(12rem, 40vw, 15.625rem);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                padding: clamp(0.75rem, 3vw, 0.9375rem) 0;
+            }
+            
+            .logo-img {
+                height: clamp(1.8rem, 8vw, 2.5rem);
+            }
+            
+            .logo {
+                font-size: clamp(1.2rem, 4vw, 1.8rem);
+            }
+            
+            .main-nav a {
+                font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: relative;
+                right: 0;
+            }
+            
+            .main-nav ul {
+                position: fixed;
+                top: clamp(3.5rem, 12vw, 4.375rem);
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - clamp(3.5rem, 12vw, 4.375rem));
+                background-color: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 1.875rem;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+            
+            .main-nav ul.show {
+                left: 0;
+            }
+            
+            .main-nav li {
+                margin: 0.9375rem 0;
+            }
+            
+            .submenu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                width: 100%;
+                background: rgba(67, 102, 230, 0.95);
+                box-shadow: none;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+            }
+            
+            .has-submenu.active .submenu {
+                max-height: 31.25rem;
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .submenu li {
+                padding: 0.5rem 0;
+                text-align: center;
+            }
+            
+            .hero-title {
+                font-size: clamp(1.2rem, 5vw, 2.5rem);
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(0.7rem, 3vw, 1.2rem);
+            }
+            
+            .section-title {
+                font-size: clamp(1.5rem, 5vw, 2.5rem);
+            }
+            
+            .section-subtitle {
+                font-size: clamp(0.8rem, 3vw, 1.3rem);
+            }
+            
+            .esfera {
+                width: clamp(7rem, 18vw, 8.75rem);
+                height: clamp(7rem, 18vw, 8.75rem);
+            }
+            
+            .esfera-icon {
+                font-size: clamp(1.2rem, 4vw, 2.5rem);
+            }
+            
+            .esfera-name {
+                font-size: clamp(0.7rem, 2vw, 1rem);
+            }
+            
+            .clientes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(clamp(7rem, 18vw, 8.75rem), 1fr));
+                gap: clamp(0.75rem, 2vw, 1.25rem);
+            }
+            
+            .cliente-item {
+                height: clamp(6rem, 16vw, 7.5rem);
+            }
+            
+            .cliente-logo {
+                max-width: clamp(4rem, 12vw, 6rem);
+                max-height: clamp(2.5rem, 8vw, 4rem);
+            }
+            
+            .astronaut {
+                width: clamp(8rem, 25vw, 15.625rem);
+                margin-bottom: 1.25rem;
+            }
+            
+            .ubicacion-map {
+                height: clamp(12rem, 40vw, 18.75rem);
+                min-height: clamp(12rem, 40vw, 18.75rem);
+            }
+
+            #map {
+                min-height: clamp(12rem, 40vw, 18.75rem);
+            }
+
+            .detalle-container {
+                padding: clamp(0.75rem, 3vw, 1.25rem);
+                max-width: 90%;
+            }
+
+            .detalle-title {
+                font-size: clamp(1.2rem, 4vw, 2rem);
+            }
+
+            .detalle-text {
+                font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+            }
+
+            .detalle-imagen {
+                max-height: clamp(10rem, 35vw, 12.5rem);
+            }
+
+            .contact-btn {
+                font-size: clamp(0.7rem, 2vw, 0.9rem);
+                padding: clamp(0.5rem, 2vw, 0.625rem) clamp(1rem, 3vw, 1.25rem);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: clamp(1rem, 5vw, 2rem);
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(0.6rem, 3vw, 1rem);
+            }
+            
+            .section-title {
+                font-size: clamp(1.2rem, 5vw, 2rem);
+            }
+            
+            .section-subtitle {
+                font-size: clamp(0.7rem, 3vw, 1.1rem);
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.625rem;
+            }
+            
+            .button {
+                width: 100%;
+                max-width: clamp(10rem, 50vw, 13.75rem);
+                padding: clamp(0.5rem, 2vw, 0.625rem) clamp(1rem, 3vw, 1.25rem);
+            }
+            
+            .esferas-container {
+                gap: clamp(0.5rem, 2vw, 0.9375rem);
+            }
+            
+            .esfera {
+                width: clamp(6rem, 18vw, 7.5rem);
+                height: clamp(6rem, 18vw, 7.5rem);
+            }
+            
+            .esfera-icon {
+                font-size: clamp(1rem, 4vw, 2rem);
+                margin-bottom: 0.3125rem;
+            }
+            
+            .esfera-name {
+                font-size: clamp(0.6rem, 2vw, 0.9rem);
+            }
+            
+            .clientes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(clamp(6rem, 18vw, 7.5rem), 1fr));
+                gap: clamp(0.5rem, 2vw, 0.9375rem);
+            }
+            
+            .cliente-item {
+                height: clamp(5rem, 16vw, 6.25rem);
+            }
+            
+            .cliente-logo {
+                max-width: clamp(3.5rem, 12vw, 5rem);
+                max-height: clamp(2rem, 8vw, 3.75rem);
+            }
+            
+            .detalle-container {
+                padding: clamp(0.5rem, 3vw, 0.9375rem);
+                max-width: 95%;
+            }
+            
+            .detalle-title {
+                font-size: clamp(1rem, 4vw, 1.8rem);
+            }
+            
+            .detalle-text {
+                font-size: clamp(0.7rem, 2.5vw, 1rem);
+            }
+            
+            .detalle-imagen {
+                max-height: clamp(8rem, 30vw, 11.25rem);
+            }
+            
+            .astronaut {
+                width: clamp(7rem, 25vw, 12.5rem);
+            }
+            
+            .contact-form {
+                padding: clamp(0.75rem, 3vw, 1.25rem);
+                max-width: clamp(18rem, 90vw, 25rem);
+            }
+            
+            .form-group label {
+                font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+            }
+            
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: clamp(0.7rem, 2vw, 1rem);
+                padding: clamp(0.5rem, 2vw, 0.625rem) clamp(0.75rem, 2vw, 0.9375rem);
+            }
+            
+            .submit-btn {
+                font-size: clamp(0.7rem, 2vw, 1rem);
+                padding: clamp(0.5rem, 2vw, 0.625rem) clamp(1rem, 3vw, 1.25rem);
+            }
+            
+            .ubicacion-map {
+                height: clamp(10rem, 35vw, 15.625rem);
+                min-height: clamp(10rem, 35vw, 15.625rem);
+            }
+
+            #map {
+                min-height: clamp(10rem, 35vw, 15.625rem);
+            }
+            
+            .footer-logo-img {
+                height: clamp(1.8rem, 8vw, 2.5rem);
+            }
+            
+            .footer-logo {
+                font-size: clamp(0.9rem, 3vw, 1.5rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: clamp(0.5rem, 3vw, 0.75rem) 0;
+            }
+            
+            .logo-img {
+                height: clamp(1.5rem, 7vw, 2rem);
+            }
+            
+            .logo {
+                font-size: clamp(1rem, 4vw, 1.5rem);
+            }
+            
+            .mobile-menu-btn {
+                font-size: clamp(1.2rem, 5vw, 1.8rem);
+            }
+            
+            .main-nav ul {
+                top: clamp(3rem, 10vw, 3.75rem);
+            }
+            
+            .hero-title {
+                font-size: clamp(0.9rem, 5vw, 1.8rem);
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(0.5rem, 3vw, 0.9rem);
+            }
+            
+            .section-title {
+                font-size: clamp(1rem, 5vw, 1.8rem);
+            }
+            
+            .section-subtitle {
+                font-size: clamp(0.6rem, 3vw, 1rem);
+            }
+            
+            .esfera {
+                width: clamp(5.5rem, 18vw, 7rem);
+                height: clamp(5.5rem, 18vw, 7rem);
+            }
+            
+            .esfera-icon {
+                font-size: clamp(0.9rem, 4vw, 1.8rem);
+            }
+            
+            .esfera-name {
+                font-size: clamp(0.5rem, 2vw, 0.8rem);
+            }
+            
+            .clientes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(clamp(5.5rem, 18vw, 7rem), 1fr));
+            }
+            
+            .cliente-item {
+                height: clamp(4.5rem, 16vw, 5.625rem);
+            }
+            
+            .cliente-logo {
+                max-width: clamp(3rem, 12vw, 4.5rem);
+                max-height: clamp(1.8rem, 8vw, 3.5rem);
+            }
+            
+            .detalle-container {
+                padding: clamp(0.5rem, 3vw, 0.75rem);
+                max-width: 98%;
+            }
+            
+            .detalle-title {
+                font-size: clamp(0.9rem, 4vw, 1.6rem);
+            }
+            
+            .detalle-text {
+                font-size: clamp(0.6rem, 2.5vw, 0.9rem);
+            }
+            
+            .detalle-imagen {
+                max-height: clamp(7rem, 30vw, 10rem);
+            }
+            
+            .contact-form {
+                max-width: clamp(16rem, 95vw, 22rem);
+            }
+            
+            .form-group label {
+                font-size: clamp(0.7rem, 2.5vw, 1rem);
+            }
+            
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: clamp(0.6rem, 2vw, 0.9rem);
+            }
+            
+            .submit-btn {
+                font-size: clamp(0.6rem, 2vw, 0.9rem);
+            }
+            
+            .astronaut {
+                width: clamp(6rem, 25vw, 10rem);
+            }
+            
+            .ubicacion-map {
+                height: clamp(8rem, 30vw, 12.5rem);
+                min-height: clamp(8rem, 30vw, 12.5rem);
+            }
+
+            #map {
+                min-height: clamp(8rem, 30vw, 12.5rem);
+            }
+        }
+    </style>
 </head>
 <body>
-
-     <!-- Preloader de imágenes (carga las imágenes en caché) -->
-    <div class="image-preloader">
-        <img src="img/appsmoviles.jpg" alt="">
-        <img src="img/UI-UX.jpg" alt="">
-        <img src="img/artificial.png" alt="">
-        <img src="img/IOT.jpg" alt="">
-        <img src="img/datos.jpg" alt="">
-        <img src="img/bigdata.jpg" alt="">
-    </div>
-
-
     <header class="main-header">
         <div class="header-container">
             <div class="logo-container">
@@ -28,9 +1375,9 @@
             </div>
             
             <nav class="main-nav">
-                <div class="mobile-menu-btn">
+                <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
                     <i class="fas fa-bars"></i>
-                </div>
+                </button>
                 <ul class="nav-list">
                     <li><a href="inicio.html">INICIO</a></li>
                     <li class="has-submenu">
@@ -40,62 +1387,31 @@
                             <li><a href="desarrollo-software.html#erp">Implementación de sistemas ERP</a></li>
                             <li><a href="desarrollo-software.html#automatizacion">Automatización de procesos</a></li>
                             <li><a href="desarrollo-software.html#consultoria">Consultoría en transformación digital</a></li>
-                            <li><a href="desarrollo-software.html#seguridad.html">Seguridad informática y soporte técnico</a></li>
+                            <li><a href="desarrollo-software.html#seguridad">Seguridad informática y soporte técnico</a></li>
                         </ul>
                     </li>
                     <li><a href="sobrenosotros.html">SOBRE NOSOTROS</a></li>
                     <li><a href="blogs.html">BLOGS</a></li>
-                    <li><a href="ubicacion1.html#contacto">CONTACTANOS</a></li>
-                    <li><a href="ubicacion1.html">UBICACIÓN</a></li>
+                    <li><a href="#contacto">CONTACTANOS</a></li>
+                    <li><a href="#ubicacion">UBICACIÓN</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-
- <!-- Widget Configuration -->
-  <script>
-    window.ChatWidgetConfig = {
-        webhook: {
-            url: 'https://www.kingsoft.pe:5678/webhook/b8e62e7e-39cd-42c0-8ec1-1ca0fd45d3a7/chat',
-            route: 'general'
-        },
-        branding: {
-            logo: 'img/eva.png',
-            name: 'EVA',
-            welcomeText: 'Hola 👋, ¿cómo puedo ayudarte?',
-            responseTimeText: 'respondemos rápidamente'
-        },
-        style: {
-            primaryColor: '#4366E6',      // Azul CMYK convertido a RGB y Hex
-            secondaryColor: '#000000',    // Negro
-            backgroundColor: '#000000',   // Fondo negro
-            fontColor: '#ffffff',         // Letras blancas
-            position: 'right'
-        }
-    };
-</script>
-
-    <script src="https://nocodeveloper.com/chat.js"></script>
-
-
     <section class="hero-section">
         <div class="video-background">
-            <video class="active" autoplay muted loop>
+            <video class="active" autoplay muted loop playsinline>
                 <source src="video/inicio1.mp4" type="video/mp4">
-                
             </video>
-            <video autoplay muted loop>
+            <video autoplay muted loop playsinline>
                 <source src="video/video2.mp4" type="video/mp4">
-              
             </video>
-            <video autoplay muted loop>
+            <video autoplay muted loop playsinline>
                 <source src="video/video3.mp4" type="video/mp4">
-               
             </video>
-            <video autoplay muted loop>
+            <video autoplay muted loop playsinline>
                 <source src="video/inicio1.mp4" type="video/mp4">
-            
             </video>
         </div>
         <div class="hero-overlay"></div>
@@ -104,368 +1420,489 @@
             <p class="hero-subtitle">Desarrollamos soluciones digitales a la medida de tus necesidades</p>
             <div class="cta-buttons">
                 <a href="#servicios" class="button primary-btn">Nuestros Servicios</a>
-                <a href="ubicacion1.html#contacto" class="button secondary-btn">Contacto</a>
+                <a href="#contacto" class="button secondary-btn">Contacto</a>
             </div>
         </div>
     </section>
-  <main>
-<!-- Sección Servicios con Estrellas -->
+
+    <main>
+        <!-- Sobre Nosotros -->
+        <section class="about-us">
+            <div class="content-container">
+                <div class="left-section">
+                    <h2>KINGSOFT</h2>
+                    <p>
+                        Empresa dedicada al desarrollo de soluciones tecnológicas innovadoras, abarcando software, aplicaciones móviles,
+                        páginas web, inteligencia artificial y tecnologías IoT y fabricación digital.
+                    </p>
+                </div>
+                <div class="separator"></div>
+                <div class="right-section">
+                    <h3>Su misión es ofrecer herramientas tecnológicas personalizadas que optimicen la eficiencia operativa, fortalezcan la competitividad y faciliten la transformación digital de sus clientes.</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Servicios -->
         <section id="servicios" class="servicios-section">
-            <div class="galaxy-bg" id="servicios-galaxy"></div>
+            <div class="galaxy-bg" id="galaxy-bg"></div>
             <div class="section-container">
-                <h2 class="section-title">QUE HACEMOS?</h2>
-                <p class="section-subtitle">Innovación tecnológica para transformar tu negocio</p>
-                
-                <!-- Sistema de esferas -->
+                <h2 class="section-title">¿QUÉ HACEMOS?</h2>
+                <p class="section-subtitle">Soluciones tecnológicas innovadoras para tu negocio</p>
                 <div class="esferas-container">
-                    <!-- Desarrollo de aplicaciones -->
-                    <div class="esfera" onclick="mostrarDetalle('desarrollo')">
-                        <i class="fas fa-code esfera-icon"></i>
-                        <span class="esfera-name">Desarrollo de aplicaciones</span>
+                    <div class="esfera" data-service="desarrollo-aplicaciones">
+                        <i class="esfera-icon fas fa-mobile-alt"></i>
+                        <span class="esfera-name">Desarrollo de Apps</span>
                     </div>
-                    
-                    <!-- Diseño UI/UX -->
-                    <div class="esfera" onclick="mostrarDetalle('uiux')">
-                        <i class="fas fa-paint-brush esfera-icon"></i>
+                    <div class="esfera" data-service="interfaz-usuario">
+                        <i class="esfera-icon fas fa-paint-brush"></i>
                         <span class="esfera-name">Diseño UI/UX</span>
                     </div>
-                    
-                    <!-- Inteligencia Artificial -->
-                    <div class="esfera" onclick="mostrarDetalle('ia')">
-                        <i class="fas fa-brain esfera-icon"></i>
+                    <div class="esfera" data-service="ia">
+                        <i class="esfera-icon fas fa-brain"></i>
                         <span class="esfera-name">Inteligencia Artificial</span>
                     </div>
-                    
-                    <!-- Internet de las cosas -->
-                    <div class="esfera" onclick="mostrarDetalle('iot')">
-                        <i class="fas fa-network-wired esfera-icon"></i>
-                        <span class="esfera-name">Internet de las cosas</span>
+                    <div class="esfera" data-service="iot">
+                        <i class="esfera-icon fas fa-network-wired"></i>
+                        <span class="esfera-name">Internet de las Cosas</span>
                     </div>
-                    
-                    <!-- Ciencia de datos -->
-                    <div class="esfera" onclick="mostrarDetalle('datascience')">
-                        <i class="fas fa-chart-line esfera-icon"></i>
-                        <span class="esfera-name">Ciencia de datos</span>
+                    <div class="esfera" data-service="ciencia-datos">
+                        <i class="esfera-icon fas fa-chart-bar"></i>
+                        <span class="esfera-name">Ciencia de Datos</span>
                     </div>
-                    
-                    <!-- Big Data -->
-                    <div class="esfera" onclick="mostrarDetalle('bigdata')">
-                        <i class="fas fa-database esfera-icon"></i>
-                        <span class="esfera-name">Big Data y análisis</span>
-                    </div>
-                </div>
-            
-            <!-- Modales de servicios -->
-            <div id="detalle-desarrollo" class="servicio-detalle">
-                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                <div class="detalle-container">
-                    <img src="img/appsmoviles.jpg" alt="Desarrollo de aplicaciones" class="detalle-imagen">
-                    <div class="detalle-content">
-                        <h3 class="detalle-title">Desarrollo de aplicaciones</h3>
-                        <p class="detalle-text">Creamos aplicaciones web, móviles y de escritorio personalizadas que se adaptan perfectamente a tus necesidades empresariales. Utilizamos tecnologías modernas y frameworks robustos para garantizar escalabilidad, seguridad y alto rendimiento.</p>
-                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
+                    <div class="esfera" data-service="big-data">
+                        <i class="esfera-icon fas fa-database"></i>
+                        <span class="esfera-name">Big Data</span>
                     </div>
                 </div>
             </div>
-            
-            <div id="detalle-uiux" class="servicio-detalle">
-                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
+            <div class="servicio-detalle" id="servicio-detalle" role="dialog" aria-labelledby="detalle-title">
                 <div class="detalle-container">
-                    <img src="img/UI-UX.jpg" alt="Diseño UI/UX" class="detalle-imagen">
-                    <div class="detalle-content">
-                        <h3 class="detalle-title">Diseño UI/UX</h3>
-                        <p class="detalle-text">Nuestro equipo de diseñadores crea interfaces intuitivas y experiencias de usuario memorables. Investigamos, prototipamos y testeamos para asegurar que cada interacción sea satisfactoria y cumpla con los objetivos de negocio.</p>
-                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
+                    <button class="close-detalle" id="close-detalle" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
+                    <div class="detalle-content-wrapper">
+                        <img src="https://via.placeholder.com/300" alt="Servicio" class="detalle-imagen" id="detalle-imagen">
+                        <div class="detalle-content">
+                            <h2 class="detalle-title" id="detalle-title">Nombre del Servicio</h2>
+                            <p class="detalle-text" id="detalle-text">Descripción detallada del servicio.</p>
+                            <button class="contact-btn">Contáctanos</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div id="detalle-ia" class="servicio-detalle">
-                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                <div class="detalle-container">
-                    <img src="img/artificial.png" alt="Inteligencia Artificial" class="detalle-imagen">
-                    <div class="detalle-content">
-                        <h3 class="detalle-title">Inteligencia Artificial(IA)</h3>
-                        <p class="detalle-text">Implementamos soluciones de IA y machine learning para automatizar procesos, predecir tendencias y ofrecer experiencias personalizadas. Desde chatbots hasta sistemas de recomendación avanzados.</p>
-                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="detalle-iot" class="servicio-detalle">
-                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                <div class="detalle-container">
-                    <img src="img/IOT.jpg" alt="Internet de las Cosas" class="detalle-imagen">
-                    <div class="detalle-content">
-                        <h3 class="detalle-title">Internet de las Cosas(IOT)</h3>
-                        <p class="detalle-text">Conectamos dispositivos físicos con plataformas digitales para recopilar datos en tiempo real, optimizar operaciones y crear nuevos modelos de negocio. Soluciones desde wearables hasta ciudades inteligentes.</p>
-                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="detalle-datascience" class="servicio-detalle">
-                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                <div class="detalle-container">
-                    <img src="img/datos.jpg" alt="Ciencia de Datos" class="detalle-imagen">
-                    <div class="detalle-content">
-                        <h3 class="detalle-title">Ciencia de Datos</h3>
-                        <p class="detalle-text">Transformamos datos en conocimiento accionable. Nuestros expertos en data science aplican técnicas estadísticas avanzadas y algoritmos de machine learning para descubrir patrones y oportunidades ocultas.</p>
-                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="detalle-bigdata" class="servicio-detalle">
-                <button class="close-detalle" onclick="cerrarDetalle()"><i class="fas fa-times"></i></button>
-                <div class="detalle-container">
-                    <img src="img/bigdata.jpg" alt="Big Data y Análisis" class="detalle-imagen">
-                    <div class="detalle-content">
-                        <h3 class="detalle-title">Big Data y Análisis</h3>
-                        <p class="detalle-text">Manejamos y analizamos grandes volúmenes de datos estructurados y no estructurados. Implementamos arquitecturas de datos robustas que permiten procesamiento en tiempo real y batch para obtener insights valiosos.</p>
-                        <a href="ubicacion1.html#contacto" class="contact-btn">Contáctanos</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Línea divisoria -->
-    <div class="divider-line"></div>
-
-    <!-- Sección de Clientes -->
-    <section class="clientes-section">
-        <div class="galaxy-bg" id="clientes-galaxy"></div>
-        <div class="clientes-container">
-            <h2 class="clientes-title">PARTNERSHIP</h2>
-            <div class="clientes-grid">
-                <div class="cliente-item">
-                    <img src="img/ECOFAUCET.png" alt="Cliente 1" class="cliente-logo">
-                </div>
-                <div class="cliente-item">
-                    <img src="img/IRON.png" alt="Cliente 2" class="cliente-logo">
-                </div>
-                <div class="cliente-item">
-                    <img src="img/JEREM-IA.png" alt="Cliente 3" class="cliente-logo">
-                </div>
-                <div class="cliente-item">
-                    <img src="img/CUY.png" alt="Cliente 4" class="cliente-logo">
-                </div>
-                <div class="cliente-item">
-                    <img src="img/LLAM-AI-.png" alt="Cliente 5" class="cliente-logo">
-                </div>
-                <div class="cliente-item">
-                    <img src="img/MAT-IA-.png" alt="Cliente 6" class="cliente-logo">
-                </div>
-                  <div class="cliente-item">
-                    <img src="img/SOF-IA-.png" alt="Cliente 6" class="cliente-logo">
-                </div>
-                <div class="cliente-item">
-                    <img src="img/SMARTKEY.png" alt="Cliente 6" class="cliente-logo">
-                </div>
-                <div class="cliente-item">
-                    <img src="img/VIGIA.png" alt="Cliente 6" class="cliente-logo">
-                </div>
-                 <div class="cliente-item">
-                    <img src="img/VALER-IA.png" alt="Cliente 6" class="cliente-logo">
-                </div>
-                 <div class="cliente-item">
-                    <img src="img/JOS-IA-.png" alt="Cliente 6" class="cliente-logo">
+        <!-- Sección de Clientes -->
+        <section class="clientes-section">
+            <div class="galaxy-bg" id="clientes-galaxy"></div>
+            <div class="clientes-container">
+                <h2 class="section-title">PARTNERSHIP</h2>
+                <div class="clientes-grid">
+                    <div class="cliente-item">
+                        <img src="img/ECOFAUCET.png" alt="Cliente 1" class="cliente-logo">
+                    </div>
+                    <div class="cliente-item">
+                        <img src="img/IRON.png" alt="Cliente 2" class="cliente-logo">
+                    </div>
+                    <div class="cliente-item">
+                        <img src="img/JEREM-IA.png" alt="Cliente 3" class="cliente-logo">
+                    </div>
+                    <div class="cliente-item">
+                        <img src="img/CUY.png" alt="Cliente 4" class="cliente-logo">
+                    </div>
+                    <div class="cliente-item">
+                        <img src="img/LLAM-AI-.png" alt="Cliente 5" class="cliente-logo">
+                    </div>
+                    <div class="cliente-item">
+                        <img src="img/MAT-IA-.png" alt="Cliente 6" class="cliente-logo">
+                    </div>
+                    <div class="cliente-item">
+                        <img src="img/SOF-IA-.png" alt="Cliente 7" class="cliente-logo">
+                    </div>
+                    <div class="cliente-item">
+                        <img src="img/SMARTKEY.png" alt="Cliente 8" class="cliente-logo">
+                    </div>
+                    <div class="cliente-item">
+                        <img src="img/VIGIA.png" alt="Cliente 9" class="cliente-logo">
+                    </div>
+                    <div class="cliente-item">
+                        <img src="img/VALER-IA.png" alt="Cliente 10" class="cliente-logo">
+                    </div>
+                    <div class="cliente-item">
+                        <img src="img/JOS-IA-.png" alt="Cliente 11" class="cliente-logo">
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
+        <!-- Sección de Contacto -->
+        <section class="contact-section" id="contacto">
+            <div class="contact-container">
+                <h2 class="section-title">CONTÁCTANOS</h2>
+                <div class="contact-content">
+                    <img src="img/bot.png" alt="Astronauta KingSoft" class="astronaut" loading="lazy">
+                    <form class="contact-form" method="POST" action="contact.php">
+                        <div class="form-group">
+                            <label for="name">Nombres</label>
+                            <input type="text" id="name" name="name" placeholder="Ingresa tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Apellidos</label>
+                            <input type="text" id="lastname" name="lastname" placeholder="Ingresa tus apellidos" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Número de contacto</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Ingresa tu número de teléfono" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Selecciona un servicio</label>
+                            <select id="service" name="service" required>
+                                <option value="selecciona">Selecciona un servicio</option>
+                                <option value="desarrollo-aplicaciones">Desarrollo de aplicaciones</option>
+                                <option value="interfaz-usuario">Interfaz de usuario/Experiencia de usuario</option>
+                                <option value="ia">Inteligencia Artificial (IA)</option>
+                                <option value="iot">Internet de las Cosas</option>
+                                <option value="ciencia-datos">Ciencia de datos</option>
+                                <option value="big-data">Big Data y Análisis</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">¿Cómo podemos ayudarle?</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Describe cómo podemos ayudarte..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            Enviar Mensaje
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Ubicación -->
+        <section class="ubicacion-section" id="ubicacion">
+            <div class="galaxy-bg"></div>
+            <div class="ubicacion-container">
+                <div class="ubicacion-text">
+                    <h2 class="section-title">¿DÓNDE NOS ENCONTRAMOS?</h2>
+                </div>
+                <div class="ubicacion-map">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider-line"></div>
+    </main>
+
+    <!-- Footer -->
     <footer>
         <div class="footer-container">
             <div class="footer-logo-container">
-                <img src="img/KINGSOFT1.png" alt="KSOFT Logo" class="footer-logo-img">
+                <img src="img/KINGSOFT1.png" alt="KSOFT Logo" class="footer-logo-img" loading="lazy">
                 <a href="#" class="footer-logo">KINGSOFT</a>
             </div>
-            
             <div class="social-links">
-                <p class="detalle-text">Potenciamos tu negocio con tecnología de precisión</p>
+                <p>Potenciamos tu negocio con tecnología de precisión</p>
             </div>
-            
             <p class="copyright">© 2025 KINGSOFT - Todos los derechos reservados</p>
         </div>
     </footer>
- <script>
-        // Preload images al cargar la página
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Datos de los servicios
+        const servicios = {
+            "desarrollo-aplicaciones": {
+                title: "Desarrollo de Aplicaciones",
+                text: "Creamos aplicaciones móviles y web personalizadas que se adaptan a las necesidades específicas de tu negocio. Nuestro equipo de desarrolladores utiliza las últimas tecnologías para garantizar aplicaciones escalables, seguras y de alto rendimiento.",
+                image: "img/appsmoviles.jpg"
+            },
+            "interfaz-usuario": {
+                title: "Diseño de Interfaz de Usuario",
+                text: "Diseñamos experiencias de usuario intuitivas y atractivas que aumentan la satisfacción del cliente y mejoran la usabilidad de tus productos digitales.",
+                image: "img/UI-UX.jpg"
+            },
+            "ia": {
+                title: "Inteligencia Artificial",
+                text: "Implementamos soluciones de inteligencia artificial que transforman la forma en que operas tu negocio, desde chatbots hasta análisis predictivo.",
+                image: "img/artificial.png"
+            },
+            "iot": {
+                title: "Internet de las Cosas",
+                text: "Conectamos tus dispositivos y sistemas para crear redes inteligentes que recopilan y analizan datos en tiempo real.",
+                image: "img/IOT.jpg"
+            },
+            "ciencia-datos": {
+                title: "Ciencia de Datos",
+                text: "Transformamos tus datos en información valiosa que impulsa la toma de decisiones estratégicas.",
+                image: "img/datos.jpg"
+            },
+            "big-data": {
+                title: "Big Data y Análisis",
+                text: "Manejamos grandes volúmenes de datos con herramientas especializadas para procesamiento en tiempo real y análisis avanzado.",
+                image: "img/bigdata.jpg"
+            }
+        };
+
+        // Funcionalidad del modal y efectos
         document.addEventListener('DOMContentLoaded', function() {
-            // Preload de imágenes para los detalles de servicios
-            const imagesToPreload = [
-                'img/appsmoviles.jpg',
-                'img/UI-UX.jpg',
-                'img/artificial.png',
-                'img/IOT.jpg',
-                'img/datos.jpg',
-                'img/bigdata.jpg'
-            ];
-            
-            imagesToPreload.forEach(imgSrc => {
-                const img = new Image();
-                img.src = imgSrc;
+            const esferas = document.querySelectorAll('.esfera');
+            const modal = document.getElementById('servicio-detalle');
+            const closeBtn = document.getElementById('close-detalle');
+            const detalleTitle = document.getElementById('detalle-title');
+            const detalleText = document.getElementById('detalle-text');
+            const detalleImagen = document.getElementById('detalle-imagen');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('.nav-list');
+            const hasSubmenuItems = document.querySelectorAll('.has-submenu');
+
+            // Abrir modal al hacer clic en una esfera
+            esferas.forEach(esfera => {
+                esfera.addEventListener('click', function() {
+                    const servicioId = this.getAttribute('data-service');
+                    const servicio = servicios[servicioId];
+                    if (servicio) {
+                        detalleTitle.textContent = servicio.title;
+                        detalleText.textContent = servicio.text;
+                        detalleImagen.src = servicio.image || 'https://via.placeholder.com/300';
+                        detalleImagen.alt = servicio.title;
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        console.error('Servicio no encontrado:', servicioId);
+                    }
+                });
             });
-            
-            // Crear galaxias de estrellas
-            createGalaxy('servicios-galaxy', 300, 4);
-            createGalaxy('clientes-galaxy', 250, 3);
-            
-            // Rotar videos de fondo automáticamente
+
+            // Cerrar modal
+            closeBtn.addEventListener('click', function() {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Cerrar modal al hacer clic fuera
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Toggle del menú móvil
+            mobileMenuBtn.addEventListener('click', function() {
+                const isOpen = navMenu.classList.toggle('show');
+                mobileMenuBtn.innerHTML = `<i class="fas fa-${isOpen ? 'times' : 'bars'}"></i>`;
+            });
+
+            // Submenu toggle en móvil
+            hasSubmenuItems.forEach(item => {
+                const link = item.querySelector('a');
+                link.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        item.classList.toggle('active');
+                        hasSubmenuItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Cerrar menú móvil al hacer clic en un enlace
+            document.querySelectorAll('.nav-list a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768 && !link.parentElement.classList.contains('has-submenu')) {
+                        navMenu.classList.remove('show');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+            });
+
+            // Smooth scroll para enlaces ancla
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - clamp(3.5rem, 12vw, 5rem),
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Crear galaxia para servicios y clientes
+            createGalaxy('galaxy-bg', 100, 5);
+            createGalaxy('clientes-galaxy', 100, 5);
+
+            // Crear partículas y nubes
+            createParticles();
+            createClouds();
+
+            // Cambiar videos cada 3 segundos
             const videos = document.querySelectorAll('.video-background video');
             let currentVideo = 0;
-
-            function rotateVideos() {
+            function changeVideo() {
                 videos[currentVideo].classList.remove('active');
                 currentVideo = (currentVideo + 1) % videos.length;
                 videos[currentVideo].classList.add('active');
             }
+            setInterval(changeVideo, 3000);
 
-            setInterval(rotateVideos, 8000);
+            // Inicializar el mapa
+            function initializeMap() {
+                try {
+                    const mapContainer = document.getElementById('map');
+                    if (!mapContainer) {
+                        console.error('Contenedor del mapa no encontrado');
+                        return;
+                    }
+
+                    // Destruir mapa existente si lo hay
+                    if (mapContainer._leaflet_id) {
+                        L.Map.get(mapContainer._leaflet_id).remove();
+                    }
+
+                    const map = L.map('map', {
+                        center: [-9.98131858444757, -76.24075873422063],
+                        zoom: 15,
+                        zoomControl: true,
+                    });
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        minZoom: 0,
+                        maxZoom: 19,
+                    }).addTo(map);
+
+                    const marker = L.marker([-9.98131858444757, -76.24075873422063]).addTo(map);
+                    marker.bindPopup('<b>COLPA ALTA B-13</b><br>EMPRESA INGENIERÍA E INFORMÁTICA,<br>KINGSOFTWARE SAC.');
+
+                    // Forzar redibujado
+                    setTimeout(() => {
+                        map.invalidateSize();
+                    }, 100);
+                } catch (error) {
+                    console.error('Error al inicializar el mapa:', error);
+                }
+            }
+
+            // Inicializar mapa
+            initializeMap();
+
+            // Re-inicializar mapa al cambiar tamaño
+            window.addEventListener('resize', () => {
+                setTimeout(initializeMap, 100);
+            });
         });
 
-        // Crear galaxia de estrellas
-        function createGalaxy(containerId, starCount = 200, shootingStarCount = 3) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            
-            // Crear estrellas fijas
+        // Función para crear galaxia
+        function createGalaxy(containerId, starCount, shootingStarCount) {
+            const galaxyBg = document.getElementById(containerId);
+            if (!galaxyBg) return;
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
-                
-                // Tamaño aleatorio entre 1px y 3px
-                const size = Math.random() * 2 + 1;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                
-                // Posición aleatoria
+                const size = Math.random() * 0.1875 + 0.0625;
+                star.style.width = `${size}rem`;
+                star.style.height = `${size}rem`;
                 star.style.left = `${Math.random() * 100}%`;
                 star.style.top = `${Math.random() * 100}%`;
-                
-                // Duración de animación aleatoria
-                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
-                
-                container.appendChild(star);
+                const duration = Math.random() * 3 + 1;
+                star.style.setProperty('--duration', `${duration}s`);
+                galaxyBg.appendChild(star);
             }
-            
-            // Crear estrellas fugaces
             for (let i = 0; i < shootingStarCount; i++) {
                 const shootingStar = document.createElement('div');
                 shootingStar.classList.add('shooting-star');
-                
-                // Posición inicial aleatoria
-                const startX = Math.random() * 20;
-                const startY = Math.random() * 20;
-                shootingStar.style.left = `${startX}%`;
-                shootingStar.style.top = `${startY}%`;
-                
-                // Dirección y distancia aleatoria
-                const angle = Math.random() * Math.PI / 4 + Math.PI / 8;
-                const distance = 50 + Math.random() * 50;
-                const endX = startX + Math.cos(angle) * distance;
-                const endY = startY + Math.sin(angle) * distance;
-                
-                shootingStar.style.setProperty('--shooting-x', `${endX - startX}%`);
-                shootingStar.style.setProperty('--shooting-y', `${endY - startY}%`);
-                
-                // Duración y retraso aleatorio
-                const duration = 2 + Math.random() * 3;
+                const x = Math.random() * 31.25 - 6.25;
+                const y = Math.random() * 31.25 - 6.25;
+                shootingStar.style.setProperty('--shooting-x', `${x}rem`);
+                shootingStar.style.setProperty('--shooting-y', `${y}rem`);
+                const duration = Math.random() * 5 + 3;
                 shootingStar.style.setProperty('--shooting-duration', `${duration}s`);
-                shootingStar.style.animationDelay = `${Math.random() * 10}s`;
-                
-                container.appendChild(shootingStar);
+                shootingStar.style.left = `${Math.random() * 100}%`;
+                shootingStar.style.top = `${Math.random() * 100}%`;
+                galaxyBg.appendChild(shootingStar);
             }
         }
 
-        // Mostrar detalle del servicio - Versión optimizada
-        function mostrarDetalle(servicio) {
-            // Ocultar todos los detalles primero
-            document.querySelectorAll('.servicio-detalle').forEach(detalle => {
-                detalle.classList.remove('active');
-            });
-            
-            // Mostrar el detalle seleccionado
-            const detalle = document.getElementById(`detalle-${servicio}`);
-            if (detalle) {
-                detalle.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        // Cerrar detalle del servicio
-        function cerrarDetalle() {
-            document.querySelectorAll('.servicio-detalle').forEach(detalle => {
-                detalle.classList.remove('active');
-            });
-            document.body.style.overflow = '';
-        }
-
-        // Cerrar detalles al hacer clic fuera de ellos
-        document.addEventListener('click', function(event) {
-            const detalles = document.querySelectorAll('.servicio-detalle.active');
-            if (detalles.length > 0 && !event.target.closest('.servicio-detalle') && !event.target.classList.contains('esfera')) {
-                cerrarDetalle();
-            }
-        });
-
-        // Menú móvil
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navMenu = document.querySelector('nav ul');
-        const hasSubmenuItems = document.querySelectorAll('.has-submenu');
-
-        mobileMenuBtn.addEventListener('click', function() {
-            navMenu.classList.toggle('show');
-        });
-
-        // Manejar submenú en móviles
-        hasSubmenuItems.forEach(item => {
-            const link = item.querySelector('a');
-            link.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    item.classList.toggle('active');
-                    
-                    // Cerrar otros submenús
-                    hasSubmenuItems.forEach(otherItem => {
-                        if (otherItem !== item) {
-                            otherItem.classList.remove('active');
-                        }
-                    });
+        // Crear partículas
+        function createParticles() {
+            const sections = document.querySelectorAll('.contact-section, .ubicacion-section');
+            sections.forEach(section => {
+                for (let i = 0; i < 30; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    const size = Math.random() * 0.25 + 0.0625;
+                    particle.style.width = `${size}rem`;
+                    particle.style.height = `${size}rem`;
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    particle.style.opacity = Math.random() * 0.6 + 0.1;
+                    section.appendChild(particle);
+                    animateParticle(particle);
                 }
             });
-        });
+        }
 
-        // Cerrar menú al hacer clic en un enlace (solo en móviles)
-        document.querySelectorAll('nav a').forEach(link => {
-            if (!link.parentElement.classList.contains('has-submenu')) {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 768) {
-                        navMenu.classList.remove('show');
-                    }
+        function animateParticle(particle) {
+            let x = parseFloat(particle.style.left);
+            let y = parseFloat(particle.style.top);
+            let xSpeed = (Math.random() - 0.5) * 0.1;
+            let ySpeed = (Math.random() - 0.5) * 0.1;
+            function move() {
+                x += xSpeed;
+                y += ySpeed;
+                if (x <= 0 || x >= 100) xSpeed *= -1;
+                if (y <= 0 || y >= 100) ySpeed *= -1;
+                particle.style.left = `${x}%`;
+                particle.style.top = `${y}%`;
+                requestAnimationFrame(move);
+            }
+            move();
+        }
+
+        // Crear nubes
+        function createClouds() {
+            const sections = document.querySelectorAll('.contact-section, .ubicacion-section');
+            const clouds = [
+                { class: 'cloud-1', width: '12.5rem', height: '5rem', top: '20%', left: '5%', duration: '30s' },
+                { class: 'cloud-2', width: '18.75rem', height: '7.5rem', top: '60%', left: '-10%', duration: '40s', opacity: '0.7' },
+                { class: 'cloud-3', width: '15.625rem', height: '6.25rem', top: '30%', right: '-5%', duration: '35s', opacity: '0.6' }
+            ];
+            sections.forEach(section => {
+                clouds.forEach(cloud => {
+                    const cloudElement = document.createElement('div');
+                    cloudElement.classList.add('cloud', cloud.class);
+                    cloudElement.style.width = cloud.width;
+                    cloudElement.style.height = cloud.height;
+                    cloudElement.style.top = cloud.top;
+                    if (cloud.left) cloudElement.style.left = cloud.left;
+                    if (cloud.right) cloudElement.style.right = cloud.right;
+                    cloudElement.style.animationDuration = cloud.duration;
+                    if (cloud.opacity) cloudElement.style.opacity = cloud.opacity;
+                    section.appendChild(cloudElement);
                 });
-            }
-        });
-
-        // Efecto de scroll suave
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
             });
-        });
+        }
+
+        // Función clamp
+        function clamp(min, val, max) {
+            return Math.min(Math.max(min, val), max);
+        }
     </script>
-    <script src="script.js"></script>
 </body>
 </html>

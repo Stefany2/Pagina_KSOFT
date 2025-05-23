@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KINGSOFT</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" onerror="console.error('Font Awesome failed to load')">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" onerror="console.error('Leaflet CSS failed to load')">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" onerror="console.error('Bootstrap CSS failed to load')">
     <style>
         /* Estilos generales */
         * {
@@ -498,8 +498,8 @@
             background-color: #111;
             border-radius: 0.625rem;
             width: 100%;
-            max-width: 56.25rem;
-            padding: clamp(1rem, 3vw, 1.875rem);
+            max-width: 62.5rem;
+            padding: clamp(1.5rem, 4vw, 2.5rem);
             position: relative;
             box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -524,19 +524,34 @@
 
         .detalle-content-wrapper {
             display: flex;
-            gap: clamp(1rem, 3vw, 1.875rem);
+            gap: clamp(1.5rem, 4vw, 2.5rem);
+            align-items: center;
+            justify-content: center;
         }
 
         .detalle-imagen {
             width: 100%;
+            max-width: clamp(15rem, 30vw, 18.75rem);
             height: auto;
-            max-height: 18.75rem;
+            max-height: clamp(12.5rem, 25vw, 15.625rem);
             object-fit: cover;
-            border-radius: 0.3125rem;
+            border-radius: 0.625rem;
+            box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            transform: translateY(1.25rem);
+        }
+
+        .servicio-detalle.active .detalle-imagen {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .detalle-content {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .detalle-title {
@@ -563,6 +578,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             min-height: 2.75rem;
+            align-self: flex-start;
         }
 
         .contact-btn:hover {
@@ -975,10 +991,12 @@
 
             .detalle-content-wrapper {
                 flex-direction: column;
+                align-items: center;
             }
 
             .detalle-imagen {
-                max-height: clamp(12rem, 40vw, 15.625rem);
+                max-width: clamp(12rem, 40vw, 15.625rem);
+                max-height: clamp(10rem, 35vw, 12.5rem);
             }
         }
 
@@ -997,12 +1015,6 @@
             
             .main-nav a {
                 font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-                position: relative;
-                right: 0;
             }
             
             .main-nav ul {
@@ -1026,6 +1038,12 @@
             
             .main-nav li {
                 margin: 0.9375rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: relative;
+                right: 0;
             }
             
             .submenu {
@@ -1110,7 +1128,7 @@
             }
 
             .detalle-container {
-                padding: clamp(0.75rem, 3vw, 1.25rem);
+                padding: clamp(1rem, 3vw, 1.5rem);
                 max-width: 90%;
             }
 
@@ -1123,7 +1141,8 @@
             }
 
             .detalle-imagen {
-                max-height: clamp(10rem, 35vw, 12.5rem);
+                max-width: clamp(10rem, 35vw, 12.5rem);
+                max-height: clamp(8rem, 30vw, 10rem);
             }
 
             .contact-btn {
@@ -1194,7 +1213,7 @@
             }
             
             .detalle-container {
-                padding: clamp(0.5rem, 3vw, 0.9375rem);
+                padding: clamp(0.75rem, 3vw, 1rem);
                 max-width: 95%;
             }
             
@@ -1207,7 +1226,8 @@
             }
             
             .detalle-imagen {
-                max-height: clamp(8rem, 30vw, 11.25rem);
+                max-width: clamp(8rem, 30vw, 10rem);
+                max-height: clamp(6rem, 25vw, 8rem);
             }
             
             .astronaut {
@@ -1330,7 +1350,8 @@
             }
             
             .detalle-imagen {
-                max-height: clamp(7rem, 30vw, 10rem);
+                max-width: clamp(7rem, 25vw, 9rem);
+                max-height: clamp(5rem, 20vw, 7rem);
             }
             
             .contact-form {
@@ -1363,6 +1384,10 @@
             #map {
                 min-height: clamp(8rem, 30vw, 12.5rem);
             }
+            /* BRINDAMOS*/
+
+            
+            
         }
     </style>
 </head>
@@ -1370,7 +1395,7 @@
     <header class="main-header">
         <div class="header-container">
             <div class="logo-container">
-                <img src="img/KINGSOFT1.png" alt="KINGSOFT Logo" class="logo-img">
+                <img src="img/KINGSOFT1.png" alt="KINGSOFT Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/50'">
                 <h1 class="logo">KINGSOFT</h1>
             </div>
             
@@ -1381,14 +1406,7 @@
                 <ul class="nav-list">
                     <li><a href="inicio.html">INICIO</a></li>
                     <li class="has-submenu">
-                        <a href="#servicios">SERVICIOS <i class="fas fa-chevron-down"></i></a>
-                        <ul class="submenu">
-                            <li><a href="desarrollo-software.html">Desarrollo de software</a></li>
-                            <li><a href="desarrollo-software.html#erp">Implementación de sistemas ERP</a></li>
-                            <li><a href="desarrollo-software.html#automatizacion">Automatización de procesos</a></li>
-                            <li><a href="desarrollo-software.html#consultoria">Consultoría en transformación digital</a></li>
-                            <li><a href="desarrollo-software.html#seguridad">Seguridad informática y soporte técnico</a></li>
-                        </ul>
+                        <a href="#servicios">SERVICIOS <i class="fas fa-chevron-down"></i></a>C
                     </li>
                     <li><a href="sobrenosotros.html">SOBRE NOSOTROS</a></li>
                     <li><a href="blogs.html">BLOGS</a></li>
@@ -1433,7 +1451,7 @@
                     <h2>KINGSOFT</h2>
                     <p>
                         Empresa dedicada al desarrollo de soluciones tecnológicas innovadoras, abarcando software, aplicaciones móviles,
-                        páginas web, inteligencia artificial y tecnologías IoT y fabricación digital.
+                        páginas web, inteligencia artificial, tecnologías IoT, blockchain y fabricación digital.
                     </p>
                 </div>
                 <div class="separator"></div>
@@ -1466,9 +1484,9 @@
                         <i class="esfera-icon fas fa-network-wired"></i>
                         <span class="esfera-name">Internet de las Cosas</span>
                     </div>
-                    <div class="esfera" data-service="ciencia-datos">
-                        <i class="esfera-icon fas fa-chart-bar"></i>
-                        <span class="esfera-name">Ciencia de Datos</span>
+                    <div class="esfera" data-service="blockchain">
+                        <i class="esfera-icon fas fa-link"></i>
+                        <span class="esfera-name">Blockchain</span>
                     </div>
                     <div class="esfera" data-service="big-data">
                         <i class="esfera-icon fas fa-database"></i>
@@ -1480,7 +1498,9 @@
                 <div class="detalle-container">
                     <button class="close-detalle" id="close-detalle" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
                     <div class="detalle-content-wrapper">
-                        <img src="https://via.placeholder.com/300" alt="Servicio" class="detalle-imagen" id="detalle-imagen">
+                        <div class="detalle-image-container">
+                            <img src="https://via.placeholder.com/300" alt="Servicio" class="detalle-imagen" id="detalle-imagen" onerror="this.src='https://via.placeholder.com/300'">
+                        </div>
                         <div class="detalle-content">
                             <h2 class="detalle-title" id="detalle-title">Nombre del Servicio</h2>
                             <p class="detalle-text" id="detalle-text">Descripción detallada del servicio.</p>
@@ -1490,6 +1510,47 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Sección "Brindamos Capacitaciones en: -->
+
+<section id="capacitaciones" class="capacitaciones-section" aria-label="Capacitaciones que brindamos">
+  <div class="section-container">
+    <h2 class="section-title">BRINDAMOS CAPACITACIONES EN:</h2>
+    <p class="section-subtitle">Especialízate con nuestras capacitaciones innovadoras y dinámicas</p>
+    <div class="capacitaciones-grid">
+      <div class="capacitacion-card" tabindex="0" aria-describedby="desc-ia">
+        <i class="fas fa-brain capacitacion-icon" aria-hidden="true"></i>
+        <h3>Inteligencia Artificial</h3>
+        <p id="desc-ia">La IA es la creación de sistemas inteligentes que simulan procesos de pensamiento humano, transformando industrias y mejorando nuestras vidas.</p>
+      </div>
+      <div class="capacitacion-card" tabindex="0" aria-describedby="desc-ra">
+        <i class="fas fa-vr-cardboard capacitacion-icon" aria-hidden="true"></i>
+        <h3>Realidad aumentada</h3>
+        <p id="desc-ra">La RA combina el mundo real con elementos virtuales para crear experiencias inmersivas que enriquecen la interacción humana con la información digital.</p>
+      </div>
+      <div class="capacitacion-card" tabindex="0" aria-describedby="desc-robotica">
+        <i class="fas fa-robot capacitacion-icon" aria-hidden="true"></i>
+        <h3>Robótica</h3>
+        <p id="desc-robotica">La Robótica es el diseño y construcción de robots autónomos o controlados remotamente que revolucionan sectores como la manufactura y la medicina.</p>
+      </div>
+      <div class="capacitacion-card" tabindex="0" aria-describedby="desc-iot">
+        <i class="fas fa-signal capacitacion-icon" aria-hidden="true"></i>
+        <h3>IoT</h3>
+        <p id="desc-iot">El IoT es la red de dispositivos físicos conectados entre sí y a internet, optimizando procesos y mejorando la eficiencia en hogares, ciudades y empresas.</p>
+      </div>
+      <div class="capacitacion-card" tabindex="0" aria-describedby="desc-impresion">
+        <i class="fas fa-cubes capacitacion-icon" aria-hidden="true"></i>
+        <h3>Impresión 3D</h3>
+        <p id="desc-impresion">La Impresión 3D crea objetos tridimensionales a partir de modelos digitales, democratizando la fabricación y permitiendo la materialización rápida de ideas.</p>
+      </div>
+      <div class="capacitacion-card" tabindex="0" aria-describedby="desc-cnc">
+        <i class="fas fa-cut capacitacion-icon" aria-hidden="true"></i>
+        <h3>Corte CNC y Láser</h3>
+        <p id="desc-cnc">El Corte CNC y Láser utilizan tecnología computarizada para cortar materiales con precisión, ofreciendo versatilidad en la producción de piezas personalizadas y de alta calidad.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
         <!-- Sección de Clientes -->
         <section class="clientes-section">
@@ -1498,37 +1559,37 @@
                 <h2 class="section-title">PARTNERSHIP</h2>
                 <div class="clientes-grid">
                     <div class="cliente-item">
-                        <img src="img/ECOFAUCET.png" alt="Cliente 1" class="cliente-logo">
+                        <img src="img/ECOFAUCET.png" alt="Cliente 1" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/IRON.png" alt="Cliente 2" class="cliente-logo">
+                        <img src="img/IRON.png" alt="Cliente 2" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/JEREM-IA.png" alt="Cliente 3" class="cliente-logo">
+                        <img src="img/JEREM-IA.png" alt="Cliente 3" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/CUY.png" alt="Cliente 4" class="cliente-logo">
+                        <img src="img/CUY.png" alt="Cliente 4" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/LLAM-AI-.png" alt="Cliente 5" class="cliente-logo">
+                        <img src="img/LLAM-AI-.png" alt="Cliente 5" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/MAT-IA-.png" alt="Cliente 6" class="cliente-logo">
+                        <img src="img/MAT-IA-.png" alt="Cliente 6" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/SOF-IA-.png" alt="Cliente 7" class="cliente-logo">
+                        <img src="img/SOF-IA-.png" alt="Cliente 7" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/SMARTKEY.png" alt="Cliente 8" class="cliente-logo">
+                        <img src="img/SMARTKEY.png" alt="Cliente 8" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/VIGIA.png" alt="Cliente 9" class="cliente-logo">
+                        <img src="img/VIGIA.png" alt="Cliente 9" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/VALER-IA.png" alt="Cliente 10" class="cliente-logo">
+                        <img src="img/VALER-IA.png" alt="Cliente 10" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/JOS-IA-.png" alt="Cliente 11" class="cliente-logo">
+                        <img src="img/JOS-IA-.png" alt="Cliente 11" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
                     </div>
                 </div>
             </div>
@@ -1539,7 +1600,7 @@
             <div class="contact-container">
                 <h2 class="section-title">CONTÁCTANOS</h2>
                 <div class="contact-content">
-                    <img src="img/bot.png" alt="Astronauta KingSoft" class="astronaut" loading="lazy">
+                    <img src="img/bot.png" alt="Astronauta KingSoft" class="astronaut" loading="lazy" onerror="this.src='https://via.placeholder.com/200'">
                     <form class="contact-form" method="POST" action="contact.php">
                         <div class="form-group">
                             <label for="name">Nombres</label>
@@ -1565,7 +1626,7 @@
                                 <option value="interfaz-usuario">Interfaz de usuario/Experiencia de usuario</option>
                                 <option value="ia">Inteligencia Artificial (IA)</option>
                                 <option value="iot">Internet de las Cosas</option>
-                                <option value="ciencia-datos">Ciencia de datos</option>
+                                <option value="blockchain">Blockchain</option>
                                 <option value="big-data">Big Data y Análisis</option>
                             </select>
                         </div>
@@ -1602,7 +1663,7 @@
     <footer>
         <div class="footer-container">
             <div class="footer-logo-container">
-                <img src="img/KINGSOFT1.png" alt="KSOFT Logo" class="footer-logo-img" loading="lazy">
+                <img src="img/KINGSOFT1.png" alt="KSOFT Logo" class="footer-logo-img" loading="lazy" onerror="this.src='https://via.placeholder.com/50'">
                 <a href="#" class="footer-logo">KINGSOFT</a>
             </div>
             <div class="social-links">
@@ -1613,9 +1674,9 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js" onerror="console.error('Leaflet JS failed to load')"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" onerror="console.error('jQuery failed to load')"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" onerror="console.error('Bootstrap JS failed to load')"></script>
     <script>
         // Datos de los servicios
         const servicios = {
@@ -1637,12 +1698,12 @@
             "iot": {
                 title: "Internet de las Cosas",
                 text: "Conectamos tus dispositivos y sistemas para crear redes inteligentes que recopilan y analizan datos en tiempo real.",
-                image: "img/IOT.jpg"
+                image: "img/cosas.jpg"
             },
-            "ciencia-datos": {
-                title: "Ciencia de Datos",
-                text: "Transformamos tus datos en información valiosa que impulsa la toma de decisiones estratégicas.",
-                image: "img/datos.jpg"
+            "blockchain": {
+                title: "Blockchain",
+                text: "Desarrollamos soluciones basadas en blockchain para garantizar transacciones seguras, transparentes y descentralizadas, optimizando procesos en industrias como finanzas, logística y más.",
+                image: "img/blockchain.jpg"
             },
             "big-data": {
                 title: "Big Data y Análisis",
@@ -1651,257 +1712,265 @@
             }
         };
 
-        // Funcionalidad del modal y efectos
+        // Funcionalidad principal
         document.addEventListener('DOMContentLoaded', function() {
-            const esferas = document.querySelectorAll('.esfera');
-            const modal = document.getElementById('servicio-detalle');
-            const closeBtn = document.getElementById('close-detalle');
-            const detalleTitle = document.getElementById('detalle-title');
-            const detalleText = document.getElementById('detalle-text');
-            const detalleImagen = document.getElementById('detalle-imagen');
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const navMenu = document.querySelector('.nav-list');
-            const hasSubmenuItems = document.querySelectorAll('.has-submenu');
+            try {
+                // Selección de elementos
+                const esferas = document.querySelectorAll('.esfera');
+                const modal = document.getElementById('servicio-detalle');
+                const closeBtn = document.getElementById('close-detalle');
+                const detalleTitle = document.getElementById('detalle-title');
+                const detalleText = document.getElementById('detalle-text');
+                const detalleImagen = document.getElementById('detalle-imagen');
+                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                const navMenu = document.querySelector('.nav-list');
+                const hasSubmenuItems = document.querySelectorAll('.has-submenu');
 
-            // Abrir modal al hacer clic en una esfera
-            esferas.forEach(esfera => {
-                esfera.addEventListener('click', function() {
-                    const servicioId = this.getAttribute('data-service');
-                    const servicio = servicios[servicioId];
-                    if (servicio) {
-                        detalleTitle.textContent = servicio.title;
-                        detalleText.textContent = servicio.text;
-                        detalleImagen.src = servicio.image || 'https://via.placeholder.com/300';
-                        detalleImagen.alt = servicio.title;
-                        modal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    } else {
-                        console.error('Servicio no encontrado:', servicioId);
-                    }
-                });
-            });
-
-            // Cerrar modal
-            closeBtn.addEventListener('click', function() {
-                modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-
-            // Cerrar modal al hacer clic fuera
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-
-            // Toggle del menú móvil
-            mobileMenuBtn.addEventListener('click', function() {
-                const isOpen = navMenu.classList.toggle('show');
-                mobileMenuBtn.innerHTML = `<i class="fas fa-${isOpen ? 'times' : 'bars'}"></i>`;
-            });
-
-            // Submenu toggle en móvil
-            hasSubmenuItems.forEach(item => {
-                const link = item.querySelector('a');
-                link.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        item.classList.toggle('active');
-                        hasSubmenuItems.forEach(otherItem => {
-                            if (otherItem !== item) {
-                                otherItem.classList.remove('active');
+                // Abrir modal al hacer clic en una esfera
+                if (esferas && modal && detalleTitle && detalleText && detalleImagen) {
+                    esferas.forEach(esfera => {
+                        esfera.addEventListener('click', function() {
+                            try {
+                                const servicioId = this.getAttribute('data-service');
+                                const servicio = servicios[servicioId];
+                                if (servicio) {
+                                    detalleTitle.textContent = servicio.title;
+                                    detalleText.textContent = servicio.text;
+                                    detalleImagen.src = servicio.image || 'https://via.placeholder.com/300';
+                                    detalleImagen.alt = servicio.title;
+                                    modal.classList.add('active');
+                                    document.body.style.overflow = 'hidden';
+                                } else {
+                                    console.error('Servicio no encontrado:', servicioId);
+                                }
+                            } catch (error) {
+                                console.error('Error al abrir modal:', error);
                             }
                         });
-                    }
-                });
-            });
+                    });
+                } else {
+                    console.error('Elementos de modal o esferas no encontrados');
+                }
 
-            // Cerrar menú móvil al hacer clic en un enlace
-            document.querySelectorAll('.nav-list a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 768 && !link.parentElement.classList.contains('has-submenu')) {
-                        navMenu.classList.remove('show');
-                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                    }
-                });
-            });
-
-            // Smooth scroll para enlaces ancla
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    if (href === '#') return;
-                    e.preventDefault();
-                    const targetElement = document.querySelector(href);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - clamp(3.5rem, 12vw, 5rem),
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            // Crear galaxia para servicios y clientes
-            createGalaxy('galaxy-bg', 100, 5);
-            createGalaxy('clientes-galaxy', 100, 5);
-
-            // Crear partículas y nubes
-            createParticles();
-            createClouds();
-
-            // Cambiar videos cada 3 segundos
-            const videos = document.querySelectorAll('.video-background video');
-            let currentVideo = 0;
-            function changeVideo() {
-                videos[currentVideo].classList.remove('active');
-                currentVideo = (currentVideo + 1) % videos.length;
-                videos[currentVideo].classList.add('active');
-            }
-            setInterval(changeVideo, 3000);
-
-            // Inicializar el mapa
-            function initializeMap() {
-                try {
-                    const mapContainer = document.getElementById('map');
-                    if (!mapContainer) {
-                        console.error('Contenedor del mapa no encontrado');
-                        return;
-                    }
-
-                    // Destruir mapa existente si lo hay
-                    if (mapContainer._leaflet_id) {
-                        L.Map.get(mapContainer._leaflet_id).remove();
-                    }
-
-                    const map = L.map('map', {
-                        center: [-9.98131858444757, -76.24075873422063],
-                        zoom: 15,
-                        zoomControl: true,
+                // Cerrar modal
+                if (closeBtn && modal) {
+                    closeBtn.addEventListener('click', function() {
+                        try {
+                            modal.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                        } catch (error) {
+                            console.error('Error al cerrar modal:', error);
+                        }
                     });
 
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                        minZoom: 0,
-                        maxZoom: 19,
-                    }).addTo(map);
-
-                    const marker = L.marker([-9.98131858444757, -76.24075873422063]).addTo(map);
-                    marker.bindPopup('<b>COLPA ALTA B-13</b><br>EMPRESA INGENIERÍA E INFORMÁTICA,<br>KINGSOFTWARE SAC.');
-
-                    // Forzar redibujado
-                    setTimeout(() => {
-                        map.invalidateSize();
-                    }, 100);
-                } catch (error) {
-                    console.error('Error al inicializar el mapa:', error);
+                    // Cerrar modal al hacer clic fuera
+                    modal.addEventListener('click', function(e) {
+                        try {
+                            if (e.target === modal) {
+                                modal.classList.remove('active');
+                                document.body.style.overflow = 'auto';
+                            }
+                        } catch (error) {
+                            console.error('Error al cerrar modal por clic fuera:', error);
+                        }
+                    });
                 }
+
+                // Toggle del menú móvil
+                if (mobileMenuBtn && navMenu) {
+                    mobileMenuBtn.addEventListener('click', function() {
+                        try {
+                            const isOpen = navMenu.classList.toggle('show');
+                            mobileMenuBtn.innerHTML = `<i class="fas fa-${isOpen ? 'times' : 'bars'}"></i>`;
+                        } catch (error) {
+                            console.error('Error en toggle del menú móvil:', error);
+                        }
+                    });
+                } else {
+                    console.error('Botón de menú móvil o menú de navegación no encontrados');
+                }
+
+                // Submenu toggle en móvil
+                if (hasSubmenuItems) {
+                    hasSubmenuItems.forEach(item => {
+                        const link = item.querySelector('a');
+                        if (link) {
+                            link.addEventListener('click', (e) => {
+                                try {
+                                    if (window.innerWidth <= 768) {
+                                        e.preventDefault();
+                                        item.classList.toggle('active');
+                                        hasSubmenuItems.forEach(otherItem => {
+                                            if (otherItem !== item) {
+                                                otherItem.classList.remove('active');
+                                            }
+                                        });
+                                    }
+                                } catch (error) {
+                                    console.error('Error en toggle de submenu:', error);
+                                }
+                            });
+                        }
+                    });
+                }
+
+                // Cerrar menú móvil al hacer clic en un enlace
+                document.querySelectorAll('.nav-list a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        try {
+                            if (window.innerWidth <= 768 && !link.parentElement.classList.contains('has-submenu') && navMenu && mobileMenuBtn) {
+                                navMenu.classList.remove('show');
+                                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                            }
+                        } catch (error) {
+                            console.error('Error al cerrar menú móvil:', error);
+                        }
+                    });
+                });
+
+                // Smooth scroll para enlaces ancla
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        try {
+                            const href = this.getAttribute('href');
+                            if (href === '#') return;
+                            e.preventDefault();
+                            const targetElement = document.querySelector(href);
+                            if (targetElement) {
+                                window.scrollTo({
+                                    top: targetElement.offsetTop - 70,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        } catch (error) {
+                            console.error('Error en smooth scroll:', error);
+                        }
+                    });
+                });
+
+                // Crear galaxia para servicios y clientes
+                createGalaxy('galaxy-bg', 100, 5);
+                createGalaxy('clientes-galaxy', 100, 5);
+
+                // Cambiar videos cada 3 segundos
+                const videos = document.querySelectorAll('.video-background video');
+                if (videos.length > 0) {
+                    let currentVideo = 0;
+                    function changeVideo() {
+                        try {
+                            videos[currentVideo].classList.remove('active');
+                            currentVideo = (currentVideo + 1) % videos.length;
+                            videos[currentVideo].classList.add('active');
+                        } catch (error) {
+                            console.error('Error al cambiar video:', error);
+                        }
+                    }
+                    setInterval(changeVideo, 3000);
+                }
+
+                // Inicializar el mapa
+                initializeMap();
+
+                // Re-inicializar mapa al cambiar tamaño
+                window.addEventListener('resize', () => {
+                    try {
+                        setTimeout(initializeMap, 100);
+                    } catch (error) {
+                        console.error('Error al reinicializar mapa:', error);
+                    }
+                });
+            } catch (error) {
+                console.error('Error en DOMContentLoaded:', error);
             }
-
-            // Inicializar mapa
-            initializeMap();
-
-            // Re-inicializar mapa al cambiar tamaño
-            window.addEventListener('resize', () => {
-                setTimeout(initializeMap, 100);
-            });
         });
+
+        // Función para inicializar el mapa
+        function initializeMap() {
+            try {
+                const mapContainer = document.getElementById('map');
+                if (!mapContainer) {
+                    console.error('Contenedor del mapa no encontrado');
+                    return;
+                }
+
+                // Verificar si Leaflet está disponible
+                if (typeof L === 'undefined') {
+                    console.error('Leaflet no está disponible');
+                    return;
+                }
+
+                // Destruir mapa existente si lo hay
+                if (mapContainer._leaflet_id) {
+                    const existingMap = L.Map.get(mapContainer._leaflet_id);
+                    if (existingMap) {
+                        existingMap.remove();
+                    }
+                }
+
+                // Inicializar el mapa
+                const map = L.map('map', {
+                    center: [-9.98131858444757, -76.24075873422063],
+                    zoom: 15,
+                    zoomControl: true
+                });
+
+                // Agregar capa de OpenStreetMap
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    minZoom: 0,
+                    maxZoom: 19
+                }).addTo(map);
+
+                // Agregar marcador
+                const marker = L.marker([-9.98131858444757, -76.24075873422063]).addTo(map);
+                marker.bindPopup('<b>COLPA ALTA B-13</b><br>EMPRESA INGENIERÍA E INFORMÁTICA,<br>KINGSOFTWARE SAC.');
+
+                // Forzar redibujado del mapa
+                setTimeout(() => {
+                    map.invalidateSize();
+                }, 100);
+            } catch (error) {
+                console.error('Error al inicializar el mapa:', error);
+            }
+        }
 
         // Función para crear galaxia
         function createGalaxy(containerId, starCount, shootingStarCount) {
-            const galaxyBg = document.getElementById(containerId);
-            if (!galaxyBg) return;
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                const size = Math.random() * 0.1875 + 0.0625;
-                star.style.width = `${size}rem`;
-                star.style.height = `${size}rem`;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                const duration = Math.random() * 3 + 1;
-                star.style.setProperty('--duration', `${duration}s`);
-                galaxyBg.appendChild(star);
-            }
-            for (let i = 0; i < shootingStarCount; i++) {
-                const shootingStar = document.createElement('div');
-                shootingStar.classList.add('shooting-star');
-                const x = Math.random() * 31.25 - 6.25;
-                const y = Math.random() * 31.25 - 6.25;
-                shootingStar.style.setProperty('--shooting-x', `${x}rem`);
-                shootingStar.style.setProperty('--shooting-y', `${y}rem`);
-                const duration = Math.random() * 5 + 3;
-                shootingStar.style.setProperty('--shooting-duration', `${duration}s`);
-                shootingStar.style.left = `${Math.random() * 100}%`;
-                shootingStar.style.top = `${Math.random() * 100}%`;
-                galaxyBg.appendChild(shootingStar);
-            }
-        }
+            try {
+                const galaxyBg = document.getElementById(containerId);
+                if (!galaxyBg) return;
 
-        // Crear partículas
-        function createParticles() {
-            const sections = document.querySelectorAll('.contact-section, .ubicacion-section');
-            sections.forEach(section => {
-                for (let i = 0; i < 30; i++) {
-                    const particle = document.createElement('div');
-                    particle.classList.add('particle');
-                    const size = Math.random() * 0.25 + 0.0625;
-                    particle.style.width = `${size}rem`;
-                    particle.style.height = `${size}rem`;
-                    particle.style.left = `${Math.random() * 100}%`;
-                    particle.style.top = `${Math.random() * 100}%`;
-                    particle.style.opacity = Math.random() * 0.6 + 0.1;
-                    section.appendChild(particle);
-                    animateParticle(particle);
+                // Crear estrellas
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    const size = Math.random() * 0.1875 + 0.0625;
+                    star.style.width = `${size}rem`;
+                    star.style.height = `${size}rem`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    const duration = Math.random() * 3 + 1;
+                    star.style.setProperty('--duration', `${duration}s`);
+                    galaxyBg.appendChild(star);
                 }
-            });
-        }
 
-        function animateParticle(particle) {
-            let x = parseFloat(particle.style.left);
-            let y = parseFloat(particle.style.top);
-            let xSpeed = (Math.random() - 0.5) * 0.1;
-            let ySpeed = (Math.random() - 0.5) * 0.1;
-            function move() {
-                x += xSpeed;
-                y += ySpeed;
-                if (x <= 0 || x >= 100) xSpeed *= -1;
-                if (y <= 0 || y >= 100) ySpeed *= -1;
-                particle.style.left = `${x}%`;
-                particle.style.top = `${y}%`;
-                requestAnimationFrame(move);
+                // Crear estrellas fugaces
+                for (let i = 0; i < shootingStarCount; i++) {
+                    const shootingStar = document.createElement('div');
+                    shootingStar.classList.add('shooting-star');
+                    const x = Math.random() * 31.25 - 6.25;
+                    const y = Math.random() * 31.25 - 6.25;
+                    shootingStar.style.setProperty('--shooting-x', `${x}rem`);
+                    shootingStar.style.setProperty('--shooting-y', `${y}rem`);
+                    const duration = Math.random() * 5 + 3;
+                    shootingStar.style.setProperty('--shooting-duration', `${duration}s`);
+                    shootingStar.style.left = `${Math.random() * 100}%`;
+                    shootingStar.style.top = `${Math.random() * 100}%`;
+                    galaxyBg.appendChild(shootingStar);
+                }
+            } catch (error) {
+                console.error('Error al crear galaxia:', error);
             }
-            move();
-        }
-
-        // Crear nubes
-        function createClouds() {
-            const sections = document.querySelectorAll('.contact-section, .ubicacion-section');
-            const clouds = [
-                { class: 'cloud-1', width: '12.5rem', height: '5rem', top: '20%', left: '5%', duration: '30s' },
-                { class: 'cloud-2', width: '18.75rem', height: '7.5rem', top: '60%', left: '-10%', duration: '40s', opacity: '0.7' },
-                { class: 'cloud-3', width: '15.625rem', height: '6.25rem', top: '30%', right: '-5%', duration: '35s', opacity: '0.6' }
-            ];
-            sections.forEach(section => {
-                clouds.forEach(cloud => {
-                    const cloudElement = document.createElement('div');
-                    cloudElement.classList.add('cloud', cloud.class);
-                    cloudElement.style.width = cloud.width;
-                    cloudElement.style.height = cloud.height;
-                    cloudElement.style.top = cloud.top;
-                    if (cloud.left) cloudElement.style.left = cloud.left;
-                    if (cloud.right) cloudElement.style.right = cloud.right;
-                    cloudElement.style.animationDuration = cloud.duration;
-                    if (cloud.opacity) cloudElement.style.opacity = cloud.opacity;
-                    section.appendChild(cloudElement);
-                });
-            });
-        }
-
-        // Función clamp
-        function clamp(min, val, max) {
-            return Math.min(Math.max(min, val), max);
         }
     </script>
 </body>

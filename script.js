@@ -1,98 +1,96 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Cambio de videos de fondo cada 8 segundos
-    const videos = document.querySelectorAll('.video-background video');
-    let currentVideo = 0;
+
+  // Efecto de partículas interactivas
+  document.addEventListener('DOMContentLoaded', function() {
+    const section = document.querySelector('section');
+    const colors = ['#4366E6', '#5A7AFF', '#3A56C7'];
     
-    function changeVideo() {
-        videos[currentVideo].classList.remove('active');
-        currentVideo = (currentVideo + 1) % videos.length;
-        videos[currentVideo].classList.add('active');
+    function createParticle(e) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      
+      const size = Math.random() * 10 + 5;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      
+      particle.style.left = e.clientX + 'px';
+      particle.style.top = e.clientY + 'px';
+      
+      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.opacity = '0.7';
+      
+      section.appendChild(particle);
+      
+      let posX = e.clientX;
+      let posY = e.clientY;
+      let angle = Math.random() * Math.PI * 2;
+      let velocity = Math.random() * 2 + 1;
+      
+      function animate() {
+        posX += Math.cos(angle) * velocity;
+        posY += Math.sin(angle) * velocity;
         
-        // Asegurarse de que el video se está reproduciendo
-        videos[currentVideo].play().catch(e => console.log("Autoplay prevented:", e));
+        particle.style.left = posX + 'px';
+        particle.style.top = posY + 'px';
+        
+        particle.style.opacity -= 0.01;
+        
+        if (parseFloat(particle.style.opacity) > 0) {
+          requestAnimationFrame(animate);
+        } else {
+          particle.remove();
+        }
+      }
+      
+      requestAnimationFrame(animate);
     }
     
-    // Iniciar el ciclo de cambio de videos
-    const videoInterval = setInterval(changeVideo, 8000);
-    
-    // Asegurar que el primer video se reproduzca
-    videos[0].play().catch(e => console.log("Autoplay prevented:", e));
-    
-    // Menú móvil - Versión mejorada
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navList = document.querySelector('.nav-list');
-    
-    mobileMenuBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        navList.classList.toggle('active');
+    // Crear partículas al mover el mouse
+    section.addEventListener('mousemove', function(e) {
+      if (Math.random() > 0.7) {
+        createParticle(e);
+      }
     });
     
-    // Submenús en móvil - Versión mejorada
-    const hasSubmenu = document.querySelectorAll('.has-submenu');
+    // Crear partículas aleatorias
+    function createRandomParticle() {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      
+      const size = Math.random() * 8 + 3;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      
+      particle.style.left = Math.random() * window.innerWidth + 'px';
+      particle.style.top = Math.random() * window.innerHeight + 'px';
+      
+      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.opacity = '0.4';
+      
+      section.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.style.transition = 'opacity 2s ease';
+        particle.style.opacity = '0';
+        setTimeout(() => particle.remove(), 2000);
+      }, Math.random() * 3000);
+    }
     
-    hasSubmenu.forEach(item => {
-        const link = item.querySelector('a');
-        
-        link.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Cerrar otros submenús abiertos
-                document.querySelectorAll('.has-submenu').forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                    }
-                });
-                
-                // Abrir/cerrar el submenú actual
-                item.classList.toggle('active');
-            }
-        });
-    });
+    // Crear múltiples partículas de fondo
+    for (let i = 0; i < 20; i++) {
+      setTimeout(createRandomParticle, i * 300);
+    }
     
-    // Cerrar menús al hacer clic en un enlace del submenú
-    document.querySelectorAll('.submenu a').forEach(link => {
-        link.addEventListener('click', function() {
-            if (window.innerWidth <= 768) {
-                navList.classList.remove('active');
-                document.querySelectorAll('.has-submenu').forEach(item => {
-                    item.classList.remove('active');
-                });
-            }
-        });
+    // Efecto hover mejorado para los items
+    const items = document.querySelectorAll('.capacitacion-item');
+    items.forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        const icon = this.querySelector('.capacitacion-icon');
+        icon.style.textShadow = `0 0 10px ${colors[0]}, 0 0 20px ${colors[1]}`;
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        const icon = this.querySelector('.capacitacion-icon');
+        icon.style.textShadow = 'none';
+      });
     });
-    
-    // Cerrar menú al hacer clic fuera
-    document.addEventListener('click', function(e) {
-        if (window.innerWidth <= 768) {
-            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-menu-btn')) {
-                navList.classList.remove('active');
-                hasSubmenu.forEach(item => {
-                    item.classList.remove('active');
-                });
-            }
-        }
-    });
-    
-    // Actualizar en redimensionamiento
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            navList.classList.remove('active');
-            hasSubmenu.forEach(item => {
-                item.classList.remove('active');
-            });
-        }
-    });
-    
-    // Pausar el intervalo cuando la pestaña no está visible
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            clearInterval(videoInterval);
-            videos[currentVideo].pause();
-        } else {
-            setInterval(changeVideo, 8000);
-            videos[currentVideo].play().catch(e => console.log("Autoplay prevented:", e));
-        }
-    });
-});
+  });

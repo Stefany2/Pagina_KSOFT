@@ -601,7 +601,7 @@
             background: linear-gradient(90deg, #4366E6, white);
             -webkit-background-clip: text;
             background-clip: text;
-            
+            color: transparent;
             text-shadow: 0 0 15px rgba(67, 102, 230, 0.6);
         }
         
@@ -1720,12 +1720,12 @@
             </div>
         </section>
 
-        <!-- Sección de Capacitaciones  -->
+        <!-- Sección de Capacitaciones - Nueva estructura piramidal -->
         <section class="capacitaciones-section">
             <h2 class="section-title">BRINDAMOS CAPACITACIONES EN:</h2>
 
             <div class="capacitaciones-pyramid">
-               
+                <!-- Fila 1 - 1 elemento (más grande) -->
                 <div class="pyramid-row">
                     <div class="capacitacion-item" tabindex="0">
                         <div class="capacitacion-icon">🧠</div>
@@ -1736,7 +1736,7 @@
                     </div>
                 </div>
                 
-               
+                <!-- Fila 2 - 2 elementos -->
                 <div class="pyramid-row">
                     <div class="capacitacion-item" tabindex="0">
                         <div class="capacitacion-icon">🕶️</div>
@@ -1754,7 +1754,7 @@
                     </div>
                 </div>
                 
-                
+                <!-- Fila 3 - 3 elementos -->
                 <div class="pyramid-row">
                     <div class="capacitacion-item" tabindex="0">
                         <div class="capacitacion-icon">📶</div>
@@ -1795,11 +1795,11 @@
                     responseTimeText: 'respondemos rápidamente'
                 },
                 style: {
-                    primaryColor: 'rgb(3, 0, 107)',    
-                    secondaryColor: 'rgb(67, 102, 230)', 
-                    backgroundColor: '#000000',   
-                    fontColor: '#ffffff',         
-                    position: 'right'             
+                    primaryColor: 'rgb(3, 0, 107)',    // R3 G0 B107
+                    secondaryColor: 'rgb(67, 102, 230)', // R67 G102 B230
+                    backgroundColor: '#000000',    // Fondo negro (unchanged)
+                    fontColor: '#ffffff',          // Letras blancas (unchanged)
+                    position: 'right'              // Unchanged
                 }           
             };
 
@@ -1906,80 +1906,53 @@
             </div>
         </section>
 
-       <!-- Sección de Contacto -->
-<section class="contact-section" id="contacto">
-    <div class="contact-container">
-        <h2 class="section-title">CONTÁCTANOS</h2>
-        <div class="contact-content">
-            <img src="img/bot.png" alt="Astronauta KingSoft" class="astronaut" loading="lazy" onerror="this.src='https://via.placeholder.com/200'">
-            
-            <!-- Formulario con acción PHP para guardar en BD y redirección a WhatsApp -->
-            <form class="contact-form" method="POST" action="guardar_contacto.php" onsubmit="return enviarAWhatsApp()">
-                <div class="form-group">
-                    <label for="name">Nombres</label>
-                    <input type="text" id="name" name="name" placeholder="Ingresa tu nombre" required>
+        <!-- Sección de Contacto -->
+        <section class="contact-section" id="contacto">
+            <div class="contact-container">
+                <h2 class="section-title">CONTÁCTANOS</h2>
+                <div class="contact-content">
+                    <img src="img/bot.png" alt="Astronauta KingSoft" class="astronaut" loading="lazy" onerror="this.src='https://via.placeholder.com/200'">
+                    <form class="contact-form" method="POST" action="contact.php">
+                        <div class="form-group">
+                            <label for="name">Nombres</label>
+                            <input type="text" id="name" name="name" placeholder="Ingresa tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Apellidos</label>
+                            <input type="text" id="lastname" name="lastname" placeholder="Ingresa tus apellidos" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Número de contacto</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Ingresa tu número de teléfono" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Selecciona un servicio</label>
+                            <select id="service" name="service" required>
+                                <option value="selecciona">Selecciona un servicio</option>
+                                <option value="desarrollo-aplicaciones">Desarrollo de aplicaciones</option>
+                                <option value="interfaz-usuario">Interfaz de usuario/Experiencia de usuario</option>
+                                <option value="ia">Inteligencia Artificial (IA)</option>
+                                <option value="iot">Internet de las Cosas</option>
+                                <option value="blockchain">Blockchain</option>
+                                <option value="big-data">Big Data y Análisis</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">¿Cómo podemos ayudarle?</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Describe cómo podemos ayudarte..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            Enviar Mensaje
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="lastname">Apellidos</label>
-                    <input type="text" id="lastname" name="lastname" placeholder="Ingresa tus apellidos" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Número de contacto</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Ingresa tu número de teléfono" required>
-                </div>
-                <div class="form-group">
-                    <label for="service">Selecciona un servicio</label>
-                    <select id="service" name="service" required>
-                        <option value="selecciona">Selecciona un servicio</option>
-                        <option value="desarrollo-aplicaciones">Desarrollo de aplicaciones</option>
-                        <option value="interfaz-usuario">Interfaz de usuario/Experiencia de usuario</option>
-                        <option value="ia">Inteligencia Artificial (IA)</option>
-                        <option value="iot">Internet de las Cosas</option>
-                        <option value="blockchain">Blockchain</option>
-                        <option value="big-data">Big Data y Análisis</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="message">¿Cómo podemos ayudarle?</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Describe cómo podemos ayudarte..." required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">
-                    Enviar Mensaje
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-</section>
-
-<!-- Script para redirección a WhatsApp -->
-<script>
-function enviarAWhatsApp() {
-    // Obtener los valores del formulario
-    const nombre = document.getElementById('name').value;
-    const apellido = document.getElementById('lastname').value;
-    const telefono = document.getElementById('phone').value;
-    const servicio = document.getElementById('service').value;
-    const mensaje = document.getElementById('message').value;
-    
-    const numeroWhatsApp = '51931576209'; 
-    
-    const textoWhatsApp = `Hola KINGSOFT, soy ${nombre} ${apellido}. Estoy interesado en: ${servicio}. ${mensaje}. Mi teléfono es: ${telefono}`;
-    
-    const mensajeCodificado = encodeURIComponent(textoWhatsApp);
-    
-    setTimeout(() => {
-        window.open(`https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`, '_blank');
-    }, 500);
-    
-    // Permitir que el formulario se envíe normalmente
-    return true;
-}
-</script>
+            </div>
+        </section>
 
         <!-- Sección de Ubicación -->
         <section class="ubicacion-section" id="ubicacion">

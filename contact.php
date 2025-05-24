@@ -1,9 +1,12 @@
 <?php
-// Conexión a la base de datos
-$servername = "localhost";  // Cambia esto con el nombre de tu servidor
-$username = "root";         // Cambia esto con tu usuario
-$password = "";             // Cambia esto con tu contraseña
-$dbname = "bd_ksoft";       // El nombre de tu base de datos
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+$servername = "localhost"; 
+$username = "root";   
+$password = "";
+$dbname = "bd_ksoft";
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -14,31 +17,34 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recibir los datos del formulario
-    $nombres = $_POST['name'];
-    $apellidos = $_POST['lastname'];
-    $correo_electronico = $_POST['email'];
-    $numero_contacto = $_POST['phone'];
-    $servicio = $_POST['service'];
-    $mensaje = $_POST['message'];
+    // Recibir y limpiar datos
+    $nombres = $conn->real_escape_string($_POST['name']);
+    $apellidos = $conn->real_escape_string($_POST['lastname']);
+    $correo = $conn->real_escape_string($_POST['email']);
+    $numero_contacto = $conn->real_escape_string($_POST['phone']);
+    $servicio = $conn->real_escape_string($_POST['service']);
+    $mensaje = $conn->real_escape_string($_POST['message']);
 
-    // Insertar los datos en la tabla
-    $sql = "INSERT INTO contactanos (nombres, apellidos, correo_electronico, numero_contacto, servicio, mensaje)
-            VALUES ('$nombres', '$apellidos', '$correo_electronico', '$numero_contacto', '$servicio', '$mensaje')";
-
-    if ($conn->query($sql) === TRUE) {
-        // Redirigir a WhatsApp con los datos del formulario
-        $whatsappMessage = "Nombre: $nombres $apellidos\nEmail: $correo_electronico\nTeléfono: $numero_contacto\nServicio: $servicio\nMensaje: $mensaje";
-        $phoneNumber = '51931576209';  // Número de WhatsApp de tu empresa
-        $whatsappUrl = "https://wa.me/$phoneNumber?text=" . urlencode($whatsappMessage);
-
-        // Redirigir al usuario a WhatsApp
-        header("Location: $whatsappUrl");
-        exit();
-    } else {
-        echo "Error al insertar los datos: " . $conn->error;
+    // Validación simple (opcional)
+    if (empty($nombres) || empty($apellidos) || empty($correo) || empty($numero_contacto) || empty($servicio) || empty($mensaje)) {
+        die("Por favor, completa todos los campos.");
     }
 
-    $conn->close();
+    // Preparar y ejecutar consulta con sentencia preparada
+   $stmt = $conn->prepare("INSERT INTO contactanos (nombres, apellidos, correo_electronico, numero_contacto, servicio, mensaje) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $nombres, $apellidos, $correo, $numero_contacto, $servicio, $mensaje);
+
+    if ($stmt->execute()) {
+        echo "Mensaje enviado correctamente.";
+        // Aquí puedes redirigir o mostrar un mensaje personalizado
+        // header("Location: gracias.html");
+        // exit();
+    } else {
+        echo "Error al enviar el mensaje: " . $stmt->error;
+    }
+
+    $stmt->close();
 }
+
+$conn->close();
 ?>

@@ -1836,7 +1836,7 @@
                     // Create voice icon (ear emoji)
                     const voiceIcon = document.createElement('span');
                     voiceIcon.className = 'voice-icon';
-                    voiceIcon.innerHTML = '👂'; // Changed to ear emoji
+                    voiceIcon.innerHTML = '🔊'; // Changed to ear emoji
                     voiceIcon.title = 'Escuchar respuesta';
                     voiceIcon.onclick = () => speakText(text);
                     
@@ -1906,15 +1906,14 @@
             </div>
         </section>
 
-       <!-- Sección de Contacto -->
+        <!-- Sección de Con-->
+
 <section class="contact-section" id="contacto">
     <div class="contact-container">
         <h2 class="section-title">CONTÁCTANOS</h2>
         <div class="contact-content">
             <img src="img/bot.png" alt="Astronauta KingSoft" class="astronaut" loading="lazy" onerror="this.src='https://via.placeholder.com/200'">
-            
-            <!-- Formulario con acción PHP para guardar en BD y redirección a WhatsApp -->
-            <form class="contact-form" method="POST" action="guardar_contacto.php" onsubmit="return enviarAWhatsApp()">
+            <form id="contact-form" action="contact.php" method="POST">
                 <div class="form-group">
                     <label for="name">Nombres</label>
                     <input type="text" id="name" name="name" placeholder="Ingresa tu nombre" required>
@@ -1956,30 +1955,53 @@
     </div>
 </section>
 
-<!-- Script para redirección a WhatsApp -->
 <script>
-function enviarAWhatsApp() {
-    // Obtener los valores del formulario
-    const nombre = document.getElementById('name').value;
-    const apellido = document.getElementById('lastname').value;
-    const telefono = document.getElementById('phone').value;
-    const servicio = document.getElementById('service').value;
-    const mensaje = document.getElementById('message').value;
+document.getElementById('contact-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
     
-    const numeroWhatsApp = '51931576209'; 
+    const form = event.target;
+    const formData = new FormData(form);
     
-    const textoWhatsApp = `Hola KINGSOFT, soy ${nombre} ${apellido}. Estoy interesado en: ${servicio}. ${mensaje}. Mi teléfono es: ${telefono}`;
-    
-    const mensajeCodificado = encodeURIComponent(textoWhatsApp);
-    
-    setTimeout(() => {
-        window.open(`https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`, '_blank');
-    }, 500);
-    
-    // Permitir que el formulario se envíe normalmente
-    return true;
-}
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Prepare WhatsApp message
+            const name = formData.get('name');
+            const lastname = formData.get('lastname');
+            const email = formData.get('email');
+            const phone = formData.get('phone');
+            const service = formData.get('service');
+            const message = formData.get('message');
+            
+            const whatsappMessage = encodeURIComponent(
+                `Hola, soy ${name} ${lastname}\n` +
+                `Correo: ${email}\n` +
+                `Teléfono: ${phone}\n` +
+                `Servicio: ${service}\n` +
+                `Mensaje: ${message}`
+            );
+            
+           
+            const whatsappNumber = '+51931576209';
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+            
+            // Redirect to WhatsApp
+            window.location.href = whatsappUrl;
+        } else {
+            alert('Error al guardar los datos: ' + result.message);
+        }
+    } catch (error) {
+        alert('Error al enviar el formulario: ' + error.message);
+    }
+});
 </script>
+
 
         <!-- Sección de Ubicación -->
         <section class="ubicacion-section" id="ubicacion">

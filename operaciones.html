@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Operaciones - KASOFT</title>
+<style>
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 20px;
+    background: linear-gradient(135deg, #4366e6, #3048b8);
+    color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 {
+    margin-bottom: 40px;
+    font-weight: 800;
+    font-size: 2.8rem;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
+    user-select: none;
+  }
+  /* Menu principal */
+  .menu {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  .menu button {
+    background: #f0f0f0;
+    color: #3048b8;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255,255,255,0.6);
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    min-width: 140px;
+    text-align: center;
+  }
+  .menu button:hover, .menu button.active {
+    background: #3048b8;
+    color: #f0f0f0;
+    box-shadow: 0 6px 25px rgba(67,102,230,0.9);
+  }
+  /* Submenu Ver/Registrar */
+  .sub-menu {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 40px;
+  }
+  .sub-menu button {
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    background: transparent;
+    border: 2.5px solid #f0f0f0;
+    color: #f0f0f0;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+  .sub-menu button:hover,
+  .sub-menu button.active {
+    background: #f0f0f0;
+    color: #3048b8;
+    border-color: #3048b8;
+    box-shadow: 0 4px 20px rgba(255,255,255,0.6);
+  }
+  /* Contenedor principal contenido */
+  #content {
+    background: #f0f0f0;
+    color: #3048b8;
+    border-radius: 20px;
+    padding: 30px 40px;
+    max-width: 720px;
+    width: 100%;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    min-height: 460px;
+  }
+  #content h2 {
+    margin-top: 0;
+    font-weight: 900;
+    color: #4366e6;
+    letter-spacing: 0.06em;
+    user-select: none;
+  }
+  /* Formularios */
+  form label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #3048b8;
+  }
+  form input, form textarea, form select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 22px;
+    border: 2px solid #b0c4ff;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.25s ease;
+  }
+  form input:focus, form textarea:focus, form select:focus {
+    border-color: #4366e6;
+    outline: none;
+    box-shadow: 0 0 8px #4366e6aa;
+  }
+  form textarea {
+    resize: vertical;
+    min-height: 70px;
+  }
+  form button {
+    background-color: #4366e6;
+    color: white;
+    font-weight: 800;
+    font-size: 1.1rem;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 5px 15px rgba(67,102,230,0.75);
+    user-select: none;
+  }
+  form button:hover {
+    background-color: #3048b8;
+  }
+  #mic-icon-container {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  #mic-icon {
+    cursor: pointer;
+    width: 42px;
+    fill: #4366e6;
+    transition: fill 0.3s ease;
+  }
+  #mic-icon:hover {
+    fill: #3048b8;
+  }
+  /* Tablas */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+  }
+  th, td {
+    padding: 14px 18px;
+    border: 1.5px solid #b0c4ff;
+    color: #3048b8;
+    user-select: text;
+  }
+  th {
+    background-color: #4366e6;
+    color: white;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+  /* Mensajes */
+  #mensaje {
+    margin-top: 22px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #2c3e50;
+  }
+  /* Responsive */
+  @media (max-width: 780px) {
+    #content {
+      padding: 25px 20px;
+    }
+    .menu button {
+      min-width: 110px;
+      font-size: 14px;
+      padding: 12px 18px;
+    }
+    .sub-menu button {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>Panel de Operaciones</h1>
+
+<div class="menu" role="menu" aria-label="Menú de operaciones">
+  <button data-op="proyectos" aria-haspopup="true" aria-controls="submenu">Proyectos</button>
+  <button data-op="ventas" aria-haspopup="true" aria-controls="submenu">Ventas</button>
+  <button data-op="gastos" aria-haspopup="true" aria-controls="submenu">Gastos</button>
+  <button data-op="deudas" aria-haspopup="true" aria-controls="submenu">Deudas</button>
+  <button data-op="asesoria" aria-haspopup="false">Asesoría Financiera</button>
+</div>
+
+<div class="sub-menu" role="menubar" aria-label="Opciones de ver o registrar" style="display:none;">
+  <button id="ver-btn" aria-pressed="true">Ver</button>
+  <button id="registrar-btn" aria-pressed="false">Registrar</button>
+</div>
+
+<div id="content" role="main" tabindex="0">
+  <p>Seleccione una operación para continuar.</p>
+</div>
+
+<script>
+  const menuButtons = document.querySelectorAll('.menu button');
+  const subMenu = document.querySelector('.sub-menu');
+  const verBtn = document.getElementById('ver-btn');
+  const registrarBtn = document.getElementById('registrar-btn');
+  const content = document.getElementById('content');
+
+  let currentOperation = null;
+
+  menuButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentOperation = btn.dataset.op;
+
+      if(currentOperation === 'asesoria'){
+        // Para asesoría no mostramos submenu y cargamos directo contenido
+        subMenu.style.display = 'none';
+        loadView(null, 'asesoria');
+        setAria(false);
+      } else {
+        subMenu.style.display = 'flex';
+        verBtn.classList.add('active');
+        registrarBtn.classList.remove('active');
+        verBtn.setAttribute('aria-pressed', 'true');
+        registrarBtn.setAttribute('aria-pressed', 'false');
+        loadView('ver', currentOperation);
+        setAria(true);
+      }
+
+      // Actualizar botón activo
+      menuButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  verBtn.addEventListener('click', () => {
+    if(!currentOperation) return;
+    verBtn.classList.add('active');
+    registrarBtn.classList.remove('active');
+    verBtn.setAttribute('aria-pressed', 'true');
+    registrarBtn.setAttribute('aria-pressed', 'false');
+    loadView('ver', currentOperation);
+  });
+
+  registrarBtn.addEventListener('click', () => {
+    if(!currentOperation) return;
+    verBtn.classList.remove('active');
+    registrarBtn.classList.add('active');
+    verBtn.setAttribute('aria-pressed', 'false');
+    registrarBtn.setAttribute('aria-pressed', 'true');
+    loadView('registrar', currentOperation);
+  });
+
+  // Accessibility helper for submenu
+  function setAria(enabled){
+    verBtn.disabled = !enabled;
+    registrarBtn.disabled = !enabled;
+  }
+
+  function loadView(view, operation) {
+    if(!operation){
+      content.innerHTML = '<p>Seleccione una operación para continuar.</p>';
+      subMenu.style.display = 'none';
+      return;
+    }
+
+    switch(operation){
+      case 'ventas':
+        if(view === 'ver'){
+          content.innerHTML = '<h2>Listado de Ventas</h2><div id="ventas-listado" aria-live="polite">Cargando...</div>';
+          fetch('listar_ventas.php')
+          .then(res => res.text())
+          .then(html => document.getElementById('ventas-listado').innerHTML = html)
+          .catch(() => document.getElementById('ventas-listado').innerHTML = '<p>Error al cargar ventas.</p>');
+        } else {
+          loadRegistrarVentas();
+        }
+        break;
+
+      case 'proyectos':
+        if(view === 'ver'){
+          content.innerHTML = '<h2>Listado de Proyectos</h2><p>Funcionalidad para listar proyectos aún no implementada.</p>';
+        } else {
+          loadRegistrarProyectos();
+        }
+        break;
+
+      case 'gastos':
+        if(view === 'ver'){
+          content.innerHTML = '<h2>Listado de Gastos</h2><p>Funcionalidad para listar gastos aún no implementada.</p>';
+        } else {
+          loadRegistrarGastos();
+        }
+        break;
+
+      case 'deudas':
+        if(view === 'ver'){
+          content.innerHTML = '<h2>Listado de Deudas</h2><div id="deudas-listado" aria-live="polite">Cargando...</div>';
+          fetch('listar_deudas.php')
+          .then(res => res.text())
+          .then(html => document.getElementById('deudas-listado').innerHTML = html)
+          .catch(() => document.getElementById('deudas-listado').innerHTML = '<p>Error al cargar deudas.</p>');
+        } else {
+          loadRegistrarDeudas();
+        }
+        break;
+
+      case 'asesoria':
+        // Mostrar contenido directamente sin submenu
+        content.innerHTML = `
+          <h2>Asesoría Financiera</h2>
+          <p>Analiza la información registrada y obtén recomendaciones personalizadas.</p>
+          <button id="revisar-btn" style="background:#3048b8; color:#f0f0f0; font-weight:700; padding:14px 28px; border:none; border-radius:12px; cursor:pointer; box-shadow:0 5px 15px rgba(67,102,230,0.8); transition:background-color 0.3s ease;">
+            Revisar
+          </button>
+          <div id="asesoria-result" style="margin-top: 25px; color:#3048b8; font-weight:600;"></div>
+        `;
+        document.getElementById('revisar-btn').addEventListener('click', () => {
+          const resultDiv = document.getElementById('asesoria-result');
+          resultDiv.innerHTML = '<p>Analizando información... (funcionalidad en desarrollo)</p>';
+          // Aquí puedes implementar el análisis real y mostrar resultados dinámicos
+        });
+        break;
+
+      default:
+        content.innerHTML = '<p>Funcionalidad no disponible.</p>';
+    }
+  }
+
+  function loadRegistrarVentas() {
+    content.innerHTML = `
+      <h2>Registrar Venta</h2>
+      <div id="mic-icon-container" aria-label="Ingresar por voz" role="button" tabindex="0" style="text-align:center; margin-bottom: 20px;">
+        <svg id="mic-icon" viewBox="0 0 24 24" fill="#4366e6" stroke="#4366e6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px; cursor:pointer;" title="Ingresar por voz">
+          <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zM12 19v3m-4 0h8"/>
+        </svg>
+      </div>
+      <form id="venta-form" aria-label="Formulario para registrar venta">
+        <label for="nombre_producto">Nombre de producto</label>
+        <input type="text" id="nombre_producto" name="nombre_producto" required />
+
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+
+        <label for="precio_unitario">Precio Unitario</label>
+        <input type="number" id="precio_unitario" name="precio_unitario" step="0.01" required />
+
+        <label for="cantidad">Cantidad</label>
+        <input type="number" id="cantidad" name="cantidad" required />
+
+        <label for="total">Total</label>
+        <input type="number" id="total" name="total" step="0.01" readonly />
+
+        <button type="submit">Guardar Venta</button>
+      </form>
+      <div id="mensaje"></div>
+    `;
+    setupVentaForm();
+  }
+
+  function setupVentaForm(){
+    const precioInput = document.getElementById('precio_unitario');
+    const cantidadInput = document.getElementById('cantidad');
+    const totalInput = document.getElementById('total');
+    const micIcon = document.getElementById('mic-icon');
+    const nombreInput = document.getElementById('nombre_producto');
+    const ventaForm = document.getElementById('venta-form');
+    const mensajeDiv = document.getElementById('mensaje');
+
+    function calcularTotal() {
+      const precio = parseFloat(precioInput.value) || 0;
+      const cantidad = parseInt(cantidadInput.value) || 0;
+      totalInput.value = (precio * cantidad).toFixed(2);
+    }
+
+    precioInput.addEventListener('input', calcularTotal);
+    cantidadInput.addEventListener('input', calcularTotal);
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'es-PE';
+      recognition.interimResults = false;
+
+      micIcon.addEventListener('click', () => {
+        recognition.start();
+      });
+
+      recognition.onresult = (event) => {
+        const speechResult = event.results[0][0].transcript;
+        nombreInput.value = speechResult;
+      };
+
+      recognition.onerror = (event) => {
+        alert('Error en reconocimiento de voz: ' + event.error);
+      };
+    } else {
+      micIcon.style.display = 'none';
+    }
+
+    ventaForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = new FormData(ventaForm);
+
+      fetch('guardar_venta.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.success){
+          mensajeDiv.innerHTML = '<p style="color:green;">Venta registrada con éxito.</p>';
+          ventaForm.reset();
+          totalInput.value = '';
+        } else {
+          mensajeDiv.innerHTML = '<p style="color:red;">Error al registrar venta: ' + data.message + '</p>';
+        }
+      })
+      .catch(() => {
+        mensajeDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor.</p>';
+      });
+    });
+  }
+
+  function loadRegistrarProyectos() {
+    content.innerHTML = `
+      <h2>Registrar Proyecto</h2>
+      <form id="proyecto-form" aria-label="Formulario para registrar proyecto">
+        <label for="nombre_proyecto">Nombre de proyecto</label>
+        <input type="text" id="nombre_proyecto" name="nombre_proyecto" required />
+
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+
+        <label for="fecha_inicio">Fecha de inicio</label>
+        <input type="date" id="fecha_inicio" name="fecha_inicio" required />
+
+        <label for="fecha_fin">Fecha de fin</label>
+        <input type="date" id="fecha_fin" name="fecha_fin" required />
+
+        <label for="estado">Estado</label>
+        <select id="estado" name="estado" required>
+          <option value="Pendiente">Pendiente</option>
+          <option value="En curso">En curso</option>
+          <option value="Finalizado">Finalizado</option>
+          <option value="Cancelado">Cancelado</option>
+        </select>
+
+        <button type="submit">Guardar Proyecto</button>
+      </form>
+      <div id="mensaje-proyecto"></div>
+    `;
+
+    const proyectoForm = document.getElementById('proyecto-form');
+    const mensajeProyectoDiv = document.getElementById('mensaje-proyecto');
+
+    proyectoForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = new FormData(proyectoForm);
+
+      fetch('guardar_proyecto.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.success){
+          mensajeProyectoDiv.innerHTML = '<p style="color:green;">Proyecto registrado con éxito.</p>';
+          proyectoForm.reset();
+        } else {
+          mensajeProyectoDiv.innerHTML = '<p style="color:red;">Error al registrar proyecto: ' + data.message + '</p>';
+        }
+      })
+      .catch(() => {
+        mensajeProyectoDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor.</p>';
+      });
+    });
+  }
+
+  function loadRegistrarGastos() {
+    content.innerHTML = `
+      <h2>Registrar Gasto</h2>
+      <form id="gasto-form" aria-label="Formulario para registrar gasto">
+        <label for="descripcion_gasto">Descripción de gasto</label>
+        <textarea id="descripcion_gasto" name="descripcion_gasto" rows="3" required></textarea>
+
+        <label for="monto">Monto</label>
+        <input type="number" id="monto" name="monto" step="0.01" required />
+
+        <button type="submit">Guardar Gasto</button>
+      </form>
+      <div id="mensaje-gasto"></div>
+    `;
+
+    const gastoForm = document.getElementById('gasto-form');
+    const mensajeGastoDiv = document.getElementById('mensaje-gasto');
+
+    gastoForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = new FormData(gastoForm);
+
+      fetch('guardar_gasto.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.success){
+          mensajeGastoDiv.innerHTML = '<p style="color:green;">Gasto registrado con éxito.</p>';
+          gastoForm.reset();
+        } else {
+          mensajeGastoDiv.innerHTML = '<p style="color:red;">Error al registrar gasto: ' + data.message + '</p>';
+        }
+      })
+      .catch(() => {
+        mensajeGastoDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor.</p>';
+      });
+    });
+  }
+
+  function loadRegistrarDeudas() {
+    content.innerHTML = `
+      <h2>Registrar Deuda</h2>
+      <form id="deuda-form" aria-label="Formulario para registrar deuda">
+        <label for="nombre_deuda">Ingresar Nombres</label>
+        <input type="text" id="nombre_deuda" name="nombre_deuda" required />
+
+        <label for="dni_deuda">Ingresar DNI</label>
+        <input type="text" id="dni_deuda" name="dni_deuda" maxlength="20" required />
+
+        <label for="descripcion_deuda">Descripción de la deuda</label>
+        <textarea id="descripcion_deuda" name="descripcion_deuda" rows="3"></textarea>
+
+        <label for="monto_deuda">Monto</label>
+        <input type="number" id="monto_deuda" name="monto_deuda" step="0.01" required />
+
+        <label for="estado_deuda">Estado</label>
+        <select id="estado_deuda" name="estado_deuda" required>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Pagada">Pagada</option>
+          <option value="Vencida">Vencida</option>
+        </select>
+
+        <label for="fecha_deuda">Fecha</label>
+        <input type="date" id="fecha_deuda" name="fecha_deuda" required />
+
+        <button type="submit">Guardar Deuda</button>
+      </form>
+      <div id="mensaje-deuda"></div>
+    `;
+
+    const deudaForm = document.getElementById('deuda-form');
+    const mensajeDeudaDiv = document.getElementById('mensaje-deuda');
+
+    deudaForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = new FormData(deudaForm);
+
+      fetch('guardar_deuda.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.success){
+          mensajeDeudaDiv.innerHTML = '<p style="color:green;">Deuda registrada con éxito.</p>';
+          deudaForm.reset();
+        } else {
+          mensajeDeudaDiv.innerHTML = '<p style="color:red;">Error al registrar deuda: ' + data.message + '</p>';
+        }
+      })
+      .catch(() => {
+        mensajeDeudaDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor.</p>';
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

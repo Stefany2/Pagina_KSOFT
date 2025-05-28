@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KINGSOFT</title>
+    <link rel="icon" href="img/kingsoft.png" type="image/x-icon">
     <script src="script.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" onerror="console.error('Font Awesome failed to load')">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" onerror="console.error('Leaflet CSS failed to load')">
@@ -290,7 +291,7 @@
             }
         }
 
-        /* About Us Section */
+        /* About Us Section kingsoft */
         .about-us {
             background-color: #4366E6;
             padding: clamp(3rem, 10vw, 6.25rem) 1.25rem;
@@ -343,7 +344,7 @@
             font-weight: 500;
         }
 
-        /* Servicios Section */
+        /* Servicios Seccion */
         .servicios-section {
             background-color: #000;
             padding: clamp(3rem, 10vw, 7.5rem) 1.25rem;
@@ -588,7 +589,7 @@
             box-shadow: 0 0.3125rem 0.9375rem rgba(67, 102, 230, 0.4);
         }
 
-        /* Capacitaciones Section */
+        /* Capacitaciones Seccion */
         .capacitaciones-section {
             padding: clamp(3rem, 10vw, 7.5rem) 1.25rem;
             background: linear-gradient(135deg, #03006B 0%, #0A0A2E 100%);
@@ -610,7 +611,7 @@
             filter: drop-shadow(0 0 5px #4366E6);
         }
         
-        /* Nueva estructura piramidal para capacitaciones */
+        /* Estructura piramidal para capacitaciones */
         .capacitaciones-pyramid {
             display: flex;
             flex-direction: column;
@@ -838,7 +839,7 @@
             transform: scale(1.05);
         }
 
-        /* Contacto Section */
+        /* Contacto Seccion */
         .contact-section {
             background-color:  #03006B;
             padding: clamp(3rem, 10vw, 7.5rem) 1.25rem;
@@ -1053,7 +1054,7 @@
 
         /* Footer */
         footer {
-            background-color: #4366E6;
+            background-color: #03006B;
             padding: clamp(2rem, 8vw, 3.125rem) 1.25rem;
             text-align: center;
         }
@@ -1615,12 +1616,14 @@
                 <ul class="nav-list">
                     <li><a href="inicio.html">INICIO</a></li>
                     <li class="has-submenu">
-                        <a href="#servicios">SERVICIOS <i class="fas fa-chevron-down"></i></a>
+                        <a href="#servicios">SERVICIOS</a>
                     </li>
                     <li><a href="#about-us">SOBRE NOSOTROS</a></li>
-                    <li><a href="blogs.html">BLOGS</a></li>
+                    <li><a href="competencia.html">COMPETENCIAS</a></li>
                     <li><a href="#contacto">CONTACTANOS</a></li>
                     <li><a href="#ubicacion">UBICACIÓN</a></li>
+                    <li><a href="usuario.html" aria-label="Perfil de usuario"><i class="fas fa-user"></i> Usuario</a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -1654,7 +1657,7 @@
 
     <main>
         <!-- Sobre Nosotros -->
-        <section class="about-us">
+       <section class="about-us" id="about-us">
             <div class="content-container">
                 <div class="left-section">
                     <h2>KINGSOFT</h2>
@@ -1803,7 +1806,7 @@
                 }           
             };
 
-            // Text-to-Speech functionality
+            // Funcionalidad de texto a voz
             function speakText(text) {
                 if ('speechSynthesis' in window) {
                     const utterance = new SpeechSynthesisUtterance(text);
@@ -1811,7 +1814,7 @@
                     utterance.volume = 1.0;
                     utterance.rate = 1.0;
                     utterance.pitch = 1.0;
-                    // Optional: Select a specific voice (e.g., Spanish female voice)
+                    // Opcional: Seleccione una voz específica (por ejemplo, voz femenina en español)
                     const voices = speechSynthesis.getVoices();
                     const spanishVoice = voices.find(voice => voice.lang.includes('es-'));
                     if (spanishVoice) utterance.voice = spanishVoice;
@@ -1821,32 +1824,32 @@
                 }
             }
 
-            // Function to add voice icon to chat messages
+            // Función para agregar un icono de voz a los mensajes de chat
             function addVoiceIcons() {
-                // Target chat messages (adjust selector based on actual widget structure)
+                // Mensajes de chat de destino (ajuste el selector según la estructura real del widget)
                 const messages = document.querySelectorAll('.chat-message:not(.voice-enabled)');
                 messages.forEach(message => {
-                    // Skip if already processed
+                    // Omitir si ya se procesó
                     if (message.querySelector('.voice-icon')) return;
                     
-                    // Get the message text (adjust based on actual message content structure)
+                    // Obtener el texto del mensaje (ajustarlo según la estructura del contenido real del mensaje)
                     const textElement = message.querySelector('.message-text') || message;
                     const text = textElement.textContent.trim();
                     
-                    // Create voice icon (ear emoji)
+                    // Crear un icono de voz (emoji de voz)
                     const voiceIcon = document.createElement('span');
                     voiceIcon.className = 'voice-icon';
-                    voiceIcon.innerHTML = '🔊'; // Changed to ear emoji
+                    voiceIcon.innerHTML = '🔊'; 
                     voiceIcon.title = 'Escuchar respuesta';
                     voiceIcon.onclick = () => speakText(text);
                     
-                    // Append icon to message
+                    // Añadir icono al mensaje
                     message.appendChild(voiceIcon);
-                    message.classList.add('voice-enabled'); // Mark as processed
+                    message.classList.add('voice-enabled'); // Marcar como procesado
                 });
             }
 
-            // Observe DOM changes to add icons to new messages
+            //Observar los cambios del DOM para agregar íconos a los mensajes nuevos
             function observeChat() {
                 const chatContainer = document.querySelector('.chat-container') || document.body;
                 const observer = new MutationObserver(() => {
@@ -1855,7 +1858,7 @@
                 observer.observe(chatContainer, { childList: true, subtree: true });
             }
 
-            // Initialize on page load
+            // Inicializar al cargar la página
             document.addEventListener('DOMContentLoaded', () => {
                 addVoiceIcons();
                 observeChat();
@@ -1870,37 +1873,37 @@
                 <h2 class="section-title">PARTNERSHIP</h2>
                 <div class="clientes-grid">
                     <div class="cliente-item">
-                        <img src="img/ECOFAUCET.png" alt="Cliente 1" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/ECOFAUCET.png" alt="Cliente 1" class="cliente-logo" >
                     </div>
                     <div class="cliente-item">
-                        <img src="img/IRON.png" alt="Cliente 2" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/IRON.png" alt="Cliente 2" class="cliente-logo">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/JEREM-IA.png" alt="Cliente 3" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/JEREM-IA.png" alt="Cliente 3" class="cliente-logo">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/CUY.png" alt="Cliente 4" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/CUY.png" alt="Cliente 4" class="cliente-logo" >
                     </div>
                     <div class="cliente-item">
-                        <img src="img/LLAM-AI-.png" alt="Cliente 5" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/LLAM-AI-.png" alt="Cliente 5" class="cliente-logo" >
                     </div>
                     <div class="cliente-item">
-                        <img src="img/MAT-IA-.png" alt="Cliente 6" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/MAT-IA-.png" alt="Cliente 6" class="cliente-logo" >
                     </div>
                     <div class="cliente-item">
-                        <img src="img/SOF-IA-.png" alt="Cliente 7" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/SOF-IA-.png" alt="Cliente 7" class="cliente-logo" >
                     </div>
                     <div class="cliente-item">
-                        <img src="img/SMARTKEY.png" alt="Cliente 8" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/SMARTKEY.png" alt="Cliente 8" class="cliente-logo">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/VIGIA.png" alt="Cliente 9" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/VIGIA.png" alt="Cliente 9" class="cliente-logo">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/VALER-IA.png" alt="Cliente 10" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/VALER-IA.png" alt="Cliente 10" class="cliente-logo">
                     </div>
                     <div class="cliente-item">
-                        <img src="img/JOS-IA-.png" alt="Cliente 11" class="cliente-logo" onerror="this.src='https://via.placeholder.com/100'">
+                        <img src="img/JOS-IA-.png" alt="Cliente 11" class="cliente-logo">
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
- /* Estilos generales */
+  /* Estilos generales */
         * {
             margin: 0;
             padding: 0;
@@ -83,7 +83,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background-color: rgba(67, 102, 230, 0.9);
+            background-color:  #03006B;
             backdrop-filter: blur(0.625rem);
             padding: 1rem 0;
             transition: all 0.3s ease;
@@ -279,7 +279,7 @@
             }
         }
 
-        /* About Us Section */
+        /* About Us Section kingsoft */
         .about-us {
             background-color: #4366E6;
             padding: clamp(3rem, 10vw, 6.25rem) 1.25rem;
@@ -332,7 +332,7 @@
             font-weight: 500;
         }
 
-        /* Servicios Section */
+        /* Servicios Seccion */
         .servicios-section {
             background-color: #000;
             padding: clamp(3rem, 10vw, 7.5rem) 1.25rem;
@@ -577,7 +577,7 @@
             box-shadow: 0 0.3125rem 0.9375rem rgba(67, 102, 230, 0.4);
         }
 
-        /* Capacitaciones Section */
+        /* Capacitaciones Seccion */
         .capacitaciones-section {
             padding: clamp(3rem, 10vw, 7.5rem) 1.25rem;
             background: linear-gradient(135deg, #03006B 0%, #0A0A2E 100%);
@@ -590,7 +590,7 @@
             background: linear-gradient(90deg, #4366E6, white);
             -webkit-background-clip: text;
             background-clip: text;
-          
+            
             text-shadow: 0 0 15px rgba(67, 102, 230, 0.6);
         }
         
@@ -599,14 +599,25 @@
             filter: drop-shadow(0 0 5px #4366E6);
         }
         
-        .capacitaciones-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(clamp(18rem, 30vw, 20rem), 1fr));
-            gap: 2rem;
+        /* Estructura piramidal para capacitaciones */
+        .capacitaciones-pyramid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             max-width: 87.5rem;
             margin: 0 auto;
+            padding: 2rem 0;
         }
         
+        .pyramid-row {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+        
+        /* Estilos para los items de capacitación */
         .capacitacion-item {
             background: rgba(3, 0, 107, 0.3);
             border: 1px solid rgba(67, 102, 230, 0.3);
@@ -617,6 +628,30 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        /* Tamaños diferentes para cada fila de la pirámide */
+        .pyramid-row:nth-child(1) .capacitacion-item {
+            max-width: 500px;
+            padding: 2.5rem;
+        }
+        
+        .pyramid-row:nth-child(2) .capacitacion-item {
+            max-width: 400px;
+            padding: 2.25rem;
+        }
+        
+        .pyramid-row:nth-child(3) .capacitacion-item {
+            max-width: 300px;
+            padding: 2rem;
+        }
+        
+        .pyramid-row:nth-child(4) .capacitacion-item {
+            max-width: 200px;
+            padding: 1.75rem;
         }
         
         .capacitacion-item::before {
@@ -689,11 +724,49 @@
             line-height: 1.6;
             transition: all 0.3s ease;
             opacity: 0.9;
+            font-size: 1rem;
         }
         
         .capacitacion-item:hover .capacitacion-desc {
             color: white;
             opacity: 1;
+        }
+        
+        /* Ajustar tamaños de fuente para items más pequeños */
+        .pyramid-row:nth-child(2) .capacitacion-icon {
+            font-size: 2.5rem;
+        }
+        
+        .pyramid-row:nth-child(2) .capacitacion-title {
+            font-size: 1.3rem;
+        }
+        
+        .pyramid-row:nth-child(2) .capacitacion-desc {
+            font-size: 0.9rem;
+        }
+        
+        .pyramid-row:nth-child(3) .capacitacion-icon {
+            font-size: 2rem;
+        }
+        
+        .pyramid-row:nth-child(3) .capacitacion-title {
+            font-size: 1.1rem;
+        }
+        
+        .pyramid-row:nth-child(3) .capacitacion-desc {
+            font-size: 0.8rem;
+        }
+        
+        .pyramid-row:nth-child(4) .capacitacion-icon {
+            font-size: 1.5rem;
+        }
+        
+        .pyramid-row:nth-child(4) .capacitacion-title {
+            font-size: 1rem;
+        }
+        
+        .pyramid-row:nth-child(4) .capacitacion-desc {
+            font-size: 0.7rem;
         }
         
         /* Efecto de partículas de fondo */
@@ -754,9 +827,9 @@
             transform: scale(1.05);
         }
 
-        /* Contacto Section */
+        /* Contacto Seccion */
         .contact-section {
-            background-color: #000;
+            background-color:  #03006B;
             padding: clamp(3rem, 10vw, 7.5rem) 1.25rem;
             position: relative;
             overflow: hidden;
@@ -777,10 +850,10 @@
         }
 
         .astronaut {
-            width: clamp(10rem, 30vw, 18.75rem);
+            width: clamp(10rem, 30vw, 25rem);
             z-index: 0;
             opacity: 0.8;
-            animation: float 6s ease-in-out infinite;
+            animation: float 5s ease-in-out infinite;
         }
 
         .contact-form {
@@ -969,7 +1042,7 @@
 
         /* Footer */
         footer {
-            background-color: #4366E6;
+            background-color: #03006B;
             padding: clamp(2rem, 8vw, 3.125rem) 1.25rem;
             text-align: center;
         }
@@ -1116,8 +1189,16 @@
                 max-height: clamp(10rem, 35vw, 12.5rem);
             }
 
-            .capacitaciones-grid {
-                grid-template-columns: repeat(auto-fit, minmax(clamp(15rem, 40vw, 18rem), 1fr));
+            /* Ajustes para la pirámide en tablet */
+            .pyramid-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+            
+            .pyramid-row .capacitacion-item {
+                max-width: 400px !important;
+                width: 100%;
             }
         }
 
@@ -1202,7 +1283,7 @@
             .section-title {
                 font-size: clamp(1.5rem, 5vw, 2.5rem);
             }
-            
+    
             .section-subtitle {
                 font-size: clamp(0.8rem, 3vw, 1.3rem);
             }
@@ -1269,18 +1350,6 @@
             .contact-btn {
                 font-size: clamp(0.7rem, 2vw, 0.9rem);
                 padding: clamp(0.5rem, 2vw, 0.625rem) clamp(1rem, 3vw, 1.25rem);
-            }
-
-            .capacitacion-icon {
-                font-size: 2.5rem;
-            }
-            
-            .capacitacion-title {
-                font-size: 1.3rem;
-            }
-            
-            .capacitacion-desc {
-                font-size: 0.9rem;
             }
         }
 
@@ -1403,22 +1472,6 @@
             
             .footer-logo {
                 font-size: clamp(0.9rem, 3vw, 1.5rem);
-            }
-
-            .capacitaciones-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .capacitacion-icon {
-                font-size: 2rem;
-            }
-            
-            .capacitacion-title {
-                font-size: 1.2rem;
-            }
-            
-            .capacitacion-desc {
-                font-size: 0.8rem;
             }
         }
 

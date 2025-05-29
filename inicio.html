@@ -1097,6 +1097,175 @@
             font-size: clamp(0.7rem, 2vw, 0.9rem);
         }
 
+        /* Estilos para el asistente virtual */
+        #chat-bubble {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background: #4366e6;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(67, 102, 230, 0.6);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            user-select: none;
+            transition: background-color 0.3s ease;
+            z-index: 1000;
+        }
+        #chat-bubble:hover {
+            background: #2a3dbb;
+        }
+
+        #chat-container {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 360px;
+            height: 500px;
+            background: #1f1f1f;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            font-size: 15px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+            z-index: 1000;
+        }
+        #chat-container.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #chat-header {
+            background: #4366e6;
+            color: white;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #chat-header button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            user-select: none;
+            padding: 0;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+        #chat-header button:hover {
+            color: #cdd9ff;
+        }
+
+        #messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 12px 16px;
+            background: #121212;
+            color: #ddd;
+        }
+
+        .message {
+            margin-bottom: 14px;
+            line-height: 1.3;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-width: 80%;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+        .user-message {
+            background: #4366e6;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 3px;
+        }
+        .bot-message {
+            background: #333;
+            color: #eee;
+            margin-right: auto;
+            border-bottom-left-radius: 3px;
+        }
+
+        #input-area {
+            display: flex;
+            padding: 10px 16px;
+            background: #222;
+            align-items: center;
+            gap: 8px;
+        }
+        #input-text {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            background: #333;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        #input-text::placeholder {
+            color: #bbb;
+        }
+        #send-btn, #voice-btn {
+            background: none;
+            border: none;
+            color: #4366e6;
+            font-size: 24px;
+            cursor: pointer;
+            user-select: none;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+            border-radius: 50%;
+        }
+        #send-btn:hover, #voice-btn:hover {
+            color: #2a3dbb;
+            background: #2a3dbb22;
+        }
+        #voice-btn[disabled] {
+            color: gray;
+            cursor: not-allowed;
+            background: transparent;
+        }
+
+        #messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        #messages::-webkit-scrollbar-thumb {
+            background: #4366e6aa;
+            border-radius: 4px;
+        }
+        #messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        @media (max-width: 420px) {
+            #chat-container {
+                width: 90vw;
+                bottom: 80px;
+                right: 5vw;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 1200px) {
             .hero-title {
@@ -1500,6 +1669,7 @@
                 font-size: clamp(1rem, 4vw, 1.5rem);
             }
             
+            
             .mobile-menu-btn {
                 font-size: clamp(1.2rem, 5vw, 1.8rem);
             }
@@ -1605,8 +1775,8 @@
     <header class="main-header">
         <div class="header-container">
             <div class="logo-container">
-                <img src="img/KINGSOFT1.png" alt="KINGSOFT Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/50'">
-                <h1 class="logo">KINGSOFT</h1>
+                <img src="img/KINGSOFT1.png" alt="KINGSOFT Logo" class="logo-img">
+                <h1 class="logo">KingSoft</h1>
             </div>
             
             <nav class="main-nav">
@@ -1711,7 +1881,7 @@
                     <button class="close-detalle" id="close-detalle" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
                     <div class="detalle-content-wrapper">
                         <div class="detalle-image-container">
-                            <img src="https://via.placeholder.com/300" alt="Servicio" class="detalle-imagen" id="detalle-imagen" onerror="this.src='https://via.placeholder.com/300'">
+                            <img src="https://via.placeholder.com/300" alt="Servicio" class="detalle-imagen" id="detalle-imagen" >
                         </div>
                         <div class="detalle-content">
                             <h2 class="detalle-title" id="detalle-title">Nombre del Servicio</h2>
@@ -1784,87 +1954,7 @@
             </div>
         </section>
 
-        <!-- Widget Configuration -->
-        <script>
-            window.ChatWidgetConfig = {
-                webhook: {
-                    url: 'https://www.kingsoft.pe:5678/webhook/b8e62e7e-39cd-42c0-8ec1-1ca0fd45d3a7/chat',
-                    route: 'general'
-                },
-                branding: {
-                    logo: 'img/Eva.jpeg',
-                    name: 'EVA',
-                    welcomeText: 'Hola 👋, ¿cómo puedo ayudarte?',
-                    responseTimeText: 'respondemos rápidamente'
-                },
-                style: {
-                    primaryColor: 'rgb(3, 0, 107)',    
-                    secondaryColor: 'rgb(67, 102, 230)', 
-                    backgroundColor: '#000000',   
-                    fontColor: '#ffffff',         
-                    position: 'right'             
-                }           
-            };
-
-            // Funcionalidad de texto a voz
-            function speakText(text) {
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'es-ES'; // Set to Spanish
-                    utterance.volume = 1.0;
-                    utterance.rate = 1.0;
-                    utterance.pitch = 1.0;
-                    // Opcional: Seleccione una voz específica (por ejemplo, voz femenina en español)
-                    const voices = speechSynthesis.getVoices();
-                    const spanishVoice = voices.find(voice => voice.lang.includes('es-'));
-                    if (spanishVoice) utterance.voice = spanishVoice;
-                    speechSynthesis.speak(utterance);
-                } else {
-                    alert('Lo siento, tu navegador no soporta la síntesis de voz.');
-                }
-            }
-
-            // Función para agregar un icono de voz a los mensajes de chat
-            function addVoiceIcons() {
-                // Mensajes de chat de destino (ajuste el selector según la estructura real del widget)
-                const messages = document.querySelectorAll('.chat-message:not(.voice-enabled)');
-                messages.forEach(message => {
-                    // Omitir si ya se procesó
-                    if (message.querySelector('.voice-icon')) return;
-                    
-                    // Obtener el texto del mensaje (ajustarlo según la estructura del contenido real del mensaje)
-                    const textElement = message.querySelector('.message-text') || message;
-                    const text = textElement.textContent.trim();
-                    
-                    // Crear un icono de voz (emoji de voz)
-                    const voiceIcon = document.createElement('span');
-                    voiceIcon.className = 'voice-icon';
-                    voiceIcon.innerHTML = '🔊'; 
-                    voiceIcon.title = 'Escuchar respuesta';
-                    voiceIcon.onclick = () => speakText(text);
-                    
-                    // Añadir icono al mensaje
-                    message.appendChild(voiceIcon);
-                    message.classList.add('voice-enabled'); // Marcar como procesado
-                });
-            }
-
-            //Observar los cambios del DOM para agregar íconos a los mensajes nuevos
-            function observeChat() {
-                const chatContainer = document.querySelector('.chat-container') || document.body;
-                const observer = new MutationObserver(() => {
-                    addVoiceIcons();
-                });
-                observer.observe(chatContainer, { childList: true, subtree: true });
-            }
-
-            // Inicializar al cargar la página
-            document.addEventListener('DOMContentLoaded', () => {
-                addVoiceIcons();
-                observeChat();
-            });
-        </script>
-        <script src="https://nocodeveloper.com/chat.js"></script>
+        
 
         <!-- Sección de Clientes -->
         <section class="clientes-section">
@@ -1909,102 +1999,53 @@
             </div>
         </section>
 
-        <!-- Sección de Con-->
-
-<section class="contact-section" id="contacto">
-    <div class="contact-container">
-        <h2 class="section-title">CONTÁCTANOS</h2>
-        <div class="contact-content">
-            <img src="img/bot.png" alt="Astronauta KingSoft" class="astronaut" loading="lazy" onerror="this.src='https://via.placeholder.com/200'">
-            <form id="contact-form" action="contact.php" method="POST">
-                <div class="form-group">
-                    <label for="name">Nombres</label>
-                    <input type="text" id="name" name="name" placeholder="Ingresa tu nombre" required>
+        <!-- Sección de Contacto -->
+        <section class="contact-section" id="contacto">
+            <div class="contact-container">
+                <h2 class="section-title">CONTÁCTANOS</h2>
+                <div class="contact-content">
+                    <img src="img/bot.png" alt="Astronauta KingSoft" class="astronaut" loading="lazy" onerror="this.src='https://via.placeholder.com/200'">
+                    <form id="contact-form" action="contact.php" method="POST">
+                        <div class="form-group">
+                            <label for="name">Nombres</label>
+                            <input type="text" id="name" name="name" placeholder="Ingresa tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Apellidos</label>
+                            <input type="text" id="lastname" name="lastname" placeholder="Ingresa tus apellidos" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Número de contacto</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Ingresa tu número de teléfono" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Selecciona un servicio</label>
+                            <select id="service" name="service" required>
+                                <option value="selecciona">Selecciona un servicio</option>
+                                <option value="desarrollo-aplicaciones">Desarrollo de aplicaciones</option>
+                                <option value="interfaz-usuario">Interfaz de usuario/Experiencia de usuario</option>
+                                <option value="ia">Inteligencia Artificial (IA)</option>
+                                <option value="iot">Internet de las Cosas</option>
+                                <option value="blockchain">Blockchain</option>
+                                <option value="big-data">Big Data y Análisis</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">¿Cómo podemos ayudarle?</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Describe cómo podemos ayudarte..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            Enviar Mensaje
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="lastname">Apellidos</label>
-                    <input type="text" id="lastname" name="lastname" placeholder="Ingresa tus apellidos" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Número de contacto</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Ingresa tu número de teléfono" required>
-                </div>
-                <div class="form-group">
-                    <label for="service">Selecciona un servicio</label>
-                    <select id="service" name="service" required>
-                        <option value="selecciona">Selecciona un servicio</option>
-                        <option value="desarrollo-aplicaciones">Desarrollo de aplicaciones</option>
-                        <option value="interfaz-usuario">Interfaz de usuario/Experiencia de usuario</option>
-                        <option value="ia">Inteligencia Artificial (IA)</option>
-                        <option value="iot">Internet de las Cosas</option>
-                        <option value="blockchain">Blockchain</option>
-                        <option value="big-data">Big Data y Análisis</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="message">¿Cómo podemos ayudarle?</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Describe cómo podemos ayudarte..." required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">
-                    Enviar Mensaje
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-</section>
-
-<script>
-document.getElementById('contact-form').addEventListener('submit', async function(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const formData = new FormData(form);
-    
-    try {
-        const response = await fetch(form.action, {
-            method: form.method,
-            body: formData
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            // Prepare WhatsApp message
-            const name = formData.get('name');
-            const lastname = formData.get('lastname');
-            const email = formData.get('email');
-            const phone = formData.get('phone');
-            const service = formData.get('service');
-            const message = formData.get('message');
-            
-            const whatsappMessage = encodeURIComponent(
-                `Hola, soy ${name} ${lastname}\n` +
-                `Correo: ${email}\n` +
-                `Teléfono: ${phone}\n` +
-                `Servicio: ${service}\n` +
-                `Mensaje: ${message}`
-            );
-            
-           
-            const whatsappNumber = '+51931576209';
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-            
-            // Redirect to WhatsApp
-            window.location.href = whatsappUrl;
-        } else {
-            alert('Error al guardar los datos: ' + result.message);
-        }
-    } catch (error) {
-        alert('Error al enviar el formulario: ' + error.message);
-    }
-});
-</script>
-
+            </div>
+        </section>
 
         <!-- Sección de Ubicación -->
         <section class="ubicacion-section" id="ubicacion">
@@ -2027,14 +2068,37 @@ document.getElementById('contact-form').addEventListener('submit', async functio
         <div class="footer-container">
             <div class="footer-logo-container">
                 <img src="img/KINGSOFT1.png" alt="KSOFT Logo" class="footer-logo-img" loading="lazy" onerror="this.src='https://via.placeholder.com/50'">
-                <a href="#" class="footer-logo">KINGSOFT</a>
+                <a href="#" class="footer-logo">KingSoft</a>
             </div>
             <div class="social-links">
                 <p>Potenciamos tu negocio con tecnología de precisión</p>
             </div>
-            <p class="copyright">© 2025 KINGSOFT - Todos los derechos reservados</p>
+            <p class="copyright">© 2025 KingSoft - Todos los derechos reservados</p>
         </div>
     </footer>
+
+    <!-- Asistente Virtual Eva -->
+    <div id="chat-bubble" aria-label="Abrir chat con asistente Eva" role="button" tabindex="0" title="Abrir chat Eva">
+        <img src="img/EVITA.png" alt="Logo Eva" style="width: 40px; height: 40px; object-fit: contain;" />
+    </div>
+
+    <section id="chat-container" role="dialog" aria-modal="true" aria-labelledby="chat-header-title" aria-hidden="true">
+        <header id="chat-header">
+            <span id="chat-header-title">Eva</span>
+            <button id="close-chat" aria-label="Cerrar chat">×</button>
+            <button id="speak-btn" title="Leer respuesta en voz alta" aria-label="Botón para leer respuesta" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer; margin-left: 10px;">
+                <i class="fas fa-volume-up"></i>
+            </button>
+        </header>
+
+        <div id="messages" aria-live="polite" aria-relevant="additions"></div>
+
+        <form id="input-area" autocomplete="off" onsubmit="return false;">
+            <input type="text" id="input-text" placeholder="Escribe tu pregunta..." aria-label="Entrada de texto para pregunta" />
+            <button id="voice-btn" title="Hablar para preguntar" aria-label="Botón para activar reconocimiento de voz">🎤</button>
+            <button id="send-btn" title="Enviar pregunta" aria-label="Botón para enviar pregunta">➡️</button>
+        </form>
+    </section>
 
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js" onerror="console.error('Leaflet JS failed to load')"></script>
@@ -2430,6 +2494,237 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 console.error('Error al crear galaxia:', error);
             }
         }
+
+        // Funcionalidad del asistente virtual Eva
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatContainer = document.getElementById('chat-container');
+        const closeChatBtn = document.getElementById('close-chat');
+        const messagesEl = document.getElementById('messages');
+        const inputText = document.getElementById('input-text');
+        const sendBtn = document.getElementById('send-btn');
+        const voiceBtn = document.getElementById('voice-btn');
+        const speakBtn = document.getElementById('speak-btn');
+        
+        // Variable para almacenar la última respuesta del bot
+        let lastBotResponse = '';
+        
+        // Mostrar/Ocultar chat
+        function toggleChat(show) {
+            if (show) {
+                chatContainer.classList.add('active');
+                chatContainer.setAttribute('aria-hidden', 'false');
+                inputText.focus();
+            } else {
+                chatContainer.classList.remove('active');
+                chatContainer.setAttribute('aria-hidden', 'true');
+                chatBubble.focus();
+            }
+        }
+
+        chatBubble.addEventListener('click', () => toggleChat(true));
+        closeChatBtn.addEventListener('click', () => toggleChat(false));
+
+        // Accesibilidad con teclado para burbuja y cerrar
+        chatBubble.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleChat(true);
+            }
+        });
+        closeChatBtn.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleChat(false);
+            }
+        });
+
+        // Función para agregar mensaje al chat
+        function addMessage(text, sender) {
+            const div = document.createElement('div');
+            div.classList.add('message');
+            div.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            div.textContent = text;
+            messagesEl.appendChild(div);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+            
+            // Guardar la última respuesta del bot
+            if (sender === 'bot') {
+                lastBotResponse = text;
+            }
+        }
+
+        // Función para leer texto en voz alta
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                // Detener cualquier síntesis de voz en curso
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'es-ES'; // Configurar el idioma a español
+                utterance.rate = 1.0; // Velocidad normal
+                utterance.pitch = 1.0; // Tono normal
+                
+                // Cambiar el ícono mientras se está hablando
+                speakBtn.innerHTML = '<i class="fas fa-volume-up" style="color: #4366E6;"></i>';
+                
+                utterance.onend = function() {
+                    // Restaurar el ícono cuando termina de hablar
+                    speakBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                };
+                
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Lo siento, tu navegador no soporta la función de texto a voz.');
+            }
+        }
+
+        // Botón para leer la última respuesta
+        speakBtn.addEventListener('click', () => {
+            if (lastBotResponse) {
+                speakText(lastBotResponse);
+            } else {
+                alert('No hay respuesta para leer.');
+            }
+        });
+
+        // Enviar pregunta a la API
+        async function sendQuestion(pregunta) {
+            if (!pregunta.trim()) return;
+            addMessage(pregunta, 'user');
+            inputText.value = '';
+            inputText.disabled = true;
+            sendBtn.disabled = true;
+            voiceBtn.disabled = true;
+
+            try {
+                const response = await fetch('https://www.kingsoft.pe:5678/webhook/agent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pregunta })  // Campo esperado por API
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.json();
+
+                let respuesta = data.respuesta || 'No obtuve respuesta.';
+                addMessage(respuesta, 'bot');
+                
+                // Leer automáticamente la respuesta
+                speakText(respuesta);
+            } catch (error) {
+                const errorMsg = 'Error al comunicarse con el asistente. Intenta de nuevo.';
+                addMessage(errorMsg, 'bot');
+                console.error(error);
+            } finally {
+                inputText.disabled = false;
+                sendBtn.disabled = false;
+                voiceBtn.disabled = false;
+                inputText.focus();
+            }
+        }
+
+        // Enviar con botón enviar
+        sendBtn.addEventListener('click', () => {
+            sendQuestion(inputText.value);
+        });
+
+        // Enviar con Enter
+        inputText.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                sendQuestion(inputText.value);
+            }
+        });
+
+        // Reconocimiento de voz
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            voiceBtn.disabled = true;
+            voiceBtn.title = "Tu navegador no soporta reconocimiento de voz";
+        } else {
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'es-ES';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.addEventListener('start', () => {
+                voiceBtn.textContent = '🎙️';
+                voiceBtn.style.color = '#2a3dbb';
+                voiceBtn.disabled = true;
+            });
+
+            recognition.addEventListener('end', () => {
+                voiceBtn.textContent = '🎤';
+                voiceBtn.style.color = '';
+                voiceBtn.disabled = false;
+                inputText.focus();
+            });
+
+            recognition.addEventListener('result', e => {
+                const transcript = e.results[0][0].transcript.trim();
+                sendQuestion(transcript);
+            });
+
+            voiceBtn.addEventListener('click', () => {
+                recognition.start();
+            });
+        }
+
+        // Mensaje inicial al abrir chat (solo una vez)
+        chatBubble.addEventListener('click', () => {
+            if (messagesEl.children.length === 0) {
+                const welcomeMsg = 'Hola, soy Eva. Puedes hacerme preguntas escribiendo o hablando.';
+                addMessage(welcomeMsg, 'bot');
+                lastBotResponse = welcomeMsg;
+            }
+        });
+
+        // Funcionalidad del formulario de contacto
+        document.getElementById('contact-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Prepare WhatsApp message
+                    const name = formData.get('name');
+                    const lastname = formData.get('lastname');
+                    const email = formData.get('email');
+                    const phone = formData.get('phone');
+                    const service = formData.get('service');
+                    const message = formData.get('message');
+                    
+                    const whatsappMessage = encodeURIComponent(
+                        `Hola, soy ${name} ${lastname}\n` +
+                        `Correo: ${email}\n` +
+                        `Teléfono: ${phone}\n` +
+                        `Servicio: ${service}\n` +
+                        `Mensaje: ${message}`
+                    );
+                    
+                    // WhatsApp number
+                    const whatsappNumber = '+51931576209';
+                    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+                    
+                    // Redirect to WhatsApp
+                    window.location.href = whatsappUrl;
+                } else {
+                    alert('Error al guardar los datos: ' + result.message);
+                }
+            } catch (error) {
+                alert('Error al enviar el formulario: ' + error.message);
+            }
+        });
     </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Operaciones - KASOFT</title>
+<title>Operaciones - KingSoft</title>
 <style>
   /* Reset & base */
   * {
@@ -111,7 +111,7 @@
     margin-bottom: 22px;
     border: 2px solid #b0c4ff;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 15px;
     transition: border-color 0.25s ease;
   }
   form input:focus, form textarea:focus, form select:focus {
@@ -141,15 +141,15 @@
   }
   #mic-icon-container {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
-  #mic-icon {
+  #mic-icon, #mic-asesoria {
     cursor: pointer;
     width: 42px;
     fill: #4366e6;
     transition: fill 0.3s ease;
   }
-  #mic-icon:hover {
+  #mic-icon:hover, #mic-asesoria:hover {
     fill: #3048b8;
   }
   /* Tablas */
@@ -171,11 +171,43 @@
     letter-spacing: 0.05em;
   }
   /* Mensajes */
-  #mensaje {
+  #mensaje, #mensaje-proyecto, #mensaje-gasto, #mensaje-deuda {
     margin-top: 22px;
     font-weight: 700;
     font-size: 1rem;
     color: #2c3e50;
+  }
+  /* Estado del micrófono */
+  .mic-status {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #4366e6;
+  }
+  /* Estilo para el textarea de análisis financiero */
+  #analisis-textarea, #resultados-textarea {
+    background-color: #e9ecef;
+    color: #3048b8;
+    font-weight: 500;
+    min-height: 150px;
+    resize: none;
+    cursor: default;
+    width: 100%;
+  }
+  #analisis-textarea[error], #resultados-textarea[error] {
+    border-color: #dc3545;
+    color: #dc3545;
+  }
+  /* Date filter container */
+  .date-filters {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .date-filters div {
+    flex: 1;
+    min-width: 150px;
   }
   /* Responsive */
   @media (max-width: 780px) {
@@ -190,6 +222,10 @@
     .sub-menu button {
       padding: 10px 20px;
       font-size: 14px;
+    }
+    .date-filters {
+      flex-direction: column;
+      gap: 10px;
     }
   }
 </style>
@@ -229,7 +265,6 @@
       currentOperation = btn.dataset.op;
 
       if(currentOperation === 'asesoria'){
-        // Para asesoría no mostramos submenu y cargamos directo contenido
         subMenu.style.display = 'none';
         loadView(null, 'asesoria');
         setAria(false);
@@ -243,7 +278,6 @@
         setAria(true);
       }
 
-      // Actualizar botón activo
       menuButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     });
@@ -267,7 +301,6 @@
     loadView('registrar', currentOperation);
   });
 
-  // Accessibility helper for submenu
   function setAria(enabled){
     verBtn.disabled = !enabled;
     registrarBtn.disabled = !enabled;
@@ -303,7 +336,11 @@
 
       case 'gastos':
         if(view === 'ver'){
-          content.innerHTML = '<h2>Listado de Gastos</h2><p>Funcionalidad para listar gastos aún no implementada.</p>';
+          content.innerHTML = '<h2>Listado de Gastos</h2><div id="gastos-listado" aria-live="polite">Cargando...</div>';
+          fetch('listar_gastos.php')
+          .then(res => res.text())
+          .then(html => document.getElementById('gastos-listado').innerHTML = html)
+          .catch(() => document.getElementById('gastos-listado').innerHTML = '<p>Error al cargar gastos.</p>');
         } else {
           loadRegistrarGastos();
         }
@@ -322,19 +359,264 @@
         break;
 
       case 'asesoria':
-        // Mostrar contenido directamente sin submenu
         content.innerHTML = `
           <h2>Asesoría Financiera</h2>
           <p>Analiza la información registrada y obtén recomendaciones personalizadas.</p>
-          <button id="revisar-btn" style="background:#3048b8; color:#f0f0f0; font-weight:700; padding:14px 28px; border:none; border-radius:12px; cursor:pointer; box-shadow:0 5px 15px rgba(67,102,230,0.8); transition:background-color 0.3s ease;">
+          <div id="mic-icon-container" aria-label="Ingresar análisis financiero por voz" role="button" tabindex="0" style="text-align:center; margin-bottom:20px;">
+            <svg id="mic-asesoria" viewBox="0 0 24 24" fill="#4366e6" stroke="#4366e6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:42px; cursor:pointer;" title="Ingresar análisis financiero por voz">
+              <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zM12 19v3m-4 0h8"/>
+            </svg>
+            <div id="mic-status" class="mic-status">Presione el micrófono para analizar por voz</div>
+          </div>
+          <div class="date-filters" role="group" aria-label="Filtros de fecha">
+            <div>
+              <label for="fecha-desde">Desde</label>
+              <input type="date" id="fecha-desde" name="fecha-desde" required aria-describedby="fecha-desde-help">
+              <span id="fecha-desde-help" class="sr-only">Seleccione la fecha de inicio para el análisis financiero</span>
+            </div>
+            <div>
+              <label for="fecha-hasta">Hasta</label>
+              <input type="date" id="fecha-hasta" name="fecha-hasta" required aria-describedby="fecha-hasta-help">
+              <span id="fecha-hasta-help" class="sr-only">Seleccione la fecha de fin para el análisis financiero</span>
+            </div>
+          </div>
+          <button id="revisar-btn" style="background:#3048b8; color:#f0f0f0; font-weight:700; padding:14px 28px; border:none; border-radius:12px; cursor:pointer; box-shadow:0 5px 15px rgba(67,102,230,0.8); transition:background-color 0.3s ease;" aria-label="Revisar análisis financiero">
             Revisar
           </button>
-          <div id="asesoria-result" style="margin-top: 25px; color:#3048b8; font-weight:600;"></div>
+          <div id="asesoria-result" style="margin-top: 25px;">
+            <label for="resultados-textarea">Análisis y Recomendaciones</label>
+            <textarea id="resultados-textarea" readonly placeholder="El análisis y las recomendaciones aparecerán aquí..." aria-live="polite"></textarea>
+          </div>
         `;
-        document.getElementById('revisar-btn').addEventListener('click', () => {
-          const resultDiv = document.getElementById('asesoria-result');
-          resultDiv.innerHTML = '<p>Analizando información... (funcionalidad en desarrollo)</p>';
-          // Aquí puedes implementar el análisis real y mostrar resultados dinámicos
+        
+        const micAsesoria = document.getElementById('mic-asesoria');
+        const micStatus = document.getElementById('mic-status');
+        const fechaDesdeInput = document.getElementById('fecha-desde');
+        const fechaHastaInput = document.getElementById('fecha-hasta');
+        const resultadosTextarea = document.getElementById('resultados-textarea');
+
+        // Set default dates
+        const today = new Date();
+        fechaHastaInput.value = today.toISOString().split('T')[0];
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(today.getMonth() - 1);
+        fechaDesdeInput.value = oneMonthAgo.toISOString().split('T')[0];
+
+        // Validate date range
+        function validateDates() {
+          if (new Date(fechaDesdeInput.value) > new Date(fechaHastaInput.value)) {
+            resultadosTextarea.value = "Error: La fecha de inicio no puede ser posterior a la fecha de fin";
+            resultadosTextarea.setAttribute('error', '');
+            micStatus.textContent = "Error en las fechas seleccionadas";
+            micStatus.style.color = "#dc3545";
+            return false;
+          }
+          return true;
+        }
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+          const recognition = new SpeechRecognition();
+          recognition.lang = 'es-PE';
+          recognition.interimResults = false;
+          recognition.maxAlternatives = 1;
+
+          micAsesoria.addEventListener('click', () => {
+            try {
+              micStatus.textContent = "Escuchando... Hable ahora";
+              micStatus.style.color = "#4366e6";
+              console.log('Iniciando reconocimiento de voz para asesoría');
+              recognition.start();
+            } catch (error) {
+              micStatus.textContent = "Error al iniciar el micrófono: " + error.message;
+              micStatus.style.color = "#dc3545";
+              resultadosTextarea.value = "Error al iniciar el micrófono: " + error.message;
+              resultadosTextarea.setAttribute('error', '');
+              console.error('Error al iniciar el micrófono:', error);
+              resetMicStatus(micStatus);
+            }
+          });
+
+          recognition.onresult = async (event) => {
+            const speechResult = event.results[0][0].transcript;
+            micStatus.textContent = "Transcripción recibida: " + speechResult;
+            micStatus.style.color = "#28a745";
+            console.log('Transcripción de voz:', speechResult);
+
+            if (!validateDates()) return;
+
+            try {
+              micStatus.textContent = "Procesando análisis financiero...";
+              console.log('Enviando solicitud a la API para análisis financiero por voz');
+
+              const response = await fetch('https://www.kingsoft.pe:5678/webhook/finansa', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  texto: speechResult,
+                  fecha_desde: fechaDesdeInput.value,
+                  fecha_hasta: fechaHastaInput.value,
+                  fecha: new Date().toISOString()
+                })
+              });
+
+              console.log('Código de estado HTTP:', response.status);
+              if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+              }
+
+              const data = await response.json();
+              console.log('Respuesta de la API:', data);
+
+              // Handle API response with 'respuesta' instead of 'analisis'
+              if (data.respuesta || data.recomendaciones) {
+                let output = '';
+                if (data.respuesta) output += `Análisis Financiero:\n${data.respuesta.trim()}\n\n`;
+                if (data.resumen) output += `Resumen:\n${data.resumen.trim()}\n\n`;
+                if (data.balance !== undefined) output += `Balance: ${data.balance}\n`;
+                if (data.estado_financiero) output += `Estado Financiero: ${data.estado_financiero}\n\n`;
+                if (data.recomendaciones) output += `Recomendaciones:\n${data.recomendaciones.trim()}`;
+                resultadosTextarea.value = output.trim();
+                resultadosTextarea.removeAttribute('error');
+                micStatus.textContent = "Análisis financiero procesado correctamente";
+                micStatus.style.color = "#28a745";
+                announceSuccess("Análisis y recomendaciones generados con éxito");
+                console.log('Datos procesados:', {
+                  respuesta: data.respuesta,
+                  resumen: data.resumen,
+                  balance: data.balance,
+                  estado_financiero: data.estado_financiero,
+                  recomendaciones: data.recomendaciones
+                });
+              } else {
+                const errorMessage = data.message || 'No se recibieron datos válidos del análisis financiero';
+                micStatus.textContent = "Error al procesar análisis financiero: " + errorMessage;
+                micStatus.style.color = "#dc3545";
+                resultadosTextarea.value = `Error: ${errorMessage}`;
+                resultadosTextarea.setAttribute('error', '');
+                console.error('Error en la API:', errorMessage);
+              }
+            } catch (error) {
+              const errorMessage = error.message || 'No se pudo conectar con el servidor';
+              micStatus.textContent = "Error de conexión con el servicio: " + errorMessage;
+              micStatus.style.color = "#dc3545";
+              resultadosTextarea.value = `Error en conexión: ${errorMessage}`;
+              resultadosTextarea.setAttribute('error', '');
+              console.error('Error al procesar análisis financiero por voz:', error);
+              resetMicStatus(micStatus);
+            }
+          };
+
+          recognition.onerror = (event) => {
+            let errorMessage = "Error en reconocimiento de voz: ";
+            switch(event.error) {
+              case 'no-speech':
+                errorMessage += "No se detectó voz";
+                break;
+              case 'audio-capture':
+                errorMessage += "No se pudo capturar audio";
+                break;
+              case 'not-allowed':
+                errorMessage += "Permiso denegado para usar el micrófono";
+                break;
+              default:
+                errorMessage += event.error;
+            }
+            micStatus.textContent = errorMessage;
+            micStatus.style.color = "#dc3545";
+            resultadosTextarea.value = errorMessage;
+            resultadosTextarea.setAttribute('error', '');
+            console.error('Error en reconocimiento de voz:', event.error, event);
+            resetMicStatus(micStatus);
+          };
+
+          recognition.onsoundend = () => {
+            if (micStatus.textContent === "Escuchando... Hable ahora") {
+              micStatus.textContent = "Tiempo de escucha terminado";
+              micStatus.style.color = "#dc3545";
+              resultadosTextarea.value = "Tiempo de escucha terminado sin detectar voz";
+              resultadosTextarea.setAttribute('error', '');
+              console.warn('Tiempo de escucha terminado sin detectar voz');
+              resetMicStatus(micStatus);
+            }
+          };
+        } else {
+          micAsesoria.style.display = 'none';
+          micStatus.textContent = "El reconocimiento de voz no está disponible en este navegador";
+          micStatus.style.color = "#dc3545";
+          resultadosTextarea.value = "El reconocimiento de voz no está disponible en este navegador";
+          resultadosTextarea.setAttribute('error', '');
+          console.warn('Reconocimiento de voz no disponible en este navegador');
+        }
+
+        document.getElementById('revisar-btn').addEventListener('click', async () => {
+          if (!validateDates()) return;
+
+          try {
+            resultadosTextarea.value = "Analizando información...";
+            resultadosTextarea.removeAttribute('error');
+            console.log('Enviando solicitud a la API para análisis financiero manual');
+
+            const response = await fetch('https://www.kingsoft.pe:5678/webhook/finansa', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                texto: '',
+                fecha_desde: fechaDesdeInput.value,
+                fecha_hasta: fechaHastaInput.value,
+                fecha: new Date().toISOString()
+              })
+            });
+
+            console.log('Código de estado HTTP:', response.status);
+            if (!response.ok) {
+              throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log('Respuesta de la API:', data);
+
+            // Handle API response with 'respuesta' instead of 'analisis'
+            if (data.respuesta || data.recomendaciones) {
+              let output = '';
+              if (data.respuesta) output += `Análisis Financiero:\n${data.respuesta.trim()}\n\n`;
+              if (data.resumen) output += `Resumen:\n${data.resumen.trim()}\n\n`;
+              if (data.balance !== undefined) output += `Balance: ${data.balance}\n`;
+              if (data.estado_financiero) output += `Estado Financiero: ${data.estado_financiero}\n\n`;
+              if (data.recomendaciones) output += `Recomendaciones:\n${data.recomendaciones.trim()}`;
+              resultadosTextarea.value = output.trim();
+              resultadosTextarea.removeAttribute('error');
+              micStatus.textContent = "Análisis financiero procesado correctamente";
+              micStatus.style.color = "#28a745";
+              announceSuccess("Análisis y recomendaciones generados con éxito");
+              console.log('Datos procesados:', {
+                respuesta: data.respuesta,
+                resumen: data.resumen,
+                balance: data.balance,
+                estado_financiero: data.estado_financiero,
+                recomendaciones: data.recomendaciones
+              });
+            } else {
+              const errorMessage = data.message || 'No se recibieron datos válidos del análisis financiero';
+              resultadosTextarea.value = `Error: ${errorMessage}`;
+              resultadosTextarea.setAttribute('error', '');
+              micStatus.textContent = "Error al procesar análisis financiero: " + errorMessage;
+              micStatus.style.color = "#dc3545";
+              console.error('Error en la API:', errorMessage);
+            }
+          } catch (error) {
+            const errorMessage = error.message || 'No se pudo conectar con el servidor';
+            resultadosTextarea.value = `Error en conexión: ${errorMessage}`;
+            resultadosTextarea.setAttribute('error', '');
+            micStatus.textContent = "Error de conexión con el servicio: " + errorMessage;
+            micStatus.style.color = "#dc3545";
+            console.error('Error al procesar análisis financiero:', error);
+            resetMicStatus(micStatus);
+          }
         });
         break;
 
@@ -343,13 +625,38 @@
     }
   }
 
+  function resetMicStatus(micStatus) {
+    setTimeout(() => {
+      micStatus.textContent = "Presione el micrófono para registrar por voz";
+      micStatus.style.color = "#4366e6";
+    }, 5000);
+  }
+
+  function announceSuccess(message) {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(message);
+      utterance.lang = 'es-PE';
+      utterance.volume = 1;
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      window.speechSynthesis.speak(utterance);
+      console.log(`Anunciando: ${message}`);
+    } else {
+      console.warn('Text-to-speech no está disponible en este navegador');
+    }
+  }
+
+  // ----------------------------
+  // Formulario Registrar Ventas
+  // ----------------------------
   function loadRegistrarVentas() {
     content.innerHTML = `
       <h2>Registrar Venta</h2>
-      <div id="mic-icon-container" aria-label="Ingresar por voz" role="button" tabindex="0" style="text-align:center; margin-bottom: 20px;">
-        <svg id="mic-icon" viewBox="0 0 24 24" fill="#4366e6" stroke="#4366e6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px; cursor:pointer;" title="Ingresar por voz">
+      <div id="mic-icon-container" aria-label="Ingresar por voz" role="button" tabindex="0" style="text-align:center; margin-bottom: 10px;">
+        <svg id="mic-icon" viewBox="0 0 24 24" fill="#4366e6" stroke="#4366e6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:42px; cursor:pointer;" title="Ingresar por voz">
           <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zM12 19v3m-4 0h8"/>
         </svg>
+        <div id="mic-status" class="mic-status">Presione el micrófono para registrar venta por voz</div>
       </div>
       <form id="venta-form" aria-label="Formulario para registrar venta">
         <label for="nombre_producto">Nombre de producto</label>
@@ -379,7 +686,9 @@
     const cantidadInput = document.getElementById('cantidad');
     const totalInput = document.getElementById('total');
     const micIcon = document.getElementById('mic-icon');
+    const micStatus = document.getElementById('mic-status');
     const nombreInput = document.getElementById('nombre_producto');
+    const descripcionInput = document.getElementById('descripcion');
     const ventaForm = document.getElementById('venta-form');
     const mensajeDiv = document.getElementById('mensaje');
 
@@ -392,55 +701,177 @@
     precioInput.addEventListener('input', calcularTotal);
     cantidadInput.addEventListener('input', calcularTotal);
 
+    async function registrarVentaPorVoz(transcripcion) {
+      try {
+        micStatus.textContent = "Procesando venta...";
+        console.log('Enviando solicitud a la API:', transcripcion);
+
+        const response = await fetch('https://www.kingsoft.pe:5678/webhook/venta', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            texto: transcripcion,
+            fecha: new Date().toISOString()
+          })
+        });
+
+        console.log('Código de estado HTTP:', response.status);
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log('Respuesta de la API:', data);
+
+        if (data.success) {
+          if (data.producto) nombreInput.value = data.producto;
+          if (data.descripcion) descripcionInput.value = data.descripcion;
+          if (data.precio) precioInput.value = data.precio;
+          if (data.cantidad) cantidadInput.value = data.cantidad;
+
+          calcularTotal();
+
+          micStatus.textContent = "Venta registrada por voz correctamente";
+          micStatus.style.color = "#28a745";
+          mensajeDiv.innerHTML = '<p style="color:green;">Venta registrada por voz correctamente. Revise los datos y haga clic en "Guardar Venta" para confirmar.</p>';
+          announceSuccess("Venta registrada con éxito");
+          console.log('Datos registrados por voz:', {
+            producto: data.producto,
+            descripcion: data.descripcion,
+            precio: data.precio,
+            cantidad: data.cantidad,
+            total: totalInput.value
+          });
+        } else {
+          micStatus.textContent = "Error al procesar venta por voz: " + (data.message || 'Error desconocido');
+          micStatus.style.color = "#dc3545";
+          console.error('Error en la API:', data.message || 'Error desconocido');
+          resetMicStatus(micStatus);
+        }
+      } catch (error) {
+        micStatus.textContent = "Error de conexión con el servicio de voz: " + error.message;
+        micStatus.style.color = "#dc3545";
+        console.error('Error al registrar venta por voz:', error);
+        resetMicStatus(micStatus);
+      }
+    }
+
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
       recognition.lang = 'es-PE';
       recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
 
       micIcon.addEventListener('click', () => {
-        recognition.start();
+        try {
+          micStatus.textContent = "Escuchando... Hable ahora";
+          micStatus.style.color = "#4366e6";
+          console.log('Iniciando reconocimiento de voz');
+          recognition.start();
+        } catch (error) {
+          micStatus.textContent = "Error al iniciar el micrófono: " + error.message;
+          micStatus.style.color = "#dc3545";
+          console.error('Error al iniciar el micrófono:', error);
+          resetMicStatus(micStatus);
+        }
       });
 
       recognition.onresult = (event) => {
         const speechResult = event.results[0][0].transcript;
-        nombreInput.value = speechResult;
+        micStatus.textContent = "Transcripción recibida: " + speechResult;
+        micStatus.style.color = "#28a745";
+        console.log('Transcripción de voz:', speechResult);
+        registrarVentaPorVoz(speechResult);
       };
 
       recognition.onerror = (event) => {
-        alert('Error en reconocimiento de voz: ' + event.error);
+        let errorMessage = "Error en reconocimiento de voz: ";
+        switch(event.error) {
+          case 'no-speech':
+            errorMessage += "No se detectó voz";
+            break;
+          case 'audio-capture':
+            errorMessage += "No se pudo capturar audio";
+            break;
+          case 'not-allowed':
+            errorMessage += "Permiso denegado para usar el micrófono";
+            break;
+          default:
+            errorMessage += event.error;
+        }
+        micStatus.textContent = errorMessage;
+        micStatus.style.color = "#dc3545";
+        console.error('Error en reconocimiento de voz:', event.error, event);
+        resetMicStatus(micStatus);
+      };
+
+      recognition.onsoundend = () => {
+        if (micStatus.textContent === "Escuchando... Hable ahora") {
+          micStatus.textContent = "Tiempo de escucha terminado";
+          micStatus.style.color = "#dc3545";
+          console.warn('Tiempo de escucha terminado sin detectar voz');
+          resetMicStatus(micStatus);
+        }
       };
     } else {
       micIcon.style.display = 'none';
+      micStatus.textContent = "El reconocimiento de voz no está disponible en este navegador";
+      micStatus.style.color = "#dc3545";
+      console.warn('Reconocimiento de voz no disponible en este navegador');
     }
 
     ventaForm.addEventListener('submit', e => {
       e.preventDefault();
       const formData = new FormData(ventaForm);
+      console.log('Enviando datos del formulario de venta:', Object.fromEntries(formData));
 
       fetch('guardar_venta.php', {
         method: 'POST',
         body: formData
       })
-      .then(res => res.json())
+      .then(res => {
+        console.log('Código de estado HTTP (guardar_venta):', res.status);
+        if (!res.ok) {
+          throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        console.log('Respuesta de guardar_venta.php:', data);
         if(data.success){
           mensajeDiv.innerHTML = '<p style="color:green;">Venta registrada con éxito.</p>';
           ventaForm.reset();
           totalInput.value = '';
+          micStatus.textContent = "Presione el micrófono para registrar venta por voz";
+          micStatus.style.color = "#4366e6";
+          announceSuccess("Venta guardada con éxito");
         } else {
           mensajeDiv.innerHTML = '<p style="color:red;">Error al registrar venta: ' + data.message + '</p>';
+          console.error('Error al registrar venta:', data.message);
         }
       })
-      .catch(() => {
-        mensajeDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor.</p>';
+      .catch(error => {
+        mensajeDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor: ' + error.message + '</p>';
+        console.error('Error en conexión con el servidor:', error);
       });
     });
   }
 
+  // ----------------------------
+  // Formulario Registrar Proyectos
+  // ----------------------------
   function loadRegistrarProyectos() {
     content.innerHTML = `
       <h2>Registrar Proyecto</h2>
+      <div id="mic-icon-container" aria-label="Ingresar por voz" role="button" tabindex="0" style="text-align:center; margin-bottom: 20px;">
+        <svg id="mic-proyecto" viewBox="0 0 24 24" fill="#4366e6" stroke="#4366e6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:42px; cursor:pointer;" title="Ingresar por voz">
+          <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zM12 19v3m-4 0h8"/>
+        </svg>
+        <div id="mic-status" class="mic-status">Presione el micrófono para registrar proyecto por voz</div>
+      </div>
       <form id="proyecto-form" aria-label="Formulario para registrar proyecto">
         <label for="nombre_proyecto">Nombre de proyecto</label>
         <input type="text" id="nombre_proyecto" name="nombre_proyecto" required />
@@ -469,80 +900,376 @@
 
     const proyectoForm = document.getElementById('proyecto-form');
     const mensajeProyectoDiv = document.getElementById('mensaje-proyecto');
+    const micProyecto = document.getElementById('mic-proyecto');
+    const micStatus = document.getElementById('mic-status');
+    const nombreProyectoInput = document.getElementById('nombre_proyecto');
+    const descripcionInput = document.getElementById('descripcion');
+    const fechaInicioInput = document.getElementById('fecha_inicio');
+    const fechaFinInput = document.getElementById('fecha_fin');
+    const estadoInput = document.getElementById('estado');
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'es-PE';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      micProyecto.addEventListener('click', () => {
+        try {
+          micStatus.textContent = "Escuchando... Hable ahora";
+          micStatus.style.color = "#4366e6";
+          console.log('Iniciando reconocimiento de voz');
+          recognition.start();
+        } catch (error) {
+          micStatus.textContent = "Error al iniciar el micrófono: " + error.message;
+          micStatus.style.color = "#dc3545";
+          console.error('Error al iniciar el micrófono:', error);
+          resetMicStatus(micStatus);
+        }
+      });
+
+      recognition.onresult = async (event) => {
+        const speechResult = event.results[0][0].transcript;
+        micStatus.textContent = "Transcripción recibida: " + speechResult;
+        micStatus.style.color = "#28a745";
+        console.log('Transcripción de voz:', speechResult);
+
+        try {
+          micStatus.textContent = "Procesando proyecto...";
+          console.log('Enviando solicitud a la API para procesar proyecto por voz');
+
+          const response = await fetch('https://www.kingsoft.pe:5678/webhook/proyecto', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              texto: speechResult,
+              fecha: new Date().toISOString()
+            })
+          });
+
+          console.log('Código de estado HTTP:', response.status);
+          if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+          }
+
+          const data = await response.json();
+          console.log('Respuesta de la API:', data);
+
+          if (data.success) {
+            if (data.nombre) nombreProyectoInput.value = data.nombre;
+            if (data.descripcion) descripcionInput.value = data.descripcion;
+            if (data.fecha_inicio) fechaInicioInput.value = data.fecha_inicio.split('T')[0];
+            if (data.fecha_fin) fechaFinInput.value = data.fecha_fin.split('T')[0];
+            if (data.estado) estadoInput.value = data.estado;
+
+            micStatus.textContent = "Proyecto registrado por voz correctamente";
+            micStatus.style.color = "#28a745";
+            mensajeProyectoDiv.innerHTML = '<p style="color:green;">Proyecto registrado con éxito. Revise los datos y haga clic en "Guardar" para confirmar.</p>';
+            announceSuccess("Proyecto registrado con éxito");
+            console.log('Datos registrados por voz:', {
+              nombre: data.nombre,
+              descripcion: data.descripcion,
+              fecha_inicio: data.fecha_inicio,
+              fecha_fin: data.fecha_fin,
+              estado: data.estado
+            });
+          } else {
+            micStatus.textContent = "Error al procesar proyecto por voz: " + (data.message || 'Error desconocido');
+            micStatus.style.color = "#dc3545";
+            console.error('Error en la API:', data.message || 'Error desconocido');
+            resetMicStatus(micStatus);
+          }
+        } catch (error) {
+          micStatus.textContent = "Error de conexión con el servicio de voz: " + error.message;
+          micStatus.style.color = "#dc3545";
+          console.error('Error al registrar proyecto por voz:', error);
+          resetMicStatus(micStatus);
+        }
+      };
+
+      recognition.onerror = (event) => {
+        let errorMessage = "Error en reconocimiento de voz: ";
+        switch(event.error) {
+          case 'no-speech':
+            errorMessage += "No se detectó voz";
+            break;
+          case 'audio-capture':
+            errorMessage += "No se pudo capturar audio";
+            break;
+          case 'not-allowed':
+            errorMessage += "Permiso denegado para usar el micrófono";
+            break;
+          default:
+            errorMessage += event.error;
+        }
+        micStatus.textContent = errorMessage;
+        micStatus.style.color = "#dc3545";
+        console.error('Error en reconocimiento de voz:', event.error, event);
+        resetMicStatus(micStatus);
+      };
+
+      recognition.onsoundend = () => {
+        if (micStatus.textContent === "Escuchando... Hable ahora") {
+          micStatus.textContent = "Tiempo de escucha terminado";
+          micStatus.style.color = "#dc3545";
+          console.warn('Tiempo de escucha terminado sin detectar voz');
+          resetMicStatus(micStatus);
+        }
+      };
+    } else {
+      micProyecto.style.display = 'none';
+      micStatus.textContent = "El reconocimiento de voz no está disponible en este navegador";
+      micStatus.style.color = "#dc3545";
+      console.warn('Reconocimiento de voz no disponible en este navegador');
+    }
 
     proyectoForm.addEventListener('submit', e => {
       e.preventDefault();
       const formData = new FormData(proyectoForm);
+      console.log('Enviando datos del formulario de proyecto:', Object.fromEntries(formData));
 
       fetch('guardar_proyecto.php', {
         method: 'POST',
         body: formData
       })
-      .then(res => res.json())
+      .then(res => {
+        console.log('Código de estado HTTP (guardar_proyecto):', res.status);
+        if (!res.ok) {
+          throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        console.log('Respuesta de guardar_proyecto.php:', data);
         if(data.success){
           mensajeProyectoDiv.innerHTML = '<p style="color:green;">Proyecto registrado con éxito.</p>';
           proyectoForm.reset();
+          micStatus.textContent = "Presione el micrófono para registrar proyecto por voz";
+          micStatus.style.color = "#4366e6";
+          announceSuccess("Proyecto guardado con éxito");
         } else {
           mensajeProyectoDiv.innerHTML = '<p style="color:red;">Error al registrar proyecto: ' + data.message + '</p>';
+          console.error('Error al registrar proyecto:', data.message);
         }
       })
-      .catch(() => {
-        mensajeProyectoDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor.</p>';
+      .catch(error => {
+        mensajeProyectoDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor: ' + error.message + '</p>';
+        console.error('Error en conexión con el servidor:', error);
       });
     });
   }
 
+  // ----------------------------
+  // Formulario Registrar Gastos
+  // ----------------------------
   function loadRegistrarGastos() {
     content.innerHTML = `
       <h2>Registrar Gasto</h2>
+      <div id="mic-icon-container" aria-label="Ingresar descripción de gasto por voz" role="button" tabindex="0" style="text-align:center; margin-bottom: 20px;">
+        <svg id="mic-gasto" viewBox="0 0 24 24" fill="#4366e6" stroke="#4366e6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:42px; cursor:pointer;" title="Ingresar descripción de gasto por voz">
+          <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zM12 19v3m-4 0h8"/>
+        </svg>
+        <div id="mic-status" class="mic-status">Presione el micrófono para registrar gasto por voz</div>
+      </div>
       <form id="gasto-form" aria-label="Formulario para registrar gasto">
-        <label for="descripcion_gasto">Descripción de gasto</label>
+        <label for="descripcion_gasto">Descripción de Gasto</label>
         <textarea id="descripcion_gasto" name="descripcion_gasto" rows="3" required></textarea>
-
+        
         <label for="monto">Monto</label>
         <input type="number" id="monto" name="monto" step="0.01" required />
-
+        
+        <label for="fecha_gasto">Fecha del Gasto</label>
+        <input type="date" id="fecha_gasto" name="fecha_gasto" required />
+        
         <button type="submit">Guardar Gasto</button>
       </form>
       <div id="mensaje-gasto"></div>
     `;
-
+    
     const gastoForm = document.getElementById('gasto-form');
     const mensajeGastoDiv = document.getElementById('mensaje-gasto');
+    const micGasto = document.getElementById('mic-gasto');
+    const micStatus = document.getElementById('mic-status');
+    const descripcionGastoInput = document.getElementById('descripcion_gasto');
+    const montoInput = document.getElementById('monto');
+    const fechaGastoInput = document.getElementById('fecha_gasto');
+
+    // Establecer fecha actual por defecto
+    const today = new Date().toISOString().split('T')[0];
+    fechaGastoInput.value = today;
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'es-PE';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      micGasto.addEventListener('click', () => {
+        try {
+          micStatus.textContent = "Escuchando... Hable ahora";
+          micStatus.style.color = "#4366e6";
+          console.log('Iniciando reconocimiento de voz');
+          recognition.start();
+        } catch (error) {
+          micStatus.textContent = "Error al iniciar el micrófono: " + error.message;
+          micStatus.style.color = "#dc3545";
+          console.error('Error al iniciar el micrófono:', error);
+          resetMicStatus(micStatus);
+        }
+      });
+
+      recognition.onresult = async (event) => {
+        const speechResult = event.results[0][0].transcript;
+        micStatus.textContent = "Transcripción recibida: " + speechResult;
+        micStatus.style.color = "#28a745";
+        console.log('Transcripción de voz:', speechResult);
+
+        try {
+          micStatus.textContent = "Procesando gasto...";
+          console.log('Enviando solicitud a la API para procesar gasto por voz');
+
+          const response = await fetch('https://www.kingsoft.pe:5678/webhook/gastos', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              texto: speechResult,
+              fecha: new Date().toISOString()
+            })
+          });
+
+          console.log('Código de estado HTTP:', response.status);
+          if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+          }
+
+          const data = await response.json();
+          console.log('Respuesta de la API:', data);
+
+          if (data.success) {
+            if (data.descripcion) descripcionGastoInput.value = data.descripcion;
+            if (data.monto) montoInput.value = data.monto;
+            if (data.fecha) fechaGastoInput.value = data.fecha.split('T')[0];
+
+            micStatus.textContent = "Gasto registrado por voz correctamente";
+            micStatus.style.color = "#28a745";
+            mensajeGastoDiv.innerHTML = '<p style="color:green;">Gasto registrado por voz correctamente. Revise los datos y haga clic en "Guardar Gasto" para confirmar.</p>';
+            announceSuccess("Gasto registrado con éxito");
+            console.log('Datos registrados por voz:', {
+              descripcion: data.descripcion,
+              monto: data.monto,
+              fecha: data.fecha
+            });
+          } else {
+            micStatus.textContent = "Error al procesar gasto por voz: " + (data.message || 'Error desconocido');
+            micStatus.style.color = "#dc3545";
+            console.error('Error en la API:', data.message || 'Error desconocido');
+            resetMicStatus(micStatus);
+          }
+        } catch (error) {
+          micStatus.textContent = "Error de conexión con el servicio de voz: " + error.message;
+          micStatus.style.color = "#dc3545";
+          console.error('Error al registrar gasto por voz:', error);
+          resetMicStatus(micStatus);
+        }
+      };
+
+      recognition.onerror = (event) => {
+        let errorMessage = "Error en reconocimiento de voz: ";
+        switch(event.error) {
+          case 'no-speech':
+            errorMessage += "No se detectó voz";
+            break;
+          case 'audio-capture':
+            errorMessage += "No se pudo capturar audio";
+            break;
+          case 'not-allowed':
+            errorMessage += "Permiso denegado para usar el micrófono";
+            break;
+          default:
+            errorMessage += event.error;
+        }
+        micStatus.textContent = errorMessage;
+        micStatus.style.color = "#dc3545";
+        console.error('Error en reconocimiento de voz:', event.error, event);
+        resetMicStatus(micStatus);
+      };
+
+      recognition.onsoundend = () => {
+        if (micStatus.textContent === "Escuchando... Hable ahora") {
+          micStatus.textContent = "Tiempo de escucha terminado";
+          micStatus.style.color = "#dc3545";
+          console.warn('Tiempo de escucha terminado sin detectar voz');
+          resetMicStatus(micStatus);
+        }
+      };
+    } else {
+      micGasto.style.display = 'none';
+      micStatus.textContent = "El reconocimiento de voz no está disponible en este navegador";
+      micStatus.style.color = "#dc3545";
+      console.warn('Reconocimiento de voz no disponible en este navegador');
+    }
 
     gastoForm.addEventListener('submit', e => {
       e.preventDefault();
       const formData = new FormData(gastoForm);
+      console.log('Enviando datos del formulario de gasto:', Object.fromEntries(formData));
 
       fetch('guardar_gasto.php', {
         method: 'POST',
         body: formData
       })
-      .then(res => res.json())
+      .then(res => {
+        console.log('Código de estado HTTP (guardar_gasto):', res.status);
+        if (!res.ok) {
+          throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        console.log('Respuesta de guardar_gasto.php:', data);
         if(data.success){
           mensajeGastoDiv.innerHTML = '<p style="color:green;">Gasto registrado con éxito.</p>';
           gastoForm.reset();
+          fechaGastoInput.value = today;
+          micStatus.textContent = "Presione el micrófono para registrar gasto por voz";
+          micStatus.style.color = "#4366e6";
+          announceSuccess("Gasto guardado con éxito");
         } else {
           mensajeGastoDiv.innerHTML = '<p style="color:red;">Error al registrar gasto: ' + data.message + '</p>';
+          console.error('Error al registrar gasto:', data.message);
         }
       })
-      .catch(() => {
-        mensajeGastoDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor.</p>';
+      .catch(error => {
+        mensajeGastoDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor: ' + error.message + '</p>';
+        console.error('Error en conexión con el servidor:', error);
       });
     });
   }
 
+  // ----------------------------
+  // Formulario Registrar Deudas
+  // ----------------------------
   function loadRegistrarDeudas() {
     content.innerHTML = `
       <h2>Registrar Deuda</h2>
+      <div id="mic-icon-container" aria-label="Ingresar por voz" role="button" tabindex="0" style="text-align:center; margin-bottom:20px;">
+        <svg id="mic-deuda" viewBox="0 0 24 24" fill="#4366e6" stroke="#4366e6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:42px; cursor:pointer;" title="Ingresar por voz">
+          <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zM12 19v3m-4 0h8"/>
+        </svg>
+        <div id="mic-status" class="mic-status">Presione el micrófono para registrar deuda por voz</div>
+      </div>
       <form id="deuda-form" aria-label="Formulario para registrar deuda">
         <label for="nombre_deuda">Ingresar Nombres</label>
         <input type="text" id="nombre_deuda" name="nombre_deuda" required />
 
-        <label for="dni_deuda">Ingresar DNI</label>
-        <input type="text" id="dni_deuda" name="dni_deuda" maxlength="20" required />
+        <label for="dni_deuda">Ingresar el DNI</label>
+        <input type="text" id="dni_deuda" name="dni_deuda" minlength="8" maxlength="8" pattern="\d{8}" required title="El DNI debe tener exactamente 8 dígitos numéricos" />
 
         <label for="descripcion_deuda">Descripción de la deuda</label>
         <textarea id="descripcion_deuda" name="descripcion_deuda" rows="3"></textarea>
@@ -567,26 +1294,172 @@
 
     const deudaForm = document.getElementById('deuda-form');
     const mensajeDeudaDiv = document.getElementById('mensaje-deuda');
+    const micDeuda = document.getElementById('mic-deuda');
+    const micStatus = document.getElementById('mic-status');
+    const nombreDeudaInput = document.getElementById('nombre_deuda');
+    const dniDeudaInput = document.getElementById('dni_deuda');
+    const descripcionInput = document.getElementById('descripcion_deuda');
+    const montoInput = document.getElementById('monto_deuda');
+    const estadoDeudaInput = document.getElementById('estado_deuda');
+    const fechaInput = document.getElementById('fecha_deuda');
+
+    // Establecer la fecha actual por defecto
+    const today = new Date().toISOString().split('T')[0];
+    fechaInput.value = today;
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'es-PE';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      micDeuda.addEventListener('click', () => {
+        try {
+          micStatus.textContent = "Escuchando... Hable ahora";
+          micStatus.style.color = "#4366e6";
+          console.log('Iniciando reconocimiento de voz');
+          recognition.start();
+        } catch (error) {
+          micStatus.textContent = "Error al iniciar el micrófono: " + error.message;
+          micStatus.style.color = "#dc3545";
+          console.error('Error al iniciar el micrófono:', error);
+          resetMicStatus(micStatus);
+        }
+      });
+
+      recognition.onresult = async (event) => {
+        const speechResult = event.results[0][0].transcript;
+        micStatus.textContent = "Transcripción recibida: " + speechResult;
+        micStatus.style.color = "#28a745";
+        console.log('Transcripción de voz:', speechResult);
+
+        try {
+          micStatus.textContent = "Procesando deuda...";
+          console.log('Enviando solicitud a la API para procesar deuda por voz');
+
+          const response = await fetch('https://www.kingsoft.pe:5678/webhook/deuda', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              texto: speechResult,
+              fecha: new Date().toISOString()
+            })
+          });
+
+          console.log('Código de estado HTTP:', response.status);
+          if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+          }
+
+          const data = await response.json();
+          console.log('Respuesta de la API:', data);
+
+          if (data.success) {
+            if (data.nombre) nombreDeudaInput.value = data.nombre;
+            if (data.dni) dniDeudaInput.value = data.dni;
+            if (data.descripcion) descripcionInput.value = data.descripcion;
+            if (data.monto) montoInput.value = data.monto;
+            if (data.estado) estadoDeudaInput.value = data.estado;
+            if (data.fecha) fechaInput.value = data.fecha.split('T')[0];
+
+            micStatus.textContent = "Deuda registrada por voz correctamente";
+            micStatus.style.color = "#28a745";
+            mensajeDeudaDiv.innerHTML = '<p style="color:green;">Deuda registrada por voz correctamente. Revise los datos y haga clic en "Guardar" para confirmar.</p>';
+            announceSuccess("Deuda registrada con éxito");
+            console.log('Datos registrados por voz:', {
+              nombre: data.nombre,
+              dni: data.dni,
+              descripcion: data.descripcion,
+              monto: data.monto,
+              estado: data.estado,
+              fecha: data.fecha
+            });
+          } else {
+            micStatus.textContent = "Error al procesar deuda por voz: " + (data.message || 'Error desconocido');
+            micStatus.style.color = "#dc3545";
+            console.error('Error en la API:', data.message || 'Error desconocido');
+            resetMicStatus(micStatus);
+          }
+        } catch (error) {
+          micStatus.textContent = "Error de conexión con el servicio de voz: " + error.message;
+          micStatus.style.color = "#dc3545";
+          console.error('Error al registrar deuda por voz:', error);
+          resetMicStatus(micStatus);
+        }
+      };
+
+      recognition.onerror = (event) => {
+        let errorMessage = "Error en reconocimiento de voz: ";
+        switch(event.error) {
+          case 'no-speech':
+            errorMessage += "No se detectó voz";
+            break;
+          case 'audio-capture':
+            errorMessage += "No se pudo capturar audio";
+            break;
+          case 'not-allowed':
+            errorMessage += "Permiso denegado para usar el micrófono";
+            break;
+          default:
+            errorMessage += event.error;
+        }
+        micStatus.textContent = errorMessage;
+        micStatus.style.color = "#dc3545";
+        console.error('Error en reconocimiento de voz:', event.error, event);
+        resetMicStatus(micStatus);
+      };
+
+      recognition.onsoundend = () => {
+        if (micStatus.textContent === "Escuchando... Hable ahora") {
+          micStatus.textContent = "Tiempo de escucha terminado";
+          micStatus.style.color = "#dc3545";
+          console.warn('Tiempo de escucha terminado sin detectar voz');
+          resetMicStatus(micStatus);
+        }
+      };
+    } else {
+      micDeuda.style.display = 'none';
+      micStatus.textContent = "El reconocimiento de voz no está disponible en este navegador";
+      micStatus.style.color = "#dc3545";
+      console.warn('Reconocimiento de voz no disponible en este navegador');
+    }
 
     deudaForm.addEventListener('submit', e => {
       e.preventDefault();
       const formData = new FormData(deudaForm);
+      console.log('Enviando datos del formulario de deuda:', Object.fromEntries(formData));
 
       fetch('guardar_deuda.php', {
         method: 'POST',
         body: formData
       })
-      .then(res => res.json())
+      .then(res => {
+        console.log('Código de estado HTTP (guardar_deuda):', res.status);
+        if (!res.ok) {
+          throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        console.log('Respuesta de guardar_deuda.php:', data);
         if(data.success){
           mensajeDeudaDiv.innerHTML = '<p style="color:green;">Deuda registrada con éxito.</p>';
           deudaForm.reset();
+          fechaInput.value = today;
+          micStatus.textContent = "Presione el micrófono para registrar deuda por voz";
+          micStatus.style.color = "#4366e6";
+          announceSuccess("Deuda guardada con éxito");
         } else {
           mensajeDeudaDiv.innerHTML = '<p style="color:red;">Error al registrar deuda: ' + data.message + '</p>';
+          console.error('Error al registrar deuda:', data.message);
         }
       })
-      .catch(() => {
-        mensajeDeudaDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor.</p>';
+      .catch(error => {
+        mensajeDeudaDiv.innerHTML = '<p style="color:red;">Error en conexión con el servidor: ' + error.message + '</p>';
+        console.error('Error en conexión con el servidor:', error);
       });
     });
   }

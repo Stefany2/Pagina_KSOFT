@@ -1833,7 +1833,7 @@
                     <h2>KingSoft</h2>
                     <p>
                         Empresa dedicada al desarrollo de soluciones tecnológicas innovadoras, abarcando software, aplicaciones móviles,
-                        páginas web, inteligencia artificial, tecnologías IoT, blockchain y fabricación digital.
+                        páginas web, inteligencia artificial, tecnologías IoT, blockchain y Big Data.
                     </p>
                 </div>
                 <div class="separator"></div>
@@ -1886,7 +1886,7 @@
                         <div class="detalle-content">
                             <h2 class="detalle-title" id="detalle-title">Nombre del Servicio</h2>
                             <p class="detalle-text" id="detalle-text">Descripción detallada del servicio.</p>
-                            <button class="contact-btn">Contáctanos</button>
+                             <a href="#contacto"><button class="contact-btn">Contáctanos</button></a>
                         </div>
                     </div>
                 </div>
@@ -2004,7 +2004,7 @@
             <div class="contact-container">
                 <h2 class="section-title">CONTÁCTANOS</h2>
                 <div class="contact-content">
-                    <img src="img/bot.png" alt="Astronauta KingSoft" class="astronaut" loading="lazy" onerror="this.src='https://via.placeholder.com/200'">
+                    <img src="img/bot.png" alt="Astronauta KingSoft" class="astronaut" loading="lazy">
                     <form id="contact-form" action="contact.php" method="POST">
                         <div class="form-group">
                             <label for="name">Nombres</label>
@@ -2067,7 +2067,7 @@
     <footer>
         <div class="footer-container">
             <div class="footer-logo-container">
-                <img src="img/KINGSOFT1.png" alt="KSOFT Logo" class="footer-logo-img" loading="lazy" onerror="this.src='https://via.placeholder.com/50'">
+                <img src="img/KINGSOFT1.png" alt="KSOFT Logo" class="footer-logo-img" loading="lazy">
                 <a href="#" class="footer-logo">KingSoft</a>
             </div>
             <div class="social-links">
@@ -2256,11 +2256,11 @@
                 });
 
                 // Smooth scroll para enlaces ancla
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                document.querySelectorAll('a[href^=""]').forEach(anchor => {
                     anchor.addEventListener('click', function(e) {
                         try {
                             const href = this.getAttribute('href');
-                            if (href === '#') return;
+                            if (href === '') return;
                             e.preventDefault();
                             const targetElement = document.querySelector(href);
                             if (targetElement) {

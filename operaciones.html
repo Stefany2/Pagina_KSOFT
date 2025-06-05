@@ -26,6 +26,24 @@
     text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
     user-select: none;
   }
+  /* Logout icon */
+  .logout-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  .logout-icon {
+    width: 32px;
+    height: 32px;
+    fill: #f0f0f0;
+    cursor: pointer;
+    transition: fill 0.3s ease, transform 0.3s ease;
+  }
+  .logout-icon:hover {
+    fill: #ff4d4d;
+    transform: scale(1.1);
+  }
   /* Menu principal */
   .menu {
     display: flex;
@@ -143,13 +161,13 @@
     text-align: center;
     margin-bottom: 20px;
   }
-  #mic-icon, #mic-asesoria {
+  #mic-icon, #mic-asesoria, #mic-proyecto, #mic-gasto, #mic-deuda {
     cursor: pointer;
     width: 42px;
     fill: #4366e6;
     transition: fill 0.3s ease;
   }
-  #mic-icon:hover, #mic-asesoria:hover {
+  #mic-icon:hover, #mic-asesoria:hover, #mic-proyecto:hover, #mic-gasto:hover, #mic-deuda:hover {
     fill: #3048b8;
   }
   /* Tablas */
@@ -227,12 +245,24 @@
       flex-direction: column;
       gap: 10px;
     }
+    .logout-icon {
+      width: 28px;
+      height: 28px;
+    }
   }
 </style>
 </head>
 <body>
 
 <h1>Panel de Operaciones</h1>
+
+<div class="logout-container" role="button" aria-label="Cerrar sesión">
+  <a href="inicio.html" title="Cerrar sesión">
+    <svg class="logout-icon" viewBox="0 0 24 24" stroke="#f0f0f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 14l5-5-5-5m5 5H11"/>
+    </svg>
+  </a>
+</div>
 
 <div class="menu" role="menu" aria-label="Menú de operaciones">
   <button data-op="proyectos" aria-haspopup="true" aria-controls="submenu">Proyectos</button>
@@ -470,7 +500,6 @@
               const data = await response.json();
               console.log('Respuesta de la API:', data);
 
-              // Handle API response with 'respuesta' instead of 'analisis'
               if (data.respuesta || data.recomendaciones) {
                 let output = '';
                 if (data.respuesta) output += `Análisis Financiero:\n${data.respuesta.trim()}\n\n`;
@@ -580,7 +609,6 @@
             const data = await response.json();
             console.log('Respuesta de la API:', data);
 
-            // Handle API response with 'respuesta' instead of 'analisis'
             if (data.respuesta || data.recomendaciones) {
               let output = '';
               if (data.respuesta) output += `Análisis Financiero:\n${data.respuesta.trim()}\n\n`;
@@ -646,9 +674,6 @@
     }
   }
 
-  // ----------------------------
-  // Formulario Registrar Ventas
-  // ----------------------------
   function loadRegistrarVentas() {
     content.innerHTML = `
       <h2>Registrar Venta</h2>
@@ -860,9 +885,6 @@
     });
   }
 
-  // ----------------------------
-  // Formulario Registrar Proyectos
-  // ----------------------------
   function loadRegistrarProyectos() {
     content.innerHTML = `
       <h2>Registrar Proyecto</h2>
@@ -1062,9 +1084,6 @@
     });
   }
 
-  // ----------------------------
-  // Formulario Registrar Gastos
-  // ----------------------------
   function loadRegistrarGastos() {
     content.innerHTML = `
       <h2>Registrar Gasto</h2>
@@ -1097,7 +1116,6 @@
     const montoInput = document.getElementById('monto');
     const fechaGastoInput = document.getElementById('fecha_gasto');
 
-    // Establecer fecha actual por defecto
     const today = new Date().toISOString().split('T')[0];
     fechaGastoInput.value = today;
 
@@ -1252,9 +1270,6 @@
     });
   }
 
-  // ----------------------------
-  // Formulario Registrar Deudas
-  // ----------------------------
   function loadRegistrarDeudas() {
     content.innerHTML = `
       <h2>Registrar Deuda</h2>
@@ -1303,7 +1318,6 @@
     const estadoDeudaInput = document.getElementById('estado_deuda');
     const fechaInput = document.getElementById('fecha_deuda');
 
-    // Establecer la fecha actual por defecto
     const today = new Date().toISOString().split('T')[0];
     fechaInput.value = today;
 

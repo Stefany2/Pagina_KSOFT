@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Operaciones - KingSoft</title>
 <style>
-  /* Reset & base */
+  
   * {
     box-sizing: border-box;
     margin: 0;
@@ -30,7 +30,7 @@
     user-select: none;
     text-align: center;
   }
-  /* Logout icon */
+  /* Icono de cierre de sesión */
   .logout-container {
     position: fixed;
     top: 2vw;
@@ -354,7 +354,7 @@
 <h1>Panel de Operaciones</h1>
 
 <div class="logout-container" role="button" aria-label="Cerrar sesión">
-  <a href="inicio.html" title="Cerrar sesión">
+  <a href="index.html" title="Cerrar sesión">
     <svg class="logout-icon" viewBox="0 0 24 24" stroke="#f0f0f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 14l5-5-5-5m5 5H11"/>
     </svg>
@@ -569,14 +569,14 @@
         const fechaHastaInput = document.getElementById('fecha-hasta');
         const resultadosTextarea = document.getElementById('resultados-textarea');
 
-        // Set default dates
+        // Establecer fechas predeterminadas
         const today = new Date();
         fechaHastaInput.value = today.toISOString().split('T')[0];
         const oneMonthAgo = new Date();
         oneMonthAgo.setMonth(today.getMonth() - 1);
         fechaDesdeInput.value = oneMonthAgo.toISOString().split('T')[0];
 
-        // Validate date range
+        // Validar rango de fechas
         function validateDates() {
           if (new Date(fechaDesdeInput.value) > new Date(fechaHastaInput.value)) {
             resultadosTextarea.value = "Error: La fecha de inicio no puede ser posterior a la fecha de fin";
